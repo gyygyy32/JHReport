@@ -1,0 +1,355 @@
+﻿
+@{
+    ViewBag.Title = "RunCard";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<section class="content-header">
+
+</section>
+<section class="content" ng-app="myApp">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary"  ng-controller="RunCardCtrl">
+                <div class="box-header with-border">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 class="box-title">组件电子流转单</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-inline">
+                        <input id="LotID" class="form-control" type="text" placeholder="组件编码"/>
+                        <button class="btn btn-default" ng-click="QueryLot()">查询</button>
+                    </div>
+                </div>
+                <div class="box-body table-responsive" >
+                    <table class="table table-bordered ">
+                        <tbody  >
+                           
+                            <tr style="">
+                               
+                                <td class="" style="">车间编号</td>
+                                <td class="" style="">当前站点</td>
+                                <td class="" style="">组件编号</td>
+                                <td class="" style="">工单类型</td>
+                                <td class="" style="">工单编号</td>
+                                <td class="" style="">客户名称</td>
+                                <td class="" style="">指令单号</td>
+                                <td class="" style="">产品规格</td>
+                                <td class="" style="">额定功率</td>
+                                <td class="" style="">投入产出比</td>
+                            </tr>
+                            <tr style="">
+                              
+                                <td class="" style="">组件1部</td>
+                                <td class="" style="">清洗</td>
+                                <td class="" style="" ng-bind="lotidinfo.serial_nbr"></td>
+                                <td class="" style="">代工工单</td>
+                                <td class="" style="" ng-bind="lotidinfo.workorder"></td>
+                                <td class="" style="">晶科</td>
+                                <td class="" style=""></td>
+                                <td class="" style="" ng-bind="lotidinfo.product_code" ></td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                               
+                                <td class="" style="" rowspan="4">分选</td>
+                                <td class="" style="">片源批号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style="" rowspan="7">装框</td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style="">2018-03-27 10:59:17</td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style="">李冬</td>
+                            </tr>
+                            <tr style="">
+                               
+                                <td class="" style="">片源厂商</td>
+                                <td ng-bind="lotidinfo.cell_supplier_desc"></td>
+                                <td class="" style="">片源规格</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">机台编号</td>
+                                <td class="" style="">ZKT002</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                               
+                                <td class="" style="">片源颜色</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">片源用量</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">线盒厂家</td>
+                                <td class="" style="">晶科</td>
+                                <td class="" style="">型材厂家</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                               
+                                <td class="" style="">片源档位</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">单片功率</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">线盒规格</td>
+                                <td class="" style="">34002594.00</td>
+                                <td class="" style="">型材规格</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                              
+                                <td class="" style="" rowspan="4">焊接</td>
+                                <td class="" style="">焊接时间</td>
+                                <td class="" style="" ng-bind="weldinfo.wks_visit_date"></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style="">赵丽</td>
+                                <td class="" style="">线盒批号</td>
+                                <td class="" style="">M11803260026</td>
+                                <td class="" style="">型材批号</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                              
+                                <td class="" style="">机台编号</td>
+                                <td class="" style="">M01HJJ006</td>
+                                <td class="" style="">破片数量</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">线盒胶厂商</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">型材胶厂商</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                                
+                                <td class="" style="">助焊剂厂商</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">互联条厂商</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">线盒胶批号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">型材胶批号</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                               
+                                <td class="" style="">助焊剂批号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">互联条规格</td>
+                                <td class="" style=""></td>
+                                <td class="" >清洗</td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">叠层</td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style="">2018-03-27 09:02:14</td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style="">赵丽</td>
+                                <td class="" style="">机台编号</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">机台编号</td>
+                                <td class="" style="">M01DCT004</td>
+                                <td class="" style="">EVA厂商</td>
+                                <td class="" style="">福斯特</td>
+                                <td class="" style="" rowspan="2">全检</td>
+                                <td class="" style="">全检时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">高透EVA规格</td>
+                                <td class="" style="">34002202.00</td>
+                                <td class="" style="">普通EVA规格</td>
+                                <td class="" style="">34001019.00</td>
+                                <td class="" style="">机台编号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">全检结果</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">高透EVA批号</td>
+                                <td class="" style="">M11803260025</td>
+                                <td class="" style="">普通EVA批号</td>
+                                <td class="" style="">M11803260021</td>
+                                <td class="" style="" rowspan="2">电性能测试</td>
+                                <td class="" style="">机台编号</td>
+                                <td class="" style="">IV001</td>
+                                <td class="" style="">测试时间</td>
+                                <td class="" style="">2018-03-28 01:58:29</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">玻璃厂商</td>
+                                <td class="" style="">福莱特</td>
+                                <td class="" style="">背板厂商</td>
+                                <td class="" style="">台虹TPE</td>
+                                <td class="" style="">测试功率</td>
+                                <td class="" style="">348.06</td>
+                                <td class="" style="">测试电流</td>
+                                <td class="" style="">9.69</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">玻璃规格</td>
+                                <td class="" style="">34001964.00</td>
+                                <td class="" style="">背板规格</td>
+                                <td class="" style="">34000118.00</td>
+                                <td class="" style="" rowspan="2">测试后EL</td>
+                                <td class="" style="">测试时间</td>
+                                <td class="" style="">2018-03-28 01:59:42</td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">玻璃批号</td>
+                                <td class="" style="">M11803260024</td>
+                                <td class="" style="">背板批号</td>
+                                <td class="" style="">M11803260020</td>
+                                <td class="" style="">机台编号</td>
+                                <td class="" style="">HEL001</td>
+                                <td class="" style="">测试结果</td>
+                                <td class="" style="">A</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">汇流条厂商</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">汇流条批号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="" rowspan="2">包装</td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style="">2018-03-28 03:09:30</td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="">汇流条规格</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                                <td class="" style="">机台编号</td>
+                                <td class="" style="">DGBZ001</td>
+                                <td class="" style="">托盘编号</td>
+                                <td class="" style="" ng-bind="lotidinfo.pallet_nbr"></td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+
+                                <td class="" style="" rowspan="2">层压前EL</td>
+                                <td class="" style="">测试时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style="" rowspan="2">入库</td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                
+                            </tr>
+                            <tr style="">
+                        
+                                <td class="" style="">机台编号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">测试结果</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">库位编号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">出货柜号</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                         
+                                <td class="" style="" rowspan="3">层压</td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style="" rowspan="2">返工</td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                        
+                                <td class="" style="">机台编号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">层压温度</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">换片数量</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">不良说明</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                        
+                                <td class="" style="">层压时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">抽真空时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="" rowspan="2">检验评审</td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作时间</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                            
+                                <td class="" style="" rowspan="2">层压后EL</td>
+                                <td class="" style="">测试时间</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">操作人员</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">外观等级</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">EL等级</td>
+                                <td class="" style=""></td>
+                            </tr>
+                            <tr style="">
+                          
+                                <td class="" style="">机台编号</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">测试结果</td>
+                                <td class="" style=""></td>
+                                <td class="" style="">备注</td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                                <td class="" style=""></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/3rd/Angularjs/angular.min.js?v=1"></script>
+@*<script src="~/3rd/Angularjs/angular-route.min.js"></script>*@
+<script src="~/Scripts/Report/RunCard/app.js"></script>
+<script src="~/Scripts/Report/RunCard/controller.js?v=3"></script>
