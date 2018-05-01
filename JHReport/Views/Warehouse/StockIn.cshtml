@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "StockIn";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<link href="/3rd/AdminLTE2.4.3/plugins/iCheck/flat/_all.css" rel="stylesheet" />
+<style>
+    #listcbx label {
+        padding-left: 10px;
+        padding-right: 60px;
+    }
+</style>
+<section class="content-header"></section>
+<section class="content" ng-app="myApp">
+    <div ng-controller="StockInCtrl">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+
+                        <h3 class="box-title">入库</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-inline">
+                            <label>仓库</label>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                            <label>库位</label>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                            <input class="form-control" placeholder="托盘号" />
+                        </div>
+
+                    </div>
+                    <div class="box-body ">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4>卡关</h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-inline" id="listcbx">
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxPower" />
+                                <label for="cbxPower">
+                                    功率
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxIpm" />
+                                <label for="cbxIpm">
+                                    电流
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxColor" />
+                                <label for="cbxColor">
+                                    颜色
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxCellType" />
+                                <label for="cbxCellType">
+                                    电池类型
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxFinalGrade" />
+                                <label for="cbxFinalGrade">
+                                    最终等级
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxCellQty" />
+                                <label for="cbxCellQty">
+                                    电池数量
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxFrame" />
+                                <label for="cbxFrame">
+                                    边框
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="cbxBox" />
+                                <label for="cbxBox">
+                                    接线盒
+                                </label>
+                            </div>
+                            <div class="checkbox" id="cbxBusBar">
+                                <input type="checkbox" />
+                                <label for="cbxBusBar">
+                                    栅线
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table id="tbCondition"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+
+                        <h3 class="box-title">已入库托盘</h3>
+                    </div>
+                    <div class="box-body">
+                        <table id="tbStockInPallet"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+
+                        <h3 class="box-title">信息</h3>
+                    </div>
+                    <div class="box-body"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script src="~/3rd/Angularjs/angular.min.js"></script>
+<script src="~/3rd/Angularjs/angular-route.min.js"></script>
+<script src="~/Scripts/Warehouse/StockIn/app.js"></script>
+<script src="~/Scripts/Warehouse/StockIn/controller.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-green'
+        });
+        $('#cbxPower, #cbxCellType').iCheck('check');
+    });
+</script>
+
