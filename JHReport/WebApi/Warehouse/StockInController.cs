@@ -18,7 +18,7 @@ namespace JHReport.WebApi.Warehouse
             {
                var res = conn.Query(sql, new { PalletID=PalletID }).Single();
             }
-            return Json("");
+            return Json(" ");
         }
     }
 }
