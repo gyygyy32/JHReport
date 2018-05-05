@@ -109,7 +109,7 @@ and dp.descriptions='焊接';";
             {
                 res = conn.Query(sql, new { lotid = lotid }).Single();
             }
-            return Json(res);
+            return Json(res);//
         }
 
         
