@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 <link href="/3rd/AdminLTE2.4.3/plugins/iCheck/flat/_all.css" rel="stylesheet" />
+
 <style>
     #listcbx label {
         padding-left: 10px;
@@ -23,7 +24,7 @@
                     <div class="box-body">
                         <div class="form-inline">
                             <label>仓库</label>
-                            <select class="form-control">
+                            <select class="form-control" id="ddlStock" style="width:200px">
                                 <option>1</option>
                                 <option>2</option>
                             </select>
@@ -139,6 +140,7 @@
         </div>
     </div>
 </section>
+<script src="~/3rd/AdminLTE2.4.3/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="~/3rd/Angularjs/angular.min.js"></script>
 <script src="~/3rd/Angularjs/angular-route.min.js"></script>
 <script src="~/Scripts/Warehouse/StockIn/app.js"></script>
@@ -151,6 +153,10 @@
             radioClass: 'iradio_flat-green'
         });
         $('#cbxPower, #cbxCellType').iCheck('check');
+        $('#ddlStock').select2({
+            placeholder: "Select a State",
+            allowClear: true
+        })
     });
 </script>
 
