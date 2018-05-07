@@ -1,13 +1,13 @@
 ﻿app.controller('StockInCtrl', function ($scope, $http) {
 
-    $.init = function () {
+    $scope.init = function () {
         QueryStock();
     }
 
     //查询库位
     function QueryStock() {
         var promise = $.ajax({
-            url: '../api/StockIn/Stock',
+            url: '../api/StockIn/QueryStock',
             type: 'post',
             cache: false,
             async: true,
@@ -24,6 +24,12 @@
             })
 
             $('#ddlStock').html(options);
+            $('#ddlStock').val('');
+            $('#ddlStock').select2({
+                placeholder: "Select a State",
+                allowClear: true
+            })
+            
 
             
         });
