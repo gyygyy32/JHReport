@@ -14,5 +14,7 @@ namespace JHReport.Controllers.Warehouse
         {
             return View();
         }
+
+        
     }
 }

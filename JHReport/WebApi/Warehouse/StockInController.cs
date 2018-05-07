@@ -8,6 +8,7 @@ using Dapper;
 
 namespace JHReport.WebApi.Warehouse
 {
+    [RoutePrefix("api/StockIn")]
     public class StockInController : ApiController
     {
         public IHttpActionResult QueryCondition(string PalletID, dynamic ConditionSetting)
@@ -20,5 +21,29 @@ namespace JHReport.WebApi.Warehouse
             }
             return Json("");
         }
+        [Route("QueryStock")]
+        [HttpPost]
+        public IHttpActionResult QueryStock()
+        {
+            string sql = " select * from warehouse.dbo.tstock;";
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                var res = conn.Query(sql);
+                return Json<dynamic>(res);
+            }
+        }
+        [Route("QueryStorageLocation")]
+        [HttpPost]
+        public IHttpActionResult QueryStorageLocation(string stock)
+        {
+            string sql = "select * from warehouse.dbo.tstoragelocation where stockcodeid = @stock;";
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                var res = conn.Query(sql);
+                return Json<dynamic>(res);
+            }
+        }
+
+
     }
 }
