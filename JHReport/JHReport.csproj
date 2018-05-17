@@ -173,6 +173,7 @@
     <Compile Include="Common\Dpperhelper.cs" />
     <Compile Include="Common\filter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Measurement\MeasurementController.cs" />
     <Compile Include="Controllers\Report\ReportController.cs" />
     <Compile Include="Controllers\Warehouse\WarehouseController.cs" />
     <Compile Include="Global.asax.cs">
@@ -7773,6 +7774,7 @@
     <Content Include="Views\Report\RunCard.cshtml" />
     <Content Include="Views\Report\QC.cshtml" />
     <Content Include="Views\Warehouse\StockIn.cshtml" />
+    <Content Include="Views\Measurement\Measure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
