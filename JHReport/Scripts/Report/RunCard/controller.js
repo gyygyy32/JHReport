@@ -1,5 +1,6 @@
 ﻿app.controller('RunCardCtrl', function ($scope, $http) {
     $scope.QueryLot = function () {
+        $('#tbRuncard').show(1000);
         //$scope.cell_supplier_desc = "test";
         var promise = $.ajax({
             url: '../api/RunCard/QueryLotID',
@@ -38,5 +39,7 @@
             console.log(error)
             alert(error);
         });
+
+        
     }
 })
