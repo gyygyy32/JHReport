@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApi\Report\QCController.cs" />
     <Compile Include="WebApi\Report\RunCardController.cs" />
     <Compile Include="WebApi\Warehouse\StockInController.cs" />
   </ItemGroup>
@@ -7223,6 +7224,8 @@
     <Content Include="3rd\jquery-validation-1.17.0\test\rules.js" />
     <Content Include="3rd\jquery-validation-1.17.0\test\test.js" />
     <Content Include="3rd\jQuery\jquery.min.js" />
+    <Content Include="3rd\moment\moment-with-locales.min.js" />
+    <Content Include="3rd\tableExport.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -7741,6 +7744,7 @@
     <Content Include="3rd\jquery-validation-1.17.0\demo\captcha\fonts\Anorexia.ttf" />
     <Content Include="3rd\jquery-validation-1.17.0\package.json" />
     <Content Include="3rd\jquery-validation-1.17.0\README.md" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -7781,6 +7785,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Dapper\" />
+    <Folder Include="Scripts\Report\QC\" />
     <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
