@@ -7226,6 +7226,8 @@
     <Content Include="3rd\jQuery\jquery.min.js" />
     <Content Include="3rd\moment\moment-with-locales.min.js" />
     <Content Include="3rd\tableExport.js" />
+    <Content Include="3rd\tableExport.min.js" />
+    <Content Include="3rd\xlsx.full.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -7781,6 +7783,7 @@
     <Content Include="Views\Report\QC.cshtml" />
     <Content Include="Views\Warehouse\StockIn.cshtml" />
     <Content Include="Views\Measurement\Measure.cshtml" />
+    <Content Include="Views\Report\TestDataDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

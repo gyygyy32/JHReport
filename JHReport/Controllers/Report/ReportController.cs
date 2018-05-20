@@ -20,6 +20,11 @@ namespace JHReport.Controllers
         {
             return View();
         }
+        [Route("{action=TestDataDetail}")]
+        public ActionResult TestDataDetail()
+        {
+            return View();
+        }
 
         // GET: Report/Details/5
         public ActionResult Details(int id)
