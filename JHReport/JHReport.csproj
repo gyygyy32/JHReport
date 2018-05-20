@@ -7727,6 +7727,7 @@
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\Report\QC\QC.js" />
     <Content Include="Scripts\Report\RunCard\app.js" />
     <Content Include="Scripts\Report\RunCard\controller.js" />
     <Content Include="Scripts\Report\RunCard\RunCard.js" />
@@ -7745,6 +7746,7 @@
     <Content Include="3rd\jquery-validation-1.17.0\package.json" />
     <Content Include="3rd\jquery-validation-1.17.0\README.md" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -7785,7 +7787,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Dapper\" />
-    <Folder Include="Scripts\Report\QC\" />
     <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>

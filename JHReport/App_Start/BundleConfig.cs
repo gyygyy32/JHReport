@@ -32,7 +32,6 @@ namespace JHReport
                 "~/3rd/AdminLTE2.4.3/bower_components/font-awesome/css/font-awesome.min.css",
                 "~/3rd/AdminLTE2.4.3/bower_components/select2/dist/css/select2.min.css",
                 "~/3rd/AdminLTE2.4.3/dist/css/AdminLTE.min.css",
-
                 "~/3rd/AdminLTE2.4.3/dist/css/skins/_all-skins.min.css"
                 ));
             bundles.Add(new ScriptBundle("~/3rd/js").Include(
