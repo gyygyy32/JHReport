@@ -4,5 +4,58 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>TestDataDetail</h2>
+<link href="~/3rd/AdminLTE2.4.3/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="~/3rd/bootstrapTable/dist/bootstrap-table.min.css" rel="stylesheet" />
+
+<section class="content-header"></section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 class="box-title">质量报表</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-inline">
+
+                        <input id="LotID" class="form-control" type="text" placeholder="工单号" />
+                        <div class="input-daterange input-group" id="datepicker">
+                            <input type="text" class=" form-control" name="start" id="txtBegintime" />
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class=" form-control" name="end" id="txtEndtime" />
+                        </div>
+
+                        <select class="form-control" id="ddlWorkshop">
+                            <option value="1">组件一部</option>
+                        </select>
+                        <select class="form-control" id="ddlStatus"></select>
+                        <button class="btn btn-default" id="btnQuery">查询</button>
+                    </div>
+
+                </div>
+                <div class="box-body ">
+                    <table id="tbtestdata"></table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script src="~/3rd/AdminLTE2.4.3/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="~/3rd/AdminLTE2.4.3/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="~/3rd/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+
+<script src="~/3rd/bootstrapTable/dist/bootstrap-table.min.js"></script>
+<script src="~/3rd/bootstrapTable/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<script src="~/3rd/bootstrapTable/dist/extensions/export/bootstrap-table-export.min.js?v=2"></script>
+<script src="~/3rd/tableExport.js"></script>
+<!--<script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>-->
+@*<script src="~/3rd/xlsx.full.min.js"></script>*@
+<script src="~/3rd/AdminLTE2.4.3/bower_components/select2/dist/js/select2.min.js"></script>
+<script src="~/3rd/moment/moment-with-locales.min.js"></script>
+<script src="~/Scripts/Report/TestDataDetail/TestDataDetail.js?v=2"></script>
 

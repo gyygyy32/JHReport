@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ApplicationServices;
 using System.Web.Mvc;
+using System.Web.Routing;
+using System.Web.Security;
 
 namespace JHReport.Common
 {
@@ -56,8 +59,15 @@ namespace JHReport.Common
         //在所有action方法过滤器之前执行  
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            filterContext.HttpContext.Response.Write("我是OnAuthorization，在所有action方法过滤器之前执行<br/>");
+            //filterContext.HttpContext.Response.Write("我是OnAuthorization，在所有action方法过滤器之前执行<br/>");
             //base.OnAuthorization(filterContext);  
+            //filterContext.Result = new ContentResult { Content = @"抱歉,你不具有当前操作的权限！" };
+            //base.OnAuthorization(filterContext);
+            if (!filterContext.RequestContext.HttpContext.Request.IsAuthenticated)
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Admin/Admin", action = "Login", returnUrl = filterContext.HttpContext.Request.Url, returnMessage = "您无权查看." }));
+                return;
+            }
         }
     }
 
@@ -97,5 +107,43 @@ namespace JHReport.Common
         /// </summary>
         public string actionName { get; set; }
 
+    }
+
+    public class RoleAuthorizeAttribute : AuthorizeAttribute
+    {
+        //public override void OnAuthorization(AuthorizationContext filterContext)
+        //{
+        //    var isAuth = false;
+        //    if (!filterContext.RequestContext.HttpContext.Request.IsAuthenticated)
+        //    {
+        //        isAuth = false;
+        //    }
+        //    else
+        //    {
+        //        if (filterContext.RequestContext.HttpContext.User.Identity != null)
+        //        {
+        //            var roleService = new RoleService();
+        //            var actionDescriptor = filterContext.ActionDescriptor;
+        //            var controllerDescriptor = actionDescriptor.ControllerDescriptor;
+        //            var controller = controllerDescriptor.ControllerName;
+        //            var action = actionDescriptor.ActionName;
+        //            var ticket = (filterContext.RequestContext.HttpContext.User.Identity as FormsIdentity).Ticket;
+        //            var role = roleService.GetById(ticket.Version);
+        //            if (role != null)
+        //            {
+        //                isAuth = role.Permissions.Any(x => x.Permission.Controller.ToLower() == controller.ToLower() && x.Permission.Action.ToLower() == action.ToLower());
+        //            }
+        //        }
+        //    }
+        //    if (!isAuth)
+        //    {
+        //        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "account", action = "login", returnUrl = filterContext.HttpContext.Request.Url, returnMessage = "您无权查看." }));
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        base.OnAuthorization(filterContext);
+        //    }
+        //}
     }
 }

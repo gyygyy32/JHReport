@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JHReport.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,8 @@ namespace JHReport.Controllers
         {
             return View();
         }
+        //[Authorize]
+        //[MyFilter2Attribute]
         [Route("{action=QC}")]
         public ActionResult QC()
         {
