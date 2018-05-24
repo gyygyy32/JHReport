@@ -36,9 +36,9 @@ namespace JHReport.WebApi.Report
   left join [mes_main].[dbo].[assembly_status] ast
   on qcv.[serial_nbr] =ast.[serial_nbr] 
 where qcv.create_date>='" + Convert.ToString( para.begintime)+ "' and qcv.create_date<='"+ Convert.ToString(para.endtime)+"' ";
-            sql += para.serialno == null ? "" : " and qcv.[serial_nbr] LIKE '" + Convert.ToString(para.serialno) + "%'";
-            sql += para.workshop == null ? "" : " AND wo.[area_code] = '" + Convert.ToString(para.workshop) + "' ";
-            sql += para.status == null ? "" : " AND qcv.[visit_type] = '" + Convert.ToString(para.status) + "'";
+            sql += String.IsNullOrEmpty(para.serialno.ToString()) ? "" : " and qcv.[serial_nbr] LIKE '" + Convert.ToString(para.serialno) + "%'";
+            sql += String.IsNullOrEmpty(para.workshop.ToString()) ? "" : " AND wo.[area_code] = '" + Convert.ToString(para.workshop) + "' ";
+            sql += String.IsNullOrEmpty(para.status.ToString()) ? "" : " AND qcv.[visit_type] = '" + Convert.ToString(para.status) + "'";
 
             IEnumerable<dynamic> res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())

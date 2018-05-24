@@ -66,18 +66,22 @@ namespace JHReport.WebApi.Report
 ,[mes_main].[dbo].[config_mat_cell]cmc
 --,[mes_main].[dbo].[config_mat_eva] cme
 ,[mes_level2_iface].[dbo].[el] el
-where iv.[serial_nbr]=ab.serial_nbr
+,wo_mfg wm
+where iv.wks_visit_date>=@begintime
+and  iv.wks_visit_date<=@endtime
+and iv.[serial_nbr]=ab.serial_nbr
 and ab.cell_part_nbr=cmc.[part_nbr]
 --and ab.eva_part_nbr=cme.part_nbr
-and iv.[serial_nbr]=el.[serial_nbr]" + Convert.ToString(para.endtime) + "' ";
-            sql += para.serialno == null ? "" : " and qcv.[serial_nbr] LIKE '" + Convert.ToString(para.serialno) + "%'";
-            sql += para.workshop == null ? "" : " AND wo.[area_code] = '" + Convert.ToString(para.workshop) + "' ";
-            sql += para.status == null ? "" : " AND qcv.[visit_type] = '" + Convert.ToString(para.status) + "'";
+and iv.[serial_nbr]=el.[serial_nbr]
+and ab.workorder=wm.workorder" ;
+            sql += String.IsNullOrEmpty(para.workshop.ToString() ) ? "" : " and wm.area_code LIKE '" + Convert.ToString(para.workshop) + "%'";
+            sql += String.IsNullOrEmpty(para.workorder.ToString()) ? "" : " AND ab.workorder = '" + Convert.ToString(para.workorder) + "'";
+            sql += String.IsNullOrEmpty(para.serialno.ToString()) ? "" : " AND iv.serial_nbr = '" + Convert.ToString(para.serialno) + "'";
 
             IEnumerable<dynamic> res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())
             {
-                res = conn.Query(sql, new { lotid = Convert.ToString(para.lotid) });
+                res = conn.Query(sql, new { begintime = Convert.ToString(para.begintime),endtime=Convert.ToString( para.endtime) });
             }
             return Json<dynamic>(res);
             //return Json<dynamic>(new { AA = "aa", BB = "cc" });
