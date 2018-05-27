@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+//using System.Web.Mvc;
 using Dapper;
 namespace JHReport.WebApi.Report
 {
@@ -64,5 +65,11 @@ where vt.visit_type in ('M','H','RL','S')";
 
 
         }
+        //[Route("QueryStatus")]
+        //[HttpPost]
+        //public FileResult tt()
+        //{
+        //    return FileResult();
+        //}
     }
 }

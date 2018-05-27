@@ -18,7 +18,6 @@ $().ready(function () {
 
 })
 function QueryddlStatus() {
-    //焊接信息
     var promiseweld = $.ajax({
         url: '../api/QC/QueryStatus',
         type: 'post',

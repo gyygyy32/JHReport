@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace JHReport.Controllers
 {
@@ -28,81 +30,94 @@ namespace JHReport.Controllers
         {
             return View();
         }
+
         public FileResult ExportExcel()
         {
-            return File(ms, "application/vnd.ms-excel", strdate + "Excel.xls");
-        }
-
-        // GET: Report/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Report/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Report/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            var sbHtml = new StringBuilder();
+            sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
+            sbHtml.Append("<tr>");
+            var lstTitle = new List<string> { "编号", "姓名", "年龄", "创建时间" };
+            foreach (var item in lstTitle)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                sbHtml.AppendFormat("<td style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='25'>{0}</td>", item);
             }
-            catch
+            sbHtml.Append("</tr>");
+
+            for (int i = 0; i < 1000; i++)
             {
-                return View();
+                sbHtml.Append("<tr>");
+                sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", i);
+                sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>屌丝{0}号</td>", i);
+                sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", new Random().Next(20, 30) + i);
+                sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", DateTime.Now);
+                sbHtml.Append("</tr>");
             }
+            sbHtml.Append("</table>");
+
+            //第一种:使用FileContentResult  
+            byte[] fileContents = Encoding.Default.GetBytes(sbHtml.ToString());
+            return File(fileContents, "application/ms-excel", "fileContents.xls");
+
+            //第二种:使用FileStreamResult  
+            //var fileStream = new MemoryStream(fileContents);
+            //return File(fileStream, "application/ms-excel", "fileStream.xls");
+
+            //第三种:使用FilePathResult  
+            //服务器上首先必须要有这个Excel文件,然会通过Server.MapPath获取路径返回.  
+            //var fileName = Server.MapPath("~/Files/fileName.xls");
+            //return File(fileName, "application/ms-excel", "fileName.xls");
         }
 
-        // GET: Report/Edit/5
-        public ActionResult Edit(int id)
+
+        [Route("{action=ExportToExcel}")]
+        public FileContentResult ExportToExcel()
         {
-            return View();
+            List<Student> lstStudent = StaticDataOfStudent.ListStudent;
+            string[] columns = { "ID", "Name", "Age" };
+            byte[] filecontent = ExcelExportHelper.ExportExcel(lstStudent, "", false, columns);
+            return File(filecontent, ExcelExportHelper.ExcelContentType, "MyStudent.xlsx");
         }
 
-        // POST: Report/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+    }
+    public class StudentViewModel
+    {
+        public List<Student> ListStudent
         {
-            try
+            get
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Report/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Report/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                return StaticDataOfStudent.ListStudent;
             }
         }
     }
+
+    public class StaticDataOfStudent
+    {
+        public static List<Student> ListStudent
+        {
+            get
+            {
+                return new List<Student>()
+                {
+                new Student(){ID=1,Name="曹操",Sex="男",Email="caocao@163.com",Age=24},
+                new Student(){ID=2,Name="李易峰",Sex="女",Email="lilingjie@sina.com.cn",Age=24},
+                new Student(){ID=3,Name="张三丰",Sex="男",Email="zhangsanfeng@qq.com",Age=224},
+                new Student(){ID=4,Name="孙权",Sex="男",Email="sunquan@163.com",Age=1224},
+                };
+            }
+        }
+    }
+    public class Student
+    {
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+
+        public string Sex { get; set; }
+
+        public int Age { get; set; }
+
+        public string Email { get; set; }
+    }
+
+
 }

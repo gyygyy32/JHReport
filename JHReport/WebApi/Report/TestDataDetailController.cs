@@ -77,7 +77,7 @@ and ab.workorder=wm.workorder" ;
             sql += String.IsNullOrEmpty(para.workshop.ToString() ) ? "" : " and wm.area_code LIKE '" + Convert.ToString(para.workshop) + "%'";
             sql += String.IsNullOrEmpty(para.workorder.ToString()) ? "" : " AND ab.workorder = '" + Convert.ToString(para.workorder) + "'";
             sql += String.IsNullOrEmpty(para.serialno.ToString()) ? "" : " AND iv.serial_nbr = '" + Convert.ToString(para.serialno) + "'";
-
+            
             IEnumerable<dynamic> res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())
             {
