@@ -19,7 +19,7 @@ namespace JHReport.WebApi.Report
       iv.[wks_visit_date]/*测试时间*/
       ,iv.[serial_nbr] /*组件序列号*/
       ,iv.[wks_id]/*机台号*/
-      ,ab.[workorder]/*工单号*/
+      ,ab.[workorder] as workorder/*工单号*/
       ,cmc.cell_uop/*电池片功率*/
       ,cmc.cell_eff/*电池片效率*/
       ,iv.[pmax]

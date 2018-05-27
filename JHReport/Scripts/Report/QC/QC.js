@@ -80,6 +80,8 @@ var TableInit = function () {
             showExport: true,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
             exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
+
+            
             onLoadSuccess: function (data) {
                 var data = $('#tbqc').bootstrapTable('getData', true);
                 //合并单元格

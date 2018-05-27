@@ -33,6 +33,7 @@ public class Dpperhelper
     //获取SqlServer的连接数据库对象。SqlServerConnection
     public static IDbConnection OpenSqlConnection()
     {
+
         IDbConnection connection = new SqlConnection(sqlconnection);
         connection.Open();
         return connection;

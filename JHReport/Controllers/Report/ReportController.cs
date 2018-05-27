@@ -28,6 +28,10 @@ namespace JHReport.Controllers
         {
             return View();
         }
+        public FileResult ExportExcel()
+        {
+            return File(ms, "application/vnd.ms-excel", strdate + "Excel.xls");
+        }
 
         // GET: Report/Details/5
         public ActionResult Details(int id)

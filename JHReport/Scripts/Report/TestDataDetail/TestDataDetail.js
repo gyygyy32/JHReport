@@ -80,6 +80,7 @@ var TableInit = function () {
             showExport: true,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
             exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
+            exportHiddenCells: true,
             //onLoadSuccess: function (data) {
             //    var data = $('#tbqc').bootstrapTable('getData', true);
             //    //合并单元格
@@ -95,10 +96,7 @@ var TableInit = function () {
             }, {
                 field: 'serial_nbr',
                 title: '组件序列号'
-            }, {
-                field: 'schedule_nbr',
-                title: '工单'
-            }, {
+            },  {
                 field: 'wks_id',
                 title: '机台号'
             },
