@@ -30,7 +30,11 @@ namespace JHReport.Controllers
         {
             return View();
         }
-
+        [Route("{action=PackOutput}")]
+        public ActionResult PackOutput()
+        {
+            return View();
+        }
         public FileResult ExportExcel()
         {
             var sbHtml = new StringBuilder();

@@ -11,7 +11,7 @@ $().ready(function () {
         placeholder: "车间",
         allowClear: true
     });
-    
+
     //1.初始化Table
     var oTable = new TableInit();
     oTable.Init();
@@ -51,7 +51,7 @@ var TableInit = function () {
     //初始化Table
     oTableInit.Init = function () {
         $('#tbqc').bootstrapTable({
-            url: '../api/QC/QueryQCInfo',         //请求后台的URL（*）
+            url: '../api/PackOutput/QueryInfo',         //请求后台的URL（*）
             method: 'post',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -82,26 +82,26 @@ var TableInit = function () {
 
 
             onLoadSuccess: function (data) {
-                var data = $('#tbqc').bootstrapTable('getData', true);
-                //合并单元格
-                mergeCells(data, "serial_nbr", 1, $('#tbqc'));
-                mergeCells(data, "schedule_nbr", 1, $('#tbqc'));
+                //var data = $('#tbqc').bootstrapTable('getData', true);
+                ////合并单元格
+                //mergeCells(data, "serial_nbr", 1, $('#tbqc'));
+                //mergeCells(data, "schedule_nbr", 1, $('#tbqc'));
 
             },
             columns: [{
                 checkbox: true
             }, {
-                    field: 'pallet_nbr',
+                field: 'pallet_nbr',
                 title: '托盘号'
             }, {
-                    field: 'container_nbr',
+                field: 'container_nbr',
                 title: '柜号'
             }, {
-                    field: 'serial_nbr',
-                    title: '组件序列号'
+                field: 'serial_nbr',
+                title: '组件序列号'
             }, {
-                    field: 'workorder',
-                    title: '工单号'
+                field: 'workorder',
+                title: '工单号'
             },
             {
                 field: 'power_grade',
@@ -125,167 +125,167 @@ var TableInit = function () {
             {
                 field: "pack_date",
                 title: "封箱时间"
-                },
-                {
-                    field: "descriptions",
-                    title: "功率组"
-                },
-                {
-                    field: "pallet_status_desc",
-                    title: "是否入库"
-                },
-                {
-                    field: "shift_type",
-                    title: "班次"
-                },
-                {
-                    field: "pmax",
-                    title: "Pmax"
-                },
-                {
-                    field: "voc",
-                    title: "VOC"
-                },
-                {
-                    field: "ISC",
-                    title: "ISC"
-                },
-                {
-                    field: "ff",
-                    title: "FF"
-                },
-                {
-                    field: "vpm",
-                    title: "VPM"
-                },
-                {
-                    field: "ipm",
-                    title: "IPM"
-                },
-                {
-                    field: "rs",
-                    title: "RS"
-                },
-                {
-                    field: "rsh",
-                    title: "RSH"
-                },
-                {
-                    field: "rsh",
-                    title: "RSH"
-                },
-                {
-                    field: "eff",
-                    title: "EFF"
-                },
-                {
-                    field: "env_temp",
-                    title: "ENV_TEMP"
-                },
-                {
-                    field: "surf_temp",
-                    title: "SURF_TEMP"
-                },
-                {
-                    field: "temp",
-                    title: "TEMP"
-                },
-                {
-                    field: "ivfile_path",
-                    title: "IVFILE_PATH"   
-                },
-                {
-                    field: "pack_seq",
-                    title: "包装顺序" 
-                },
-                {
-                    field: "check_nbr",
-                    title: "报检单号" 
-                },
-                {
-                    field: "cell_supplier",
-                    title: "电池片厂商"  
-                },
-                {
-                    field: "",
-                    title: "电池片档位"  
-                },
-                {
-                    field: "cell_uop",
-                    title: "单片功率"  
-                },
-                {
-                    field: "fff",
-                    title: "转换效率"  
-                },
-                {
-                    field: "eva_supplier_code",
-                    title: "EVA厂商"  
+            },
+            {
+                field: "descriptions",
+                title: "功率组"
+            },
+            {
+                field: "pallet_status_desc",
+                title: "是否入库"
+            },
+            {
+                field: "shift_type",
+                title: "班次"
+            },
+            {
+                field: "pmax",
+                title: "Pmax"
+            },
+            {
+                field: "voc",
+                title: "VOC"
+            },
+            {
+                field: "ISC",
+                title: "ISC"
+            },
+            {
+                field: "ff",
+                title: "FF"
+            },
+            {
+                field: "vpm",
+                title: "VPM"
+            },
+            {
+                field: "ipm",
+                title: "IPM"
+            },
+            {
+                field: "rs",
+                title: "RS"
+            },
+            {
+                field: "rsh",
+                title: "RSH"
+            },
+            {
+                field: "rsh",
+                title: "RSH"
+            },
+            {
+                field: "eff",
+                title: "EFF"
+            },
+            {
+                field: "env_temp",
+                title: "ENV_TEMP"
+            },
+            {
+                field: "surf_temp",
+                title: "SURF_TEMP"
+            },
+            {
+                field: "temp",
+                title: "TEMP"
+            },
+            {
+                field: "ivfile_path",
+                title: "IVFILE_PATH"
+            },
+            {
+                field: "pack_seq",
+                title: "包装顺序"
+            },
+            {
+                field: "check_nbr",
+                title: "报检单号"
+            },
+            {
+                field: "cell_supplier",
+                title: "电池片厂商"
+            },
+            {
+                field: "",
+                title: "电池片档位"
+            },
+            {
+                field: "cell_uop",
+                title: "单片功率"
+            },
+            {
+                field: "fff",
+                title: "转换效率"
+            },
+            {
+                field: "eva_supplier_code",
+                title: "EVA厂商"
 
-                },
-                {
-                    field: "eva_thickness",
-                    title:"普通EVA规格"
-                },
-                {
-                    field: "eva_lot_nbr",
-                    title: "普通EVA批号"
-                },
-                {
-                    field: "bks_supplier_code",
-                    title: "背板厂商"
-                },
-                {
-                    field: "bks_thickness",
-                    title: "背板规格"
-                },
-                {
-                    field: "bks_lot_nbr",
-                    title: "背板批号"
-                },
-                {
-                    field: "glass_supplier_code",
-                    title: "玻璃供应商"
-                }, {
-                    field: "glass_thickness_desc",
-                    title: "玻璃规格"
-                },
-                {
-                    field: "glass_lot_nbr",
-                    title: "玻璃批号"
-                },
-                {
-                    field: "jbox_supplier_code",
-                    title: "接线盒供应商"
-                },
-                {
-                    field: "jbox_model_desc",
-                    title: "接线盒规格"
-                },
-                {
-                    field: "jbox_lot_nbr",
-                    title: "接线盒批号"
-                },
-                {
-                    field: "frame_supplier_code",
-                    title: "型材供应商"
-                },
-                {
-                    field: "frame_thickness_desc",
-                    title: "型材规格"
-                },
-                {
-                    field: "frame_lot_nbr",
-                    title: "型材批号"
-                },
-                {
-                    field: "customer",
-                    title: "客户"
-                },
-                {
-                    field: "product_code_original",
-                    title: "产品组"
-                }
+            },
+            {
+                field: "eva_thickness",
+                title: "普通EVA规格"
+            },
+            {
+                field: "eva_lot_nbr",
+                title: "普通EVA批号"
+            },
+            {
+                field: "bks_supplier_code",
+                title: "背板厂商"
+            },
+            {
+                field: "bks_thickness",
+                title: "背板规格"
+            },
+            {
+                field: "bks_lot_nbr",
+                title: "背板批号"
+            },
+            {
+                field: "glass_supplier_code",
+                title: "玻璃供应商"
+            }, {
+                field: "glass_thickness_desc",
+                title: "玻璃规格"
+            },
+            {
+                field: "glass_lot_nbr",
+                title: "玻璃批号"
+            },
+            {
+                field: "jbox_supplier_code",
+                title: "接线盒供应商"
+            },
+            {
+                field: "jbox_model_desc",
+                title: "接线盒规格"
+            },
+            {
+                field: "jbox_lot_nbr",
+                title: "接线盒批号"
+            },
+            {
+                field: "frame_supplier_code",
+                title: "型材供应商"
+            },
+            {
+                field: "frame_thickness_desc",
+                title: "型材规格"
+            },
+            {
+                field: "frame_lot_nbr",
+                title: "型材批号"
+            },
+            {
+                field: "customer",
+                title: "客户"
+            },
+            {
+                field: "product_code_original",
+                title: "产品组"
+            }
 
 
             ]
@@ -302,8 +302,10 @@ var TableInit = function () {
             begintime: $('#txtBegintime').val(),
             endtime: $('#txtEndtime').val(),
             workshop: $('#ddlWorkshop').val(),
-            containerno: $('#ddlStatus').val(),
-            lotno: $('#LotID').val(),
+            containerno: $('#txtContainerNo').val(),
+            lotno: $('#txtLotID').val(),
+            palletno: $('#txtPalletNo').val(),
+            checkno: $('#txtCheckNo').val(),
 
         };
         return temp;

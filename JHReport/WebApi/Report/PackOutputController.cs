@@ -13,7 +13,7 @@ namespace JHReport.WebApi.Report
     {
         [Route("QueryInfo")]
         [HttpPost]
-        public IHttpActionResult QueryQCInfo(dynamic para)
+        public IHttpActionResult QueryInfo(dynamic para)
         {
             string sql = @"SELECT ast.[pallet_nbr]/*托盘编码*/
 ,ppk.container_nbr/*柜号*/
@@ -105,12 +105,12 @@ where ppk.[pack_date]>='" + Convert.ToString(para.begintime) + "' and ppk.[pack_
             //组件序列号
             sql += String.IsNullOrEmpty(para.lotno.ToString()) ? "" : " AND ast.[serial_nbr] = '" + Convert.ToString(para.lotno) + "'";
             //报检单号
-            sql += String.IsNullOrEmpty(para.checkno.ToString()) ? "" : " AND ast.[serial_nbr] = '" + Convert.ToString(para.lotno) + "'";
+            sql += String.IsNullOrEmpty(para.checkno.ToString()) ? "" : " AND ppk.[check_nbr]='" + Convert.ToString(para.checkno) + "'";
 
             IEnumerable<dynamic> res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())
             {
-                res = conn.Query(sql, new { lotid = Convert.ToString(para.lotid) });
+                res = conn.Query(sql);
             }
             return Json<dynamic>(res);
             //return Json<dynamic>(new { AA = "aa", BB = "cc" });
