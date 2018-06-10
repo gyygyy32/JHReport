@@ -187,6 +187,8 @@
     </Compile>
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApi\Report\CYHYield.cs" />
+    <Compile Include="WebApi\Report\PackOutputController.cs" />
     <Compile Include="WebApi\Report\QCController.cs" />
     <Compile Include="WebApi\Report\RunCardController.cs" />
     <Compile Include="WebApi\Report\TestDataDetailController.cs" />
@@ -7786,6 +7788,7 @@
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\Report\PackOutput\PackOutput.js" />
     <Content Include="Scripts\Report\QC\QC.js" />
     <Content Include="Scripts\Report\RunCard\app.js" />
     <Content Include="Scripts\Report\RunCard\controller.js" />
@@ -7858,6 +7861,7 @@
     <Content Include="Views\Warehouse\StockIn.cshtml" />
     <Content Include="Views\Measurement\Measure.cshtml" />
     <Content Include="Views\Report\TestDataDetail.cshtml" />
+    <Content Include="Views\Report\PackOutput.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
