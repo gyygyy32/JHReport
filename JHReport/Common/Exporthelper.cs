@@ -86,7 +86,7 @@ namespace JHReport.Common
                 foreach (DataColumn item in dataTable.Columns)
                 {
                     ExcelRange columnCells = workSheet.Cells[workSheet.Dimension.Start.Row, columnIndex, workSheet.Dimension.End.Row, columnIndex];
-                    int maxLength = columnCells.Max(cell => cell.Value.ToString().Count());
+                    int maxLength = columnCells.Max(cell => cell.Value == null ? 1 : cell.Value.ToString().Count());
                     if (maxLength < 150)
                     {
                         workSheet.Column(columnIndex).AutoFit();

@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 //using System.Web.Mvc;
 using Dapper;
+using JHReport.Common;
+using OfficeOpenXml;
+using System.Data.Common;
+using System.Data;
+
 namespace JHReport.WebApi.Report
 {
     [RoutePrefix("api/QC")]
     public class QCController : ApiController
     {
+        static DbUtility dbhelp = new DbUtility(System.Configuration.ConfigurationManager.ConnectionStrings["mesConn"].ToString(), DbProviderType.SqlServer);
+
         [Route("QueryQCInfo")]
         [HttpPost]
         public IHttpActionResult QueryQCInfo(dynamic para)
@@ -65,11 +74,39 @@ where vt.visit_type in ('M','H','RL','S')";
 
 
         }
-        //[Route("QueryStatus")]
-        //[HttpPost]
-        //public FileResult tt()
-        //{
-        //    return FileResult();
-        //}
+        [Route("ExportExcel")]
+        [HttpPost]
+        public HttpResponseMessage ExportExcel()
+        {
+            var stream = new MemoryStream();
+
+            // processing the stream.
+            string sql = @"SELECT TOP 1000 *
+  FROM[mes_main].[dbo].[assembly_basis]";
+            DataTable dt= dbhelp.ExecuteDataTable(sql, null);
+
+            using (ExcelPackage pck = new ExcelPackage())
+            {
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Accounts");
+                ws.Cells["A1"].LoadFromDataTable(dt,true);
+                pck.SaveAs(stream);
+            }
+
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                //Content = new ByteArrayContent(stream.ToArray())
+                Content = new StreamContent(stream)
+            };
+            result.Content.Headers.ContentDisposition =
+                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "exceltst.xlsx"
+                };
+            result.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+            return result;
+        }
     }
 }

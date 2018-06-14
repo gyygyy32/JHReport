@@ -9,7 +9,7 @@ namespace JHReport.Controllers.Measurement
     [RoutePrefix("Measurement")]
     public class MeasurementController : Controller
     {
-        [Route("{action=Measure}")]
+        [Route("(Measure)")]
         // GET: Measure
         public ActionResult Measure()
         {

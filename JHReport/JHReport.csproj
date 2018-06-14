@@ -175,6 +175,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginApiController.cs" />
+    <Compile Include="Common\dbhelp.cs" />
     <Compile Include="Common\Dpperhelper.cs" />
     <Compile Include="Common\Exporthelper.cs" />
     <Compile Include="Common\filter.cs" />
@@ -7289,6 +7290,7 @@
     <Content Include="3rd\xlsx.full.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\mycss.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

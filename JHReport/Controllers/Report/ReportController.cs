@@ -1,6 +1,7 @@
 ﻿using JHReport.Common;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -12,7 +13,9 @@ namespace JHReport.Controllers
     [RoutePrefix("Report")]
     public class ReportController : Controller
     {
-        [Route("{action=Runcard}")]
+        static DbUtility dbhelp = new DbUtility(System.Configuration.ConfigurationManager.ConnectionStrings["mesConn"].ToString(), DbProviderType.SqlServer);
+
+        [Route("Runcard")]
         // GET: Report
         public ActionResult RunCard()
         {
@@ -20,17 +23,17 @@ namespace JHReport.Controllers
         }
         //[Authorize]
         //[MyFilter2Attribute]
-        [Route("{action=QC}")]
+        [Route("QC")]
         public ActionResult QC()
         {
             return View();
         }
-        [Route("{action=TestDataDetail}")]
+        [Route("TestDataDetail")]
         public ActionResult TestDataDetail()
         {
             return View();
         }
-        [Route("{action=PackOutput}")]
+        [Route("PackOutput")]
         public ActionResult PackOutput()
         {
             return View();
@@ -73,13 +76,26 @@ namespace JHReport.Controllers
         }
 
 
-        [Route("{action=ExportToExcel}")]
-        public FileContentResult ExportToExcel()
+        //质量报表导出excel
+        [Route("QCExcel/{bt}/{et=}/{wo=}/{status=}/{workshop=}")]
+        [HttpGet]
+        public FileContentResult ExportToExcel(string bt)
         {
-            List<Student> lstStudent = StaticDataOfStudent.ListStudent;
-            string[] columns = { "ID", "Name", "Age" };
-            byte[] filecontent = ExcelExportHelper.ExportExcel(lstStudent, "", false, columns);
-            return File(filecontent, ExcelExportHelper.ExcelContentType, "MyStudent.xlsx");
+            string sql = "select top 1000 * from mes_main.dbo.assembly_basis;";
+            DataTable dt = dbhelp.ExecuteDataTable(sql, null);
+            List<string> listColName = new List<string>();
+            foreach (DataColumn item in dt.Columns)
+            {
+                listColName.Add(item.ColumnName.ToString());
+            }
+
+            byte[] content = ExcelExportHelper.ExportExcel(dt, "", false, listColName.ToArray());
+            return File(content, ExcelExportHelper.ExcelContentType, "RQCeport"+ DateTime.Now.ToString("yyyyMMdd")+".xlsx");
+
+            //List<Student> lstStudent = StaticDataOfStudent.ListStudent;
+            //string[] columns = { "ID", "Name", "Age" };
+            //byte[] filecontent = ExcelExportHelper.ExportExcel(lstStudent, "", false, columns);
+            //return File(filecontent, ExcelExportHelper.ExcelContentType, "MyStudent.xlsx");
         }
 
     }

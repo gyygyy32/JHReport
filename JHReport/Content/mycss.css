@@ -1,0 +1,6 @@
+﻿.export-xlsx-button {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAwFBMVEX///+pqqnZ2tn+//1xt2z4//P6//gxbgv////T5NNtpVtprWeCuX+IpobM4szOz87r7urBw8DU1NSZype83Ln8//vG0cQ0cQ8fbR7g8N6dvZHJysm3uLf4/vaTyJCysrLo9Oe7vbvW3tXn5+dUiDTy+O7d49nA378rdyuy2LHL2sO4zLZJmEOl0aI9ex0rhi/h69zr9+skjS3K3sqKt4hvtmqizptssHKfn5+jyqaf0pwjYx52q3PW69e80rsiXx3ygnDPAAAAAXRSTlMAQObYZgAAAMRJREFUGNM1zFV2w0AMQFENj5kZw8wp0/53VdlN35/ukQQAxsv++h9gb9f26/JogNtp1W/ex6IRrKhvH/3ByY1s4+a68eYQGdYAy7utMYYliU9x4/Ou53NznCUNYf394eiFUmXBedtXHsLPTrNtlplPh6YJRvAZK/bqGEvZ1B7k6ZqxFedHZVrPogsh3zk6tjm3MmUWC4JQpvhfNqJU6nIeNnInnSYS74UQ244CzKqOvBIyCbzleVojwIzS0KuCSUdIXfm/53AYuGWJoBEAAAAASUVORK5CYII=);
+    background-repeat: no-repeat;
+    background-position: center;
+    /*padding: 8px 6px 20px 20px;*/
+}
