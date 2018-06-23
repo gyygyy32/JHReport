@@ -1,8 +1,10 @@
-﻿using JHReport.Common;
+﻿using Dapper;
+using JHReport.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -79,9 +81,15 @@ namespace JHReport.Controllers
         //质量报表导出excel
         [Route("QCExcel/{bt}/{et=}/{wo=}/{status=}/{workshop=}")]
         [HttpGet]
-        public FileContentResult ExportToExcel(string bt)
+        public FileContentResult QCExportToExcel(string bt)
         {
             string sql = "select top 1000 * from mes_main.dbo.assembly_basis;";
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(sql);
+            }
+            DataTable tst = ToDataTable(res);
             DataTable dt = dbhelp.ExecuteDataTable(sql, null);
             List<string> listColName = new List<string>();
             foreach (DataColumn item in dt.Columns)
@@ -98,7 +106,38 @@ namespace JHReport.Controllers
             //return File(filecontent, ExcelExportHelper.ExcelContentType, "MyStudent.xlsx");
         }
 
+        //测试数据明细导出excel
+        /// <summary>  
+        /// 转换为一个DataTable  
+        /// </summary>  
+        /// <typeparam name="TResult"></typeparam>  
+        ///// <param name="value"></param>  
+        /// <returns></returns>  
+        public static DataTable ToDataTable<TResult>(IEnumerable<TResult> value) where TResult : class
+        {
+            //创建属性的集合  
+            List<PropertyInfo> pList = new List<PropertyInfo>();
+            //获得反射的入口  
+            Type type = typeof(TResult);
+            DataTable dt = new DataTable();
+            //把所有的public属性加入到集合 并添加DataTable的列  
+            Array.ForEach<PropertyInfo>(type.GetProperties(), p => { pList.Add(p); dt.Columns.Add(p.Name, p.PropertyType); });
+            foreach (var item in value)
+            {
+                //创建一个DataRow实例  
+                DataRow row = dt.NewRow();
+                //给row 赋值  
+                pList.ForEach(p => row[p.Name] = p.GetValue(item, null));
+                //加入到DataTable  
+                dt.Rows.Add(row);
+            }
+            return dt;
+        }
+
     }
+
+
+
     public class StudentViewModel
     {
         public List<Student> ListStudent

@@ -82,10 +82,10 @@ var TableInit = function () {
 
             
             onLoadSuccess: function (data) {
-                var data = $('#tbqc').bootstrapTable('getData', true);
-                //合并单元格
-                mergeCells(data, "serial_nbr", 1, $('#tbqc'));
-                mergeCells(data, "schedule_nbr", 1, $('#tbqc'));
+                //var data = $('#tbqc').bootstrapTable('getData', true);
+                ////合并单元格
+                //mergeCells(data, "serial_nbr", 1, $('#tbqc'));
+                //mergeCells(data, "schedule_nbr", 1, $('#tbqc'));
 
             },
             columns: [{
