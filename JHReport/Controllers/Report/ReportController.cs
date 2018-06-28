@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using JHReport.BLL;
 
 
 
@@ -38,6 +39,11 @@ namespace JHReport.Controllers
         }
         [Route("PackOutput")]
         public ActionResult PackOutput()
+        {
+            return View();
+        }
+        [Route("JK")]
+        public ActionResult JK()
         {
             return View();
         }
@@ -105,6 +111,26 @@ namespace JHReport.Controllers
             //string[] columns = { "ID", "Name", "Age" };
             //byte[] filecontent = ExcelExportHelper.ExportExcel(lstStudent, "", false, columns);
             //return File(filecontent, ExcelExportHelper.ExcelContentType, "MyStudent.xlsx");
+        }
+
+        [Route("JKExcel/{salesorder}/{lot}")]
+        [HttpGet]
+        public FileContentResult JKExportExcel(string salesorder, string lot)
+        {
+            DataTable dt = new ReportService().JKQueryInfo(salesorder, lot);
+            return ExportExcel(dt, "JKReport");
+        }
+
+        public FileContentResult ExportExcel(DataTable dt, string filename)
+        {
+            List<string> listColName = new List<string>();
+            foreach (DataColumn item in dt.Columns)
+            {
+                listColName.Add(item.ColumnName.ToString());
+            }
+
+            byte[] content = ExcelExportHelper.ExportExcel(dt, "", false, listColName.ToArray());
+            return File(content, ExcelExportHelper.ExcelContentType, filename + DateTime.Now.ToString("yyyyMMdd") + ".xlsx");
         }
 
         //测试数据明细导出excel

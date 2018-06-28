@@ -13,5 +13,10 @@ namespace JHReport.BLL
         {
             return new ReportDal().JKQueryInfo(saleorder,lot);
         }
+
+        public IEnumerable<dynamic> JKQueryInfoAPI(string saleorder, string lot)
+        {
+            return new ReportDal().JKQueryInfoAPI(saleorder, lot);
+        }
     }
 }
