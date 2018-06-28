@@ -175,6 +175,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginApiController.cs" />
+    <Compile Include="BLL\ReportService.cs" />
     <Compile Include="Common\dbhelp.cs" />
     <Compile Include="Common\Dpperhelper.cs" />
     <Compile Include="Common\Exporthelper.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Controllers\Measurement\MeasurementController.cs" />
     <Compile Include="Controllers\Report\ReportController.cs" />
     <Compile Include="Controllers\Warehouse\WarehouseController.cs" />
+    <Compile Include="DAL\ReportDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
