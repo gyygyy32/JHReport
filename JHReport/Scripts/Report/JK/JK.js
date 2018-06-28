@@ -12,6 +12,7 @@ $('#btnQuery').click(function () {
         alert('请输入查询参数');
         return;
     }
+    $("#tbqc").bootstrapTable('destory');
     //$("#tbqc").bootstrapTable('refresh');
     var oTable = new TableInit();
     oTable.Init();
