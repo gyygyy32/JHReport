@@ -30,7 +30,7 @@ namespace JHReport.DAL
         private string JKSql(string salesorder,string lot)
         {
             string sql = @"SELECT
-	iv.[wks_visit_date] AS TTIME,
+	convert(varchar(100), iv.[wks_visit_date],120) AS TTIME,
 	ast.[serial_nbr] AS LOT_NUM,
 	wm.[sale_order] AS WORK_ORDER_NO,
 	iv.[wks_id] AS DEVICENUM,

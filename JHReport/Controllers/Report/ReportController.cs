@@ -113,7 +113,7 @@ namespace JHReport.Controllers
             //return File(filecontent, ExcelExportHelper.ExcelContentType, "MyStudent.xlsx");
         }
 
-        [Route("JKExcel/{salesorder}/{lot}")]
+        [Route("JKExcel/{salesorder=}/{lot=}")]
         [HttpGet]
         public FileContentResult JKExportExcel(string salesorder, string lot)
         {

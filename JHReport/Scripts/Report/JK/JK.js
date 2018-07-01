@@ -12,7 +12,7 @@ $('#btnQuery').click(function () {
         alert('请输入查询参数');
         return;
     }
-    $("#tbqc").bootstrapTable('destory');
+    //$("#tbjk").bootstrapTable('destory');
     //$("#tbqc").bootstrapTable('refresh');
     var oTable = new TableInit();
     oTable.Init();
@@ -21,7 +21,7 @@ var TableInit = function () {
     var oTableInit = new Object();
     //初始化Table
     oTableInit.Init = function () {
-        $('#tbjk').bootstrapTable({
+        $('#tbjk').bootstrapTable('destroy').bootstrapTable({
             url: '../api/JK/QueryInfo',         //请求后台的URL（*）
             method: 'post',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
