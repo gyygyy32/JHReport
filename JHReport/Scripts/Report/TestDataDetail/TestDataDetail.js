@@ -315,6 +315,34 @@ function mergeCells(data, fieldName, colspan, target) {
     }
 }
 
+//导出excel
+$('#btnExportExcel').click(function () {
+    console.log("clicked");
+
+    if ($('#txtBegintime').val() == '' || $('#txtEndtime').val() == '') {
+        alert('请输入查询参数');
+        return;
+    }
+    //var promiseweld = $.ajax({
+    //    url: '../Report/ExportToExcel',
+    //    type: 'post',
+    //    cache: true,
+    //    async: true,
+    //});
+
+    //promiseweld.fail(function (error) {
+    //    console.log(error)
+    //    alert(error);
+    //});
+
+    //window.open('../Report/ExportToExcel?bt=2018-10-10');$('#LotID').val()
+    var a = $("<a href='../Report/TestDataDetailExcel/" + ($('#LotID').val() == '' ? 'Null' : $('#LotID').val()) + "/" + ($('#txtWO').val() == '' ? 'Null' : $('#txtWO').val()) + "/" + ($('#txtBegintime').val() == '' ? 'Null' : $('#txtBegintime').val()) + "/" + ($('#txtEndtime').val() == '' ? 'Null' : $('#txtEndtime').val()) + "/" + ( !$('#ddlWorkshop').val() ? 'Null' : $('#ddlWorkshop').val())+ "' target='_blank'></a>").get(0);
+    var e = document.createEvent('MouseEvents');
+    e.initEvent('click', true, true);
+    a.dispatchEvent(e);
+
+})
+
 
 
 

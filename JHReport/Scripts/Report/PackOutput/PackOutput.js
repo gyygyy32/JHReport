@@ -359,6 +359,34 @@ function mergeCells(data, fieldName, colspan, target) {
     }
 }
 
+//导出excel
+$('#btnExportExcel').click(function () {
+    console.log("clicked");
+    //var promiseweld = $.ajax({
+    //    url: '../Report/ExportToExcel',
+    //    type: 'post',
+    //    cache: true,
+    //    async: true,
+    //});
+
+    //promiseweld.fail(function (error) {
+    //    console.log(error)
+    //    alert(error);
+    //});
+
+    //window.open('../Report/ExportToExcel?bt=2018-10-10');
+    var a = $("<a href='../Report/PackoutputExcel/"
+        +( !$('#txtBegintime').val() ? "Null" : $('#txtBegintime').val()) + "/" 
+        +( !$('#txtEndtime').val() ? "Null" : $('#txtEndtime').val()) + "/" 
+        +( !$('#txtLotID').val() ? "Null" : $('#LotID').val()) + "/"
+        +( !$('#txtContainerNo').val() ? "Null" : $('#txtContainerNo').val()) + "/"
+        +( !$('#txtPalletNo').val() ? "Null" : $('#txtPalletNo').val()) + "/"
+        +( !$('#txtCheckNo').val() ? "Null" : $('#txtCheckNo').val() )+ "' target='_blank'></a>").get(0);
+    var e = document.createEvent('MouseEvents');
+    e.initEvent('click', true, true);
+    a.dispatchEvent(e);
+})
+
 
 
 

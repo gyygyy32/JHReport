@@ -246,7 +246,7 @@ $('#btnExportExcel').click(function () {
     //});
 
     //window.open('../Report/ExportToExcel?bt=2018-10-10');
-    var a = $("<a href='../Report/JKExcel/" + $('#txtSalesorder').val() + "/" + $('#txtLot').val()+"' target='_blank'></a>").get(0);
+    var a = $("<a href='../Report/JKExcel/" + (!$('#txtSalesorder').val() ? "Null" : $('#txtSalesorder').val() )+ "/" +( !$('#txtLot').val() ? "Null" : $('#txtLot').val())+"' target='_blank'></a>").get(0);
     var e = document.createEvent('MouseEvents');
     e.initEvent('click', true, true);
     a.dispatchEvent(e);

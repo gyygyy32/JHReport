@@ -209,7 +209,8 @@ $('#btnExportExcel').click(function () {
     //});
 
     //window.open('../Report/ExportToExcel?bt=2018-10-10');
-    var a = $("<a href='../Report/QCExcel/2018-6-15' target='_blank'></a>").get(0);
+    var astr = "<a href='../Report/QCExcel/" + (!$('#txtBegintime').val() ? "Null" : $('#txtBegintime').val() )+ "/"+ (!$('#txtEndtime').val() ? "Null" : $('#txtEndtime').val()) + "/"+ (!$('#LotID').val() ? "Null" : $('#LotID').val() )+ "/"+ (!$('#ddlWorkshop').val() ? "Null" : $('#ddlWorkshop').val()) + "/"+( !$('#ddlStatus').val() ? "Null" : $('#ddlStatus').val()) + "' target='_blank'></a>";
+    var a = $(astr).get(0)
     var e = document.createEvent('MouseEvents');
     e.initEvent('click', true, true);
     a.dispatchEvent(e);

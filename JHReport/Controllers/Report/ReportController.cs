@@ -47,6 +47,98 @@ namespace JHReport.Controllers
         {
             return View();
         }
+        
+
+
+        //质量报表导出excel
+        [Route("QCExcel/{bt}/{et=}/{lot=}/{workshop=}/{status=}")]
+        [HttpGet]
+        public FileContentResult QCExportToExcel(string bt,string et,string lot,string workshop,string status)
+        {
+            DataTable dt = new ReportService().QCQueryInfo(bt == "Null" ? "" : bt
+                                                                     , et == "Null" ? "" : et
+                                                                     , lot == "Null" ? "" : lot
+                                                                     , workshop == "Null" ? "" : workshop
+                                                                     , status == "Null" ? "" : status);
+            return ExportExcel(dt, "QCReport");
+        }
+
+        //晶科报表导出excel
+        [Route("JKExcel/{salesorder=}/{lot=}")]
+        [HttpGet]
+        public FileContentResult JKExportExcel(string salesorder, string lot)
+        {
+            DataTable dt = new ReportService().JKQueryInfo(salesorder=="Null"?"":salesorder, lot=="Null"?"":lot);
+            return ExportExcel(dt, "JKReport");
+        }
+
+        //测试数据明细导出excel
+        [Route("TestDataDetailExcel/{lot=}/{wo=}/{bt=}/{et=}/{workshop=}")]
+        [HttpGet]
+        public FileContentResult TestDataDetailExportExcel(string lot, string wo,string bt,string et,string workshop )
+        {
+            DataTable dt = new ReportService().TestDataDetailQueryInfo(lot=="Null"?"":lot
+                                                                     , wo=="Null"?"":wo
+                                                                     , bt=="Null"?"":bt
+                                                                     , et=="Null"?"":et
+                                                                     , workshop=="Null"?"":workshop);
+            return ExportExcel(dt, "TestDataDetailReport");
+        }
+
+        //包装产量报表导出excel
+        [HttpGet]
+        public FileContentResult PackOutputExportExcel(string workshop, string bt, string et, string lot, string container, string pallet, string check)
+        {
+            DataTable dt = new ReportService().PackOutputQueryInfo(workshop == "Null" ? "" : workshop
+                                                                     , bt == "Null" ? "" : bt
+                                                                     , et == "Null" ? "" : et
+                                                                     , lot == "Null" ? "" : lot
+                                                                     , container == "Null" ? "" : container
+                                                                     , pallet == "Null" ? "" : pallet
+                                                                     , check == "Null" ? "" : check);
+            return ExportExcel(dt, "PackOutputReport");
+        }
+
+
+        public FileContentResult ExportExcel(DataTable dt, string filename)
+        {
+            List<string> listColName = new List<string>();
+            foreach (DataColumn item in dt.Columns)
+            {
+                listColName.Add(item.ColumnName.ToString());
+            }
+
+            byte[] content = ExcelExportHelper.ExportExcel(dt, "", false, listColName.ToArray());
+            return File(content, ExcelExportHelper.ExcelContentType, filename + DateTime.Now.ToString("yyyyMMdd") + ".xlsx");
+        }
+
+        
+        /// <summary>  
+        /// 转换为一个DataTable  
+        /// </summary>  
+        /// <typeparam name="TResult"></typeparam>  
+        ///// <param name="value"></param>  
+        /// <returns></returns>  
+        public static DataTable ToDataTable<TResult>(IEnumerable<TResult> value) where TResult : class
+        {
+            //创建属性的集合  
+            List<PropertyInfo> pList = new List<PropertyInfo>();
+            //获得反射的入口  
+            Type type = typeof(TResult);
+            DataTable dt = new DataTable();
+            //把所有的public属性加入到集合 并添加DataTable的列  
+            Array.ForEach<PropertyInfo>(type.GetProperties(), p => { pList.Add(p); dt.Columns.Add(p.Name, p.PropertyType); });
+            foreach (var item in value)
+            {
+                //创建一个DataRow实例  
+                DataRow row = dt.NewRow();
+                //给row 赋值  
+                pList.ForEach(p => row[p.Name] = p.GetValue(item, null));
+                //加入到DataTable  
+                dt.Rows.Add(row);
+            }
+            return dt;
+        }
         public FileResult ExportExcel()
         {
             var sbHtml = new StringBuilder();
@@ -82,83 +174,6 @@ namespace JHReport.Controllers
             //服务器上首先必须要有这个Excel文件,然会通过Server.MapPath获取路径返回.  
             //var fileName = Server.MapPath("~/Files/fileName.xls");
             //return File(fileName, "application/ms-excel", "fileName.xls");
-        }
-
-
-        //质量报表导出excel
-        [Route("QCExcel/{bt}/{et=}/{wo=}/{status=}/{workshop=}")]
-        [HttpGet]
-        public FileContentResult QCExportToExcel(string bt)
-        {
-            string sql = "select top 1000 * from mes_main.dbo.assembly_basis;";
-            IEnumerable<dynamic> res = null;
-            using (var conn = Dpperhelper.OpenSqlConnection())
-            {
-                res = conn.Query(sql);
-            }
-            DataTable tst = ToDataTable(res);
-            DataTable dt = dbhelp.ExecuteDataTable(sql, null);
-            List<string> listColName = new List<string>();
-            foreach (DataColumn item in dt.Columns)
-            {
-                listColName.Add(item.ColumnName.ToString());
-            }
-
-            byte[] content = ExcelExportHelper.ExportExcel(dt, "", false, listColName.ToArray());
-            return File(content, ExcelExportHelper.ExcelContentType, "RQCeport"+ DateTime.Now.ToString("yyyyMMdd")+".xlsx");
-
-            //List<Student> lstStudent = StaticDataOfStudent.ListStudent;
-            //string[] columns = { "ID", "Name", "Age" };
-            //byte[] filecontent = ExcelExportHelper.ExportExcel(lstStudent, "", false, columns);
-            //return File(filecontent, ExcelExportHelper.ExcelContentType, "MyStudent.xlsx");
-        }
-
-        [Route("JKExcel/{salesorder=}/{lot=}")]
-        [HttpGet]
-        public FileContentResult JKExportExcel(string salesorder, string lot)
-        {
-            DataTable dt = new ReportService().JKQueryInfo(salesorder, lot);
-            return ExportExcel(dt, "JKReport");
-        }
-
-        public FileContentResult ExportExcel(DataTable dt, string filename)
-        {
-            List<string> listColName = new List<string>();
-            foreach (DataColumn item in dt.Columns)
-            {
-                listColName.Add(item.ColumnName.ToString());
-            }
-
-            byte[] content = ExcelExportHelper.ExportExcel(dt, "", false, listColName.ToArray());
-            return File(content, ExcelExportHelper.ExcelContentType, filename + DateTime.Now.ToString("yyyyMMdd") + ".xlsx");
-        }
-
-        //测试数据明细导出excel
-        /// <summary>  
-        /// 转换为一个DataTable  
-        /// </summary>  
-        /// <typeparam name="TResult"></typeparam>  
-        ///// <param name="value"></param>  
-        /// <returns></returns>  
-        public static DataTable ToDataTable<TResult>(IEnumerable<TResult> value) where TResult : class
-        {
-            //创建属性的集合  
-            List<PropertyInfo> pList = new List<PropertyInfo>();
-            //获得反射的入口  
-            Type type = typeof(TResult);
-            DataTable dt = new DataTable();
-            //把所有的public属性加入到集合 并添加DataTable的列  
-            Array.ForEach<PropertyInfo>(type.GetProperties(), p => { pList.Add(p); dt.Columns.Add(p.Name, p.PropertyType); });
-            foreach (var item in value)
-            {
-                //创建一个DataRow实例  
-                DataRow row = dt.NewRow();
-                //给row 赋值  
-                pList.ForEach(p => row[p.Name] = p.GetValue(item, null));
-                //加入到DataTable  
-                dt.Rows.Add(row);
-            }
-            return dt;
         }
 
     }
