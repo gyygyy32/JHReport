@@ -304,6 +304,410 @@ where ppk.[pack_date]>='" + bt + "' and ppk.[pack_date]<='" + et + "' ";
         }
         #endregion
 
+        #region 组件电子流转单
+        //装框线盒查询
+        private string FrameBoxSql(string lot)
+        {
+            string sql = @"select tcl.serial_nbr /*组件序列号*/
+,twv.schedule_nbr/*工单号*/
+,tcl.wks_visit_date/*过站时间*/
+,dpt.[descriptions] part_type/*材料类型*/
+,tcl.part_nbr/*材料料号*/
+,ms.descriptions supplier_code/*材料供应商*/
+,tcl.lot_nbr/*材料批次号*/
+,DU.nickname operator/*材料供应商*/
+,twv.wks_id/*机台号*/
+,cw.process_code /*站点编号*/
+,dp.descriptions/*站点名称*/
+,dst.descriptions shift_type/*班次*/
+ from trace_componnet_lot tcl/*记录材料*/
+,trace_workstation_visit twv /*记录机台*/
+,assembly_status ab
+,wo_mfg wm
+,[mes_level4_iface].[dbo].[df_part_type] dpt
+,[mes_level4_iface].[dbo].[master_supplier] ms
+,[mes_main].[dbo].[df_shift_type] dst
+,[mes_auth].[dbo].[df_user] du
+,[mes_main].[dbo].[config_workstation] cw
+,[mes_main].[dbo].[df_processes] dp
+where twv.serial_nbr=tcl.serial_nbr
+and tcl.wks_id=twv.wks_id
+--and twv.serial_nbr='JYP171202X60000019'
+and twv.serial_nbr=ab.serial_nbr
+and ab.workorder=wm.workorder
+and tcl.part_type=dpt.part_type
+and tcl.supplier_code=ms.supplier_code
+and twv.shift_type =dst.shift_type
+and twv.operator=du.username
+and twv.wks_id=cw.wks_id
+and cw.process_code=dp.process_code 
+and tcl.serial_nbr='" + lot + "'" + " and dp.descriptions='装框' and dpt.[descriptions]='线盒'";
+            return sql;
+
+        }
+        public IEnumerable<dynamic> FrameBoxQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(FrameBoxSql(lot));
+            }
+            return res;
+        }
+
+        //叠层eva
+        private string LaminationEVASql(string lot)
+        {
+            string sql = @"select tcl.serial_nbr /*组件序列号*/
+,twv.schedule_nbr/*工单号*/
+,tcl.wks_visit_date/*过站时间*/
+,dpt.[descriptions] part_type/*材料类型*/
+,tcl.part_nbr/*材料料号*/
+,ms.descriptions supplier_code/*材料供应商*/
+,tcl.lot_nbr/*材料批次号*/
+,DU.nickname operator/*材料供应商*/
+,twv.wks_id/*机台号*/
+,cw.process_code /*站点编号*/
+,dp.descriptions/*站点名称*/
+,dst.descriptions shift_type/*班次*/
+ from trace_componnet_lot tcl/*记录材料*/
+,trace_workstation_visit twv /*记录机台*/
+,assembly_status ab
+,wo_mfg wm
+,[mes_level4_iface].[dbo].[df_part_type] dpt
+,[mes_level4_iface].[dbo].[master_supplier] ms
+,[mes_main].[dbo].[df_shift_type] dst
+,[mes_auth].[dbo].[df_user] du
+,[mes_main].[dbo].[config_workstation] cw
+,[mes_main].[dbo].[df_processes] dp
+where twv.serial_nbr=tcl.serial_nbr
+and tcl.wks_id=twv.wks_id
+--and twv.serial_nbr='JYP171202X60000019'
+and twv.serial_nbr=ab.serial_nbr
+and ab.workorder=wm.workorder
+and tcl.part_type=dpt.part_type
+and tcl.supplier_code=ms.supplier_code
+and twv.shift_type =dst.shift_type
+and twv.operator=du.username
+and twv.wks_id=cw.wks_id
+and cw.process_code=dp.process_code 
+and tcl.serial_nbr='"+lot+"' and dp.descriptions = '叠层' and dpt.[descriptions]='EVA'";
+            return sql;
+        }
+        public IEnumerable<dynamic> LaminationEVAQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(LaminationEVASql(lot));
+            }
+            return res;
+        }
+
+        //叠层高透EVA
+        private string LaminationHighEVASql(string lot)
+        {
+            string sql = @"select tcl.serial_nbr /*组件序列号*/
+,twv.schedule_nbr/*工单号*/
+,tcl.wks_visit_date/*过站时间*/
+,dpt.[descriptions] part_type/*材料类型*/
+,tcl.part_nbr/*材料料号*/
+,ms.descriptions supplier_code/*材料供应商*/
+,tcl.lot_nbr/*材料批次号*/
+,DU.nickname operator/*材料供应商*/
+,twv.wks_id/*机台号*/
+,cw.process_code /*站点编号*/
+,dp.descriptions/*站点名称*/
+,dst.descriptions shift_type/*班次*/
+ from trace_componnet_lot tcl/*记录材料*/
+,trace_workstation_visit twv /*记录机台*/
+,assembly_status ab
+,wo_mfg wm
+,[mes_level4_iface].[dbo].[df_part_type] dpt
+,[mes_level4_iface].[dbo].[master_supplier] ms
+,[mes_main].[dbo].[df_shift_type] dst
+,[mes_auth].[dbo].[df_user] du
+,[mes_main].[dbo].[config_workstation] cw
+,[mes_main].[dbo].[df_processes] dp
+where twv.serial_nbr=tcl.serial_nbr
+and tcl.wks_id=twv.wks_id
+--and twv.serial_nbr='JYP171202X60000019'
+and twv.serial_nbr=ab.serial_nbr
+and ab.workorder=wm.workorder
+and tcl.part_type=dpt.part_type
+and tcl.supplier_code=ms.supplier_code
+and twv.shift_type =dst.shift_type
+and twv.operator=du.username
+and twv.wks_id=cw.wks_id
+and cw.process_code=dp.process_code 
+and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]='高透EVA'";
+            return sql;
+        }
+        public IEnumerable<dynamic> LaminationHighEVAQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(LaminationHighEVASql(lot));
+            }
+            return res;
+        }
+
+        //叠层玻璃
+        private string LaminationGlassSql(string lot)
+        {
+            string sql = @"select tcl.serial_nbr /*组件序列号*/
+,twv.schedule_nbr/*工单号*/
+,tcl.wks_visit_date/*过站时间*/
+,dpt.[descriptions] part_type/*材料类型*/
+,tcl.part_nbr/*材料料号*/
+,ms.descriptions supplier_code/*材料供应商*/
+,tcl.lot_nbr/*材料批次号*/
+,DU.nickname operator/*材料供应商*/
+,twv.wks_id/*机台号*/
+,cw.process_code /*站点编号*/
+,dp.descriptions/*站点名称*/
+,dst.descriptions shift_type/*班次*/
+ from trace_componnet_lot tcl/*记录材料*/
+,trace_workstation_visit twv /*记录机台*/
+,assembly_status ab
+,wo_mfg wm
+,[mes_level4_iface].[dbo].[df_part_type] dpt
+,[mes_level4_iface].[dbo].[master_supplier] ms
+,[mes_main].[dbo].[df_shift_type] dst
+,[mes_auth].[dbo].[df_user] du
+,[mes_main].[dbo].[config_workstation] cw
+,[mes_main].[dbo].[df_processes] dp
+where twv.serial_nbr=tcl.serial_nbr
+and tcl.wks_id=twv.wks_id
+--and twv.serial_nbr='JYP171202X60000019'
+and twv.serial_nbr=ab.serial_nbr
+and ab.workorder=wm.workorder
+and tcl.part_type=dpt.part_type
+and tcl.supplier_code=ms.supplier_code
+and twv.shift_type =dst.shift_type
+and twv.operator=du.username
+and twv.wks_id=cw.wks_id
+and cw.process_code=dp.process_code 
+and tcl.serial_nbr='${serial_nbr}' and dp.descriptions='叠层' and dpt.[descriptions]='玻璃'";
+            return sql;
+        }
+        public IEnumerable<dynamic> LaminationGlassQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(LaminationGlassSql(lot));
+            }
+            return res;
+        }
+        //叠层背板
+        private string LaminationBackSql(string lot)
+        {
+            string sql = @"select tcl.serial_nbr /*组件序列号*/
+,twv.schedule_nbr/*工单号*/
+,tcl.wks_visit_date/*过站时间*/
+,dpt.[descriptions] part_type/*材料类型*/
+,tcl.part_nbr/*材料料号*/
+,ms.descriptions supplier_code/*材料供应商*/
+,tcl.lot_nbr/*材料批次号*/
+,DU.nickname operator/*材料供应商*/
+,twv.wks_id/*机台号*/
+,cw.process_code /*站点编号*/
+,dp.descriptions/*站点名称*/
+,dst.descriptions shift_type/*班次*/
+ from trace_componnet_lot tcl/*记录材料*/
+,trace_workstation_visit twv /*记录机台*/
+,assembly_status ab
+,wo_mfg wm
+,[mes_level4_iface].[dbo].[df_part_type] dpt
+,[mes_level4_iface].[dbo].[master_supplier] ms
+,[mes_main].[dbo].[df_shift_type] dst
+,[mes_auth].[dbo].[df_user] du
+,[mes_main].[dbo].[config_workstation] cw
+,[mes_main].[dbo].[df_processes] dp
+where twv.serial_nbr=tcl.serial_nbr
+and tcl.wks_id=twv.wks_id
+--and twv.serial_nbr='JYP171202X60000019'
+and twv.serial_nbr=ab.serial_nbr
+and ab.workorder=wm.workorder
+and tcl.part_type=dpt.part_type
+and tcl.supplier_code=ms.supplier_code
+and twv.shift_type =dst.shift_type
+and twv.operator=du.username
+and twv.wks_id=cw.wks_id
+and cw.process_code=dp.process_code 
+and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]='背板'";
+            return sql;
+        }
+        public IEnumerable<dynamic> LaminationBackQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(LaminationBackSql(lot));
+            }
+            return res;
+        }
+
+        //IV
+        private string IVSql(string lot)
+        {
+            string sql = @"SELECT [serial_nbr]
+      ,[wks_id]
+      ,[wks_visit_date]
+      ,[pmax]
+      ,[voc]
+      ,[isc]
+      ,[ff]
+      ,[vpm]
+      ,[ipm]
+      ,[rs]
+      ,[rsh]
+      ,[eff]
+      ,[env_temp]
+      ,[surf_temp]
+      ,[temp]
+      ,[ivfile_path]
+  FROM [mes_level2_iface].[dbo].[iv] iv
+   where iv.serial_nbr='"+lot+"'";
+            return sql;
+        }
+        public IEnumerable<dynamic> IVQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(IVSql(lot));
+            }
+            return res;
+        }
+
+        //包装
+        private string PackSql(string lot)
+        {
+            string sql = @"select AST.[serial_nbr]
+      ,AST.[pallet_nbr]
+      ,AST.[pack_date]
+      ,PPT.wks_id
+       From [mes_main].[dbo].[assembly_status] ast
+       LEFT JOIN [mes_main].[dbo].[pack_pallets] PPT 
+       ON AST.pallet_nbr=PPT.pallet_nbr
+       WHERE AST.[serial_nbr]='"+lot+"' ";
+            return sql;
+        }
+        public IEnumerable<dynamic> PackQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(PackSql(lot));
+            }
+            return res;
+        }
+
+        //测试后EL
+        private string ELAfterTestSql(string lot)
+        {
+            string sql = @"SELECT [serial_nbr]
+      ,[wks_id]
+      ,[wks_visit_date]
+      ,[el_grade]
+      ,[process_code]
+      ,[el_path]
+  FROM [mes_level2_iface].[dbo].[el] el
+  where [process_code]='HEL'
+  and el.serial_nbr='"+lot+"'";
+            return sql;
+        }
+
+        public IEnumerable<dynamic> ELAfterTest(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(ELAfterTestSql(lot));
+            }
+            return res;
+        }
+
+        //层压前EL
+        private string ELBeforeLayupSql(string lot)
+        {
+            string sql = @"SELECT [serial_nbr]
+      ,[wks_id]
+      ,[wks_visit_date]
+      ,[el_grade]
+      ,[process_code]
+      ,[el_path]
+  FROM [mes_level2_iface].[dbo].[el] el
+  where el.[process_code]='QEL'
+  and el.serial_nbr='"+lot+"'";
+            return sql;
+        }
+
+        public IEnumerable<dynamic> ELBeforeLayup(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(ELBeforeLayupSql(lot));
+            }
+            return res;
+        }
+
+        
+        //清洗
+        private string CleanSql(string lot)
+        {
+            string sql = @"select tcl.serial_nbr /*组件序列号*/
+,twv.schedule_nbr/*工单号*/
+,tcl.wks_visit_date/*过站时间*/
+,dpt.[descriptions] part_type/*材料类型*/
+,tcl.part_nbr/*材料料号*/
+,ms.descriptions supplier_code/*材料供应商*/
+,tcl.lot_nbr/*材料批次号*/
+,DU.nickname operator/*材料供应商*/
+,twv.wks_id/*机台号*/
+,cw.process_code /*站点编号*/
+,dp.descriptions/*站点名称*/
+,dst.descriptions shift_type/*班次*/
+ from trace_componnet_lot tcl/*记录材料*/
+,trace_workstation_visit twv /*记录机台*/
+,assembly_status ab
+,wo_mfg wm
+,[mes_level4_iface].[dbo].[df_part_type] dpt
+,[mes_level4_iface].[dbo].[master_supplier] ms
+,[mes_main].[dbo].[df_shift_type] dst
+,[mes_auth].[dbo].[df_user] du
+,[mes_main].[dbo].[config_workstation] cw
+,[mes_main].[dbo].[df_processes] dp
+where twv.serial_nbr=tcl.serial_nbr
+and tcl.wks_id=twv.wks_id
+--and twv.serial_nbr='JYP171202X60000019'
+and twv.serial_nbr=ab.serial_nbr
+and ab.workorder=wm.workorder
+and tcl.part_type=dpt.part_type
+and tcl.supplier_code=ms.supplier_code
+and twv.shift_type =dst.shift_type
+and twv.operator=du.username
+and twv.wks_id=cw.wks_id
+and cw.process_code=dp.process_code 
+and tcl.serial_nbr='"+lot+"'";
+            return sql;
+        }
+
+        public IEnumerable<dynamic> CleanQueryInfo(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(CleanSql(lot));
+            }
+            return res;
+        }
+        #endregion
+
 
 
     }

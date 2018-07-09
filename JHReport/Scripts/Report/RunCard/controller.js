@@ -40,6 +40,194 @@
             alert(error);
         });
 
-        
+        /*装框接线盒 */
+        var promiseFrameBox = $.ajax({
+            url: '../api/RunCard/FrameBox',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseFrameBox.done(function (r) {
+            $scope.FrameBoxinfo = r;
+            $scope.$apply();
+        });
+        promiseFrameBox.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*叠层EVA */
+        var promiseLaminationEVA = $.ajax({
+            url: '../api/RunCard/LaminationEVA',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseLaminationEVA.done(function (r) {
+            $scope.LaminationEVAinfo = r;
+            $scope.$apply();
+        });
+        promiseLaminationEVA.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*叠层高透EVA */
+        var promiseLaminationHighEVA = $.ajax({
+            url: '../api/RunCard/LaminationHighEVA',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseLaminationHighEVA.done(function (r) {
+            $scope.LaminationHighEVAinfo = r;
+            $scope.$apply();
+        });
+        promiseLaminationHighEVA.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*叠层玻璃 */
+        var promiseLaminationGlass = $.ajax({
+            url: '../api/RunCard/LaminationGlass',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseLaminationGlass.done(function (r) {
+            $scope.LaminationGlassinfo = r;
+            $scope.$apply();
+        });
+        promiseLaminationGlass.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*叠层背板 */
+        var promiseLaminationBack = $.ajax({
+            url: '../api/RunCard/LaminationBack',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseLaminationBack.done(function (r) {
+            $scope.LaminationBackinfo = r;
+            $scope.$apply();
+        });
+        promiseLaminationBack.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*IV */
+        var promiseIV = $.ajax({
+            url: '../api/RunCard/IV',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseIV.done(function (r) {
+            $scope.IVinfo = r;
+            $scope.$apply();
+        });
+        promiseIV.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*包装 */
+        var promisePack = $.ajax({
+            url: '../api/RunCard/Pack',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promisePack.done(function (r) {
+            $scope.Packinfo = r;
+            $scope.$apply();
+        });
+        promisePack.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*测试后EL */
+        var promiseELAfterTest = $.ajax({
+            url: '../api/RunCard/ELAfterTest',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseELAfterTest.done(function (r) {
+            $scope.ELAfterTestinfo = r;
+            $scope.$apply();
+        });
+        promiseELAfterTest.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*层压前EL */
+        var promiseELBeforeLayup= $.ajax({
+            url: '../api/RunCard/ELBeforeLayup',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseELBeforeLayup.done(function (r) {
+            $scope.ELBeforeLayupinfo = r;
+            $scope.$apply();
+        });
+        promiseELBeforeLayup.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
+        /*清洗 */
+        var promiseClean = $.ajax({
+            url: '../api/RunCard/Clean',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseClean.done(function (r) {
+            $scope.Cleaninfo = r;
+            $scope.$apply();
+        });
+        promiseClean.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
     }
 })

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Dapper;
+using JHReport.BLL;
 
 namespace JHReport.WebApi.Report
 {
@@ -112,6 +113,96 @@ and dp.descriptions='焊接';";
             return Json(res);//
         }
 
-        
+        //装框接线盒
+        [Route("FrameBox")]
+        [HttpGet]
+        public IHttpActionResult FrameBox(string lotid)
+        {
+           IEnumerable<dynamic> res= new ReportService().FrameBoxQueryInfo(lotid);
+            return Json(res);
+        }
+        //叠层EVA
+        [Route("LaminationEVA")]
+        [HttpGet]
+        public IHttpActionResult LaminationEVA(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().LaminationEVAQueryInfo(lotid);
+            return Json(res);
+        }
+        //叠层高透EVA
+        [Route("LaminationHighEVA")]
+        [HttpGet]
+        public IHttpActionResult LaminationHighEVA(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().LaminationHighEVAQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //叠层玻璃
+        [Route("LaminationGlass")]
+        [HttpGet]
+        public IHttpActionResult LaminationGlass(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().LaminationGlassQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //叠层背板
+        [Route("LaminationBack")]
+        [HttpGet]
+        public IHttpActionResult LaminationBack(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().LaminationBackQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //IV
+        [Route("IV")]
+        [HttpGet]
+        public IHttpActionResult IV(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().IVQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //包装
+        [Route("Pack")]
+        [HttpGet]
+        public IHttpActionResult Pack(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().PackQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //测试后EL
+        [Route("ELAfterTest")]
+        [HttpGet]
+        public IHttpActionResult ELAfterTest(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().ELAfterTestQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //层压前EL
+        [Route("ELBeforeLayup")]
+        [HttpGet]
+        public IHttpActionResult ELBeforeLayup(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().ELBeforeLayupQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //清洗
+        [Route("Clean")]
+        [HttpGet]
+        public IHttpActionResult Clean(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().CleanQueryInfo(lotid);
+            return Json(res);
+        }
+
+
+
+
     }
 }
