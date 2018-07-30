@@ -376,6 +376,7 @@ $('#btnExportExcel').click(function () {
 
     //window.open('../Report/ExportToExcel?bt=2018-10-10');
     var a = $("<a href='../Report/PackoutputExcel/"
+        +( !$('#ddlWorkshop').val() ? "Null" : $('#ddlWorkshop').val())+"/"
         +( !$('#txtBegintime').val() ? "Null" : $('#txtBegintime').val()) + "/" 
         +( !$('#txtEndtime').val() ? "Null" : $('#txtEndtime').val()) + "/" 
         +( !$('#txtLotID').val() ? "Null" : $('#LotID').val()) + "/"

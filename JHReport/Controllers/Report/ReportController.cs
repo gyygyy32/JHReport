@@ -25,6 +25,13 @@ namespace JHReport.Controllers
         {
             return View();
         }
+
+        [Route("Runcard01")]
+        public ActionResult RunCardNew()
+        {
+            return View("~/Views/Report/RunCard01.cshtml");
+        }
+
         //[Authorize]
         //[MyFilter2Attribute]
         [Route("QC")]
@@ -86,6 +93,7 @@ namespace JHReport.Controllers
         }
 
         //包装产量报表导出excel
+        [Route("PackoutputExcel/{workshop}/{bt}/{et}/{lot}/{container}/{pallet}/{check}")]
         [HttpGet]
         public FileContentResult PackOutputExportExcel(string workshop, string bt, string et, string lot, string container, string pallet, string check)
         {

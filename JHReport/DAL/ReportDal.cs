@@ -179,7 +179,7 @@ and ab.workorder=wm.workorder and iv.wks_visit_date>='" + bt + "' and  iv.wks_vi
       ,def.[according_std] --不良标准
       ,cws.wks_desc  --不良站点
       , case when qcv.visit_type in ('RL','S') then ast.exterior_grade else '' end exterior_grade
-      ,qcv.[create_date]
+      , convert(varchar(100), qcv.[create_date],120) AS create_date
   FROM [mes_main].[dbo].[qc_visit] qcv
   left join [mes_main].[dbo].[df_serial_status] dfss
   on qcv.serial_status=dfss.serial_status
@@ -219,7 +219,7 @@ where qcv.create_date>='" + bt + "' and qcv.create_date<='" + et + "' ";
        ,ast.[el_grade]/*EL等级*/
       ,ast.[final_grade]/*外观等级*/
      -- ,ast.[packing_date]/*封箱时间*/
-      ,ppk.[pack_date]/*封箱时间*/
+      ,convert(varchar(100), ppk.[pack_date],120) AS pack_date/*封箱时间*/
        ,cpp.[descriptions]/*功率组*/
        ,dps.[pallet_status_desc]/*是否入库*/
         ,dst.[descriptions] shift_type/*班次*/

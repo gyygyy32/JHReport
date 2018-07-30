@@ -4,29 +4,28 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<section class="content-header">
-
-</section>
+<section class="content-header"></section>
 <section class="content" ng-app="myApp">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box box-primary"  ng-controller="RunCardCtrl">
+            <div class="box box-primary" ng-controller="RunCardCtrl">
                 <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
                     <h3 class="box-title">组件电子流转单</h3>
                 </div>
                 <div class="box-body">
                     <div class="form-inline">
-                        <input id="LotID" class="form-control" type="text" placeholder="组件编码"/>
+                        <input id="LotID" class="form-control" type="text" placeholder="组件编码" />
                         <button class="btn btn-default" ng-click="QueryLot()">查询</button>
+                        <button id="btnExportExcel" class="btn btn-default btn-sm export-xlsx-button">&nbsp<span class="button-inner"></span></button>
                     </div>
                 </div>
-                <div class="box-body table-responsive" >
-                    <table class="table table-bordered " id="tbRuncard" style="display:none">
-                        <tbody  >
-                           
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped table-hover table-condensed" id="tbRuncard" style="display:none">
+                        <tbody>
+
                             <tr style="">
-                               
+
                                 <td class="" style="">车间编号</td>
                                 <td class="" style="">当前站点</td>
                                 <td class="" style="">组件编号</td>
@@ -39,20 +38,20 @@
                                 <td class="" style="">投入产出比</td>
                             </tr>
                             <tr style="">
-                              
-                                <td class="" style="">组件1部</td>
-                                <td class="" style="">清洗</td>
-                                <td class="" style="" ng-bind="lotidinfo.serial_nbr"></td>
-                                <td class="" style="">代工工单</td>
+
+                                <td class="" style="" ng-bind="lotidinfo.workshop_name">组件1部</td>
+                                <td class="" style="" ng-bind="lotidinfo.process_name">清洗</td>
+                                <td class="" style="" ng-bind="' '+lotidinfo.serial_nbr"></td>
+                                <td class="" style="" ng-bind="lotidinfo.workorder_type_name">代工工单</td>
                                 <td class="" style="" ng-bind="lotidinfo.workorder"></td>
-                                <td class="" style="">晶科</td>
+                                <td class="" style="" ng-bind="lotidinfo.cust_desc">晶科</td>
                                 <td class="" style=""></td>
-                                <td class="" style="" ng-bind="lotidinfo.product_code" ></td>
+                                <td class="" style="" ng-bind="lotidinfo.product_code"></td>
                                 <td class="" style=""></td>
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                               
+
                                 <td class="" style="" rowspan="4">分选</td>
                                 <td class="" style="">片源批号</td>
                                 <td class="" style=""></td>
@@ -71,23 +70,23 @@
                                 <td class="" style="">片源规格</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">机台编号</td>
-                                <td class="" style="" ng-bind="FrameBoxinfo.wks_id" >ZKT002</td><!--装框机台编号-->
+                                <td class="" style="" ng-bind="FrameBoxinfo.wks_id">ZKT002</td><!--装框机台编号-->
                                 <td class="" style=""></td>
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                               
+
                                 <td class="" style="">片源颜色</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">片源用量</td>
                                 <td class="" style=""></td>
-                                <td class="" style="" >线盒厂家</td>
+                                <td class="" style="">线盒厂家</td>
                                 <td class="" style="" ng-bind="FrameBoxinfo.supplier">晶科</td><!--装框线盒厂家-->
                                 <td class="" style="">型材厂家</td>
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                               
+
                                 <td class="" style="">片源档位</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">单片功率</td>
@@ -98,11 +97,11 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                              
+
                                 <td class="" style="" rowspan="4">焊接</td>
                                 <td class="" style="">焊接时间</td>
                                 <td class="" style="" ng-bind="weldinfo.wks_visit_date"></td>
-                                <td class="" style="" >操作人员</td>
+                                <td class="" style="">操作人员</td>
                                 <td class="" style="" ng-bind="weldinfo.operator">赵丽</td>
                                 <td class="" style="">线盒批号</td>
                                 <td class="" style="" ng-bind="FrameBoxinfo.lot_nbr">M11803260026</td>
@@ -110,7 +109,7 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                              
+
                                 <td class="" style="">机台编号</td>
                                 <td class="" style="" ng-bind="weldinfo.wks_id">M01HJJ006</td>
                                 <td class="" style="">破片数量</td>
@@ -121,7 +120,7 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                                
+
                                 <td class="" style="">助焊剂厂商</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">互联条厂商</td>
@@ -132,12 +131,12 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                               
+
                                 <td class="" style="">助焊剂批号</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">互联条规格</td>
                                 <td class="" style=""></td>
-                                <td class="" >清洗</td>
+                                <td class="">清洗</td>
                                 <td class="" style="">操作时间</td>
                                 <td class="" style="" ng-bind="Cleaninfo.wks_visit_date"></td><!--清洗操作时间-->
                                 <td class="" style="">操作人员</td>
@@ -172,7 +171,7 @@
                             <tr style="">
 
                                 <td class="" style="">高透EVA规格</td>
-                                <td class="" style="" ng-bind="LaminationHighEVAinfo.part_nbr" >34002202.00</td>
+                                <td class="" style="" ng-bind="LaminationHighEVAinfo.part_nbr">34002202.00</td>
                                 <td class="" style="">普通EVA规格</td>
                                 <td class="" style="" ng-bind="LaminationEVAinfo.part_nbr">34001019.00</td>
                                 <td class="" style="">机台编号</td>
@@ -211,10 +210,10 @@
                                 <td class="" style="">玻璃规格</td>
                                 <td class="" style="" ng-bind="LaminationGlassinfo.part_nbr">34001964.00</td>
                                 <td class="" style="">背板规格</td>
-                                <td class="" style="">34000118.00</td>
+                                <td class="" style="" ng-bind="LaminationBackinfo.part_nbr">34000118.00</td>
                                 <td class="" style="" rowspan="2">测试后EL</td>
                                 <td class="" style="">测试时间</td>
-                                <td class="" style="">2018-03-28 01:59:42</td>
+                                <td class="" style="" ng-bind="ELAfterTestinfo.wks_visit_date">2018-03-28 01:59:42</td>
                                 <td class="" style="">操作人员</td>
                                 <td class="" style=""></td>
                                 <td class="" style=""></td>
@@ -222,13 +221,13 @@
                             <tr style="">
 
                                 <td class="" style="">玻璃批号</td>
-                                <td class="" style="">M11803260024</td>
+                                <td class="" style="" ng-bind="LaminationGlassinfo.lot_nbr">M11803260024</td>
                                 <td class="" style="">背板批号</td>
-                                <td class="" style="">M11803260020</td>
+                                <td class="" style="" ng-bind="LaminationBackinfo.lot_nbr">M11803260020</td>
                                 <td class="" style="">机台编号</td>
-                                <td class="" style="">HEL001</td>
+                                <td class="" style="" ng-bind="ELAfterTestinfo.wks_id">HEL001</td>
                                 <td class="" style="">测试结果</td>
-                                <td class="" style="">A</td>
+                                <td class="" style="" ng-bind="ELAfterTestinfo.el_grade">A</td>
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
@@ -239,7 +238,7 @@
                                 <td class="" style=""></td>
                                 <td class="" style="" rowspan="2">包装</td>
                                 <td class="" style="">操作时间</td>
-                                <td class="" style="">2018-03-28 03:09:30</td>
+                                <td class="" style="" ng-bind="Packinfo.pack_date">2018-03-28 03:09:30</td>
                                 <td class="" style="">操作人员</td>
                                 <td class="" style=""></td>
                                 <td class="" style=""></td>
@@ -251,16 +250,16 @@
                                 <td class="" style=""></td>
                                 <td class="" style=""></td>
                                 <td class="" style="">机台编号</td>
-                                <td class="" style="">DGBZ001</td>
+                                <td class="" style="" ng-bind="Packinfo.wks_id">DGBZ001</td>
                                 <td class="" style="">托盘编号</td>
-                                <td class="" style="" ng-bind="lotidinfo.pallet_nbr"></td>
+                                <td class="" style="" ng-bind="Packinfo.pallet_nbr"></td>
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
 
                                 <td class="" style="" rowspan="2">层压前EL</td>
                                 <td class="" style="">测试时间</td>
-                                <td class="" style=""></td>
+                                <td class="" style="" ng-bind="ELBeforeLayup.wks_visit_date"></td>
                                 <td class="" style="">操作人员</td>
                                 <td class="" style=""></td>
                                 <td class="" style="" rowspan="2">入库</td>
@@ -268,21 +267,21 @@
                                 <td class="" style=""></td>
                                 <td class="" style="">操作人员</td>
                                 <td class="" style=""></td>
-                                
+
                             </tr>
                             <tr style="">
-                        
+
                                 <td class="" style="">机台编号</td>
-                                <td class="" style=""></td>
+                                <td class="" style="" ng-bind="ELBeforeLayup.wks_id"></td>
                                 <td class="" style="">测试结果</td>
-                                <td class="" style=""></td>
+                                <td class="" style="" ng-bind="ELBeforeLayup.el_grade"></td>
                                 <td class="" style="">库位编号</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">出货柜号</td>
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                         
+
                                 <td class="" style="" rowspan="3">层压</td>
                                 <td class="" style="">操作时间</td>
                                 <td class="" style=""></td>
@@ -295,7 +294,7 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                        
+
                                 <td class="" style="">机台编号</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">层压温度</td>
@@ -306,7 +305,7 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                        
+
                                 <td class="" style="">层压时间</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">抽真空时间</td>
@@ -318,7 +317,7 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                            
+
                                 <td class="" style="" rowspan="2">层压后EL</td>
                                 <td class="" style="">测试时间</td>
                                 <td class="" style=""></td>
@@ -330,7 +329,7 @@
                                 <td class="" style=""></td>
                             </tr>
                             <tr style="">
-                          
+
                                 <td class="" style="">机台编号</td>
                                 <td class="" style=""></td>
                                 <td class="" style="">测试结果</td>
@@ -349,7 +348,33 @@
         </div>
     </div>
 </section>
+
+<script src="~/3rd/tableexport20180710/xlsx.core.js"></script>
+<script src="~/3rd/tableexport20180710/FileSaver.js"></script>
+<script src="~/3rd/tableexport20180710/dist/js/tableexport.js?v=2"></script>
 <script src="~/3rd/Angularjs/angular.min.js?v=1"></script>
 @*<script src="~/3rd/Angularjs/angular-route.min.js"></script>*@
 <script src="~/Scripts/Report/RunCard/app.js"></script>
-<script src="~/Scripts/Report/RunCard/controller.js?v=7"></script>
+<script src="~/Scripts/Report/RunCard/controller.js?v=8"></script>
+<script>
+    $('#btnExportExcel').click(function () {
+        var ExportButtons = document.getElementById('tbRuncard');
+
+        var instance = new TableExport(ExportButtons, {
+            formats: ['xlsx'],
+            exportButtons: false
+        });
+
+        //                                        // "id" of selector    // format
+        var exportData = instance.getExportData()['tbRuncard']['xlsx'];
+
+        //var XLSbutton = document.getElementById('customXLSButton');
+
+        //XLSbutton.addEventListener('click', function (e) {
+            //                   // data          // mime              // name              // extension
+            instance.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension);
+        //}); 
+    }) 
+
+    
+</script>

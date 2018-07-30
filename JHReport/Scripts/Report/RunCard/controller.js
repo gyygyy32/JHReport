@@ -51,7 +51,7 @@
             },
         });
         promiseFrameBox.done(function (r) {
-            $scope.FrameBoxinfo = r;
+            $scope.FrameBoxinfo = r[0];
             $scope.$apply();
         });
         promiseFrameBox.fail(function (error) {
@@ -70,7 +70,7 @@
             },
         });
         promiseLaminationEVA.done(function (r) {
-            $scope.LaminationEVAinfo = r;
+            $scope.LaminationEVAinfo = r[0];
             $scope.$apply();
         });
         promiseLaminationEVA.fail(function (error) {
@@ -89,7 +89,7 @@
             },
         });
         promiseLaminationHighEVA.done(function (r) {
-            $scope.LaminationHighEVAinfo = r;
+            $scope.LaminationHighEVAinfo = r[0];
             $scope.$apply();
         });
         promiseLaminationHighEVA.fail(function (error) {
@@ -108,7 +108,7 @@
             },
         });
         promiseLaminationGlass.done(function (r) {
-            $scope.LaminationGlassinfo = r;
+            $scope.LaminationGlassinfo = r[0];
             $scope.$apply();
         });
         promiseLaminationGlass.fail(function (error) {
@@ -127,7 +127,7 @@
             },
         });
         promiseLaminationBack.done(function (r) {
-            $scope.LaminationBackinfo = r;
+            $scope.LaminationBackinfo = r[0];
             $scope.$apply();
         });
         promiseLaminationBack.fail(function (error) {
@@ -146,7 +146,7 @@
             },
         });
         promiseIV.done(function (r) {
-            $scope.IVinfo = r;
+            $scope.IVinfo = r[0];
             $scope.$apply();
         });
         promiseIV.fail(function (error) {
@@ -165,7 +165,7 @@
             },
         });
         promisePack.done(function (r) {
-            $scope.Packinfo = r;
+            $scope.Packinfo = r[0];
             $scope.$apply();
         });
         promisePack.fail(function (error) {
@@ -184,7 +184,7 @@
             },
         });
         promiseELAfterTest.done(function (r) {
-            $scope.ELAfterTestinfo = r;
+            $scope.ELAfterTestinfo = r[0];
             $scope.$apply();
         });
         promiseELAfterTest.fail(function (error) {
@@ -203,7 +203,7 @@
             },
         });
         promiseELBeforeLayup.done(function (r) {
-            $scope.ELBeforeLayupinfo = r;
+            $scope.ELBeforeLayupinfo = r[0];
             $scope.$apply();
         });
         promiseELBeforeLayup.fail(function (error) {
@@ -222,7 +222,7 @@
             },
         });
         promiseClean.done(function (r) {
-            $scope.Cleaninfo = r;
+            $scope.Cleaninfo = r[0];
             $scope.$apply();
         });
         promiseClean.fail(function (error) {
