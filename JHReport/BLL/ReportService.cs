@@ -87,6 +87,11 @@ namespace JHReport.BLL
         {
             return new ReportDal().PackQueryInfo(lot);
         }
+        //层压后检验
+        public IEnumerable<dynamic> QCAfterLayupInfo(string lot)
+        {
+            return new ReportDal().QCAfterLayup(lot);
+        }
 
         #endregion
     }

@@ -632,6 +632,7 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
         }
 
         //层压前EL
+        //增加是否返修add by xue lei on 2018-7-31 
         private string ELBeforeLayupSql(string lot)
         {
             string sql = @"SELECT [serial_nbr]
@@ -640,9 +641,10 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
       ,[el_grade]
       ,[process_code]
       ,[el_path]
+      ,( select count(*) from mes_main.dbo.qc_visit as a where a.visit_type='M' and wks_id = 'QC' and serial_nbr  =el.serial_nbr ) as isRepair
   FROM [mes_level2_iface].[dbo].[el] el
   where el.[process_code]='QEL'
-  and el.serial_nbr='"+lot+"'";
+  and el.serial_nbr='" + lot+"'";
             return sql;
         }
 
@@ -706,6 +708,25 @@ and tcl.serial_nbr='"+lot+"'";
             }
             return res;
         }
+
+        //层压后检验
+        private string QCAfterLayupSql(string lot)
+        {
+            string sql = @" select * ,(select nickname from [mes_auth].[dbo].[df_user] where username = a.operator) as username,
+ (select count(*) from mes_main.dbo.qc_visit  where qc_visit.visit_type = 'H' and wks_id like '%CYHJ%' and serial_nbr = a.serial_nbr) as isHold
+  from[mes_main].[dbo].[trace_workstation_visit] as a  where serial_nbr = '" + lot+"' and wks_id like '%CYHJ%' order by wks_visit_date desc; ";
+            return sql;
+        }
+        public IEnumerable<dynamic> QCAfterLayup(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(QCAfterLayupSql(lot));
+            }
+            return res;
+        }
+
         #endregion
 
 

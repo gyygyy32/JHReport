@@ -229,5 +229,24 @@
             console.log(error)
             alert(error);
         });
+
+        /*层压后检验*/
+        var promiseQCAfterLayup = $.ajax({
+            url: '../api/RunCard/QCAfterLayup',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseQCAfterLayup.done(function (r) {
+            $scope.QCAfterLayupinfo = r[0];
+            $scope.$apply();
+        });
+        promiseQCAfterLayup.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
     }
 })

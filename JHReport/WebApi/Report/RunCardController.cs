@@ -29,7 +29,11 @@ namespace JHReport.WebApi.Report
       ,ast.[process_idx]
       ,ast.[process_code]/*站点编号*/
       ,proce.descriptions as process_name/*站点名称*/
-      --,ast.[create_date]
+      ,ast.[create_date]/*投产日期--add by xue lei on 2018-7-31*/
+      ,ast.[ny_result]/*耐压数据--add by xue lei on 2018-7-31*/ 
+      ,ast.power_grade /*功率挡位--add by xue lei on 2018-7-31*/
+      ,ast.current_grade /*电流挡位--add by xue lei on 2018-7-31*/
+        ,ast.exterior_grade /*组件等级--add by xue lei on 2018-7-31*/
       --,ast.[last_update]
      -- ,ast.[pack_date]
       ,ast.[power_grade]
@@ -40,6 +44,8 @@ namespace JHReport.WebApi.Report
       ,mfg.area_code /*车间编号*/
       ,da.descriptions as workshop_name /*车间*/
       ,mfg.[workorder_type] /*工单类型编码*/
+      ,mfg.[mod_color] /*组件颜色--add by xue lei on 2018-7-31*/
+      ,mfg.sale_order /*订单号--add by xue lei on 2018-7-31*/ 
       ,wot.descriptions as workorder_type_name/*工单类型*/
       ,cus.[cust_desc]/*客户代码*/
 from [mes_main].[dbo].[assembly_status] ast 
@@ -198,6 +204,15 @@ and dp.descriptions='焊接';";
         public IHttpActionResult Clean(string lotid)
         {
             IEnumerable<dynamic> res = new ReportService().CleanQueryInfo(lotid);
+            return Json(res);
+        }
+
+        //层压后检验
+        [Route("QCAfterLayup")]
+        [HttpGet]
+        public IHttpActionResult QCAfterLayup(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().QCAfterLayupInfo(lotid);
             return Json(res);
         }
 
