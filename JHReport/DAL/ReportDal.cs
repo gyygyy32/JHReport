@@ -332,7 +332,6 @@ where ppk.[pack_date]>='" + bt + "' and ppk.[pack_date]<='" + et + "' ";
 ,[mes_main].[dbo].[df_processes] dp
 where twv.serial_nbr=tcl.serial_nbr
 and tcl.wks_id=twv.wks_id
---and twv.serial_nbr='JYP171202X60000019'
 and twv.serial_nbr=ab.serial_nbr
 and ab.workorder=wm.workorder
 and tcl.part_type=dpt.part_type
@@ -662,40 +661,31 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
         //清洗
         private string CleanSql(string lot)
         {
-            string sql = @"select tcl.serial_nbr /*组件序列号*/
-,twv.schedule_nbr/*工单号*/
-,tcl.wks_visit_date/*过站时间*/
-,dpt.[descriptions] part_type/*材料类型*/
-,tcl.part_nbr/*材料料号*/
-,ms.descriptions supplier_code/*材料供应商*/
-,tcl.lot_nbr/*材料批次号*/
-,DU.nickname operator/*材料供应商*/
+            string sql = @"select
+twv.wks_visit_date
 ,twv.wks_id/*机台号*/
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
 ,dst.descriptions shift_type/*班次*/
- from trace_componnet_lot tcl/*记录材料*/
-,trace_workstation_visit twv /*记录机台*/
+,du.nickname
+ from 
+trace_workstation_visit twv /*记录机台*/
 ,assembly_status ab
-,wo_mfg wm
-,[mes_level4_iface].[dbo].[df_part_type] dpt
-,[mes_level4_iface].[dbo].[master_supplier] ms
 ,[mes_main].[dbo].[df_shift_type] dst
 ,[mes_auth].[dbo].[df_user] du
 ,[mes_main].[dbo].[config_workstation] cw
 ,[mes_main].[dbo].[df_processes] dp
-where twv.serial_nbr=tcl.serial_nbr
-and tcl.wks_id=twv.wks_id
+where twv.serial_nbr=ab.serial_nbr
+
 --and twv.serial_nbr='JYP171202X60000019'
 and twv.serial_nbr=ab.serial_nbr
-and ab.workorder=wm.workorder
-and tcl.part_type=dpt.part_type
-and tcl.supplier_code=ms.supplier_code
+
+
 and twv.shift_type =dst.shift_type
 and twv.operator=du.username
 and twv.wks_id=cw.wks_id
 and cw.process_code=dp.process_code 
-and tcl.serial_nbr='"+lot+"'";
+and ab.serial_nbr='" + lot + "' and dp.descriptions='清洗' order by twv.wks_visit_date desc";
             return sql;
         }
 

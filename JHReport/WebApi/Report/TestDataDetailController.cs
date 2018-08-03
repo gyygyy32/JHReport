@@ -60,22 +60,17 @@ namespace JHReport.WebApi.Report
       ,ab.[hulian_part_nbr]
       ,ab.[hulian_supplier_code]
       ,ab.[hulian_lot_nbr]
-      ,el.el_grade
-      from mes_level2_iface.dbo.iv iv  /*测试数据*/
-,[mes_main].[dbo].[assembly_basis] ab
-,[mes_main].[dbo].[config_mat_cell]cmc
---,[mes_main].[dbo].[config_mat_eva] cme
-,[mes_level2_iface].[dbo].[el] el
-,wo_mfg wm
-where iv.wks_visit_date>=@begintime
-and  iv.wks_visit_date<=@endtime
-and iv.[serial_nbr]=ab.serial_nbr
-and ab.cell_part_nbr=cmc.[part_nbr]
---and ab.eva_part_nbr=cme.part_nbr
-and iv.[serial_nbr]=el.[serial_nbr]
-and ab.workorder=wm.workorder" ;
+      ,sm.el_grade
+
+	  from mes_level2_iface.dbo.iv iv 
+	  inner join  [mes_main].[dbo].[assembly_status] sm on iv.serial_nbr = sm.serial_nbr
+	  inner join wo_mfg wm on sm.workorder = wm.workorder
+	  left join [mes_main].[dbo].[assembly_basis] ab on ab.serial_nbr=sm.serial_nbr
+	  left join [mes_main].[dbo].[config_mat_cell]cmc on ab.cell_part_nbr=cmc.[part_nbr]
+	  where iv.wks_visit_date>=@begintime
+      and  iv.wks_visit_date<=@endtime ";
             sql += String.IsNullOrEmpty(para.workshop.ToString() ) ? "" : " and wm.area_code LIKE '" + Convert.ToString(para.workshop) + "%'";
-            sql += String.IsNullOrEmpty(para.workorder.ToString()) ? "" : " AND ab.workorder = '" + Convert.ToString(para.workorder) + "'";
+            sql += String.IsNullOrEmpty(para.workorder.ToString()) ? "" : " AND wm.workorder = '" + Convert.ToString(para.workorder) + "'";
             sql += String.IsNullOrEmpty(para.serialno.ToString()) ? "" : " AND iv.serial_nbr = '" + Convert.ToString(para.serialno) + "'";
             
             IEnumerable<dynamic> res = null;

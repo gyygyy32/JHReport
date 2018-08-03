@@ -4,21 +4,47 @@ $().ready(function () {
         language: 'zh-CN',//显示中文
         format: 'yyyy-mm-dd',
     });
-    $('#txtEndtime').val(moment().format("YYYY-MM-DD"));
-    $('#txtBegintime').val(moment().subtract(1, 'days').format("YYYY-MM-DD"));
+    //使用datarangepickrer控件 modify by xue lei on 2018-8-2
+    //$('#txtEndtime').val(moment().format("YYYY-MM-DD"));
+    //$('#txtBegintime').val(moment().subtract(1, 'days').format("YYYY-MM-DD"));
     $('#ddlWorkshop').val('');
     $('#ddlWorkshop').select2({
         placeholder: "车间",
         allowClear: true
     });
+    Daterangeini();
     //QueryddlStatus();
     //1.初始化Table
     var oTable = new TableInit();
     oTable.Init();
 
 })
-function QueryddlStatus() {
-    //焊接信息
+
+/*显示daterangepicker*/
+function Daterangeini() {
+    $('#rangetime').val(moment().subtract('hours', 24).format('YYYY-MM-DD') + ' 08:00:00' + ' - ' + moment().format('YYYY-MM-DD') + ' 08:00:00');
+
+    $('#rangetime').daterangepicker(  
+        {
+            timePicker: true,
+            timePicker24Hour:true,
+            'locale': {
+                "format": 'YYYY-MM-DD hh:mm:ss',
+                "separator": " - ",
+                "applyLabel": "确定",
+                "cancelLabel": "取消",
+                "fromLabel": "起始时间",
+                "toLabel": "结束时间'",
+                "customRangeLabel": "自定义",
+                "weekLabel": "W",
+                "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+                "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                "firstDay": 1
+            }
+        });
+}
+
+function QueryddlStatus() { 
     var promiseweld = $.ajax({
         url: '../api/QC/QueryStatus',
         type: 'post',
@@ -267,8 +293,8 @@ var TableInit = function () {
             offset: params.offset,  //页码
             //departmentname: $("#txt_search_departmentname").val(),
             //statu: $("#txt_search_statu").val()
-            begintime: $('#txtBegintime').val(),
-            endtime: $('#txtEndtime').val(),
+            begintime: $('#rangetime').val().substr(0, 19),//$('#txtBegintime').val(),
+            endtime: $('#rangetime').val().split(' - ')[1],
             workshop: $('#ddlWorkshop').val(),
             workorder: $('#txtWO').val(),
             serialno: $('#LotID').val(),

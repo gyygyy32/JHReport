@@ -216,8 +216,5 @@ and dp.descriptions='焊接';";
             return Json(res);
         }
 
-
-
-
     }
 }

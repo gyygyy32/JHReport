@@ -250,3 +250,14 @@
         });
     }
 })
+
+app.filter('result', function () {
+    return function (text) {
+        if (text == 0) {
+            return "合格";
+        }
+        else if(text>0) {
+            return "扣留";
+        }
+    }
+})

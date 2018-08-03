@@ -52,7 +52,7 @@
                             <tr>
 
                                 <td>投产日期</td>
-                                <td ng-bind="lotidinfo.create_date"></td>
+                                <td ng-bind="lotidinfo.create_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td> 客户</td>
                                 <td ng-bind="lotidinfo.cust_desc"></td>
                                 <td>线别</td>
@@ -74,7 +74,7 @@
                                 <td>焊接机台号</td>
                                 <td ng-bind="weldinfo.wks_id"></td>
                                 <td>焊接时间</td>
-                                <td ng-bind="weldinfo.wks_visit_date"></td>
+                                <td ng-bind="weldinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td>焊接人员</td>
                                 <td ng-bind="weldinfo.operator"></td>
                                 <td rowspan="2">电池片</td>
@@ -103,7 +103,7 @@
                                 <td>层压前EL机台号</td>
                                 <td ng-bind="ELBeforeLayup.wks_id"></td>
                                 <td>测试时间</td>
-                                <td ng-bind="ELBeforeLayup.wks_visit_date"></td>
+                                <td ng-bind="ELBeforeLayup.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td>是否返修</td>
                                 <td ng-bind=""></td>
                                 <td>高透EVA</td>
@@ -116,7 +116,7 @@
 
                                 <td>层压</td>
                                 <td>层压机台号</td>
-                                <td ng-bind="weldinfo.wks_visit_date"></td>
+                                <td ng-bind="weldinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td>层压时间</td>
                                 <td ng-bind="weldinfo.operator"></td>
                                 <td></td>
@@ -134,7 +134,7 @@
                                 <td>层压后检验机台号</td>
                                 <td ng-bind="QCAfterLayupinfo.wks_id"></td>
                                 <td>检验时间</td>
-                                <td ng-bind="QCAfterLayupinfo.wks_visit_date"></td>
+                                <td ng-bind="QCAfterLayupinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td>检验人员</td>
                                 <td ng-bind="QCAfterLayupinfo.username"></td>
                                 <td>背板</td>
@@ -146,7 +146,7 @@
                             <tr>
 
                                 <td>层压后检验结果</td>
-                                <td ng-bind="QCAfterLayupinfo.isHold"></td>
+                                <td ng-bind="QCAfterLayupinfo.isHold|result"></td>
                                 <td>不良描述</td>
                                 <td></td>
                                 <td></td>
@@ -163,9 +163,9 @@
                                 <td>组装机台号</td>
                                 <td ng-bind="FrameBoxinfo.wks_id"></td>
                                 <td>组装时间</td>
-                                <td ng-bind="FrameBoxinfo.wks_visit_date"></td>
+                                <td ng-bind="FrameBoxinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td>组装人员</td>
-                                <td ng-bind="Cleaninfo.wks_visit_date"></td>
+                                <td ng-bind="FrameBoxinfo.operator"></td>
                                 <td>双波玻璃</td>
                                 <td>玻璃批号</td>
                                 <td></td>
@@ -192,9 +192,9 @@
                                 <td>清洗机台号</td>
                                 <td ng-bind="Cleaninfo.wks_id"></td>
                                 <td>清洗时间</td>
-                                <td ng-bind="Cleaninfo.wks_visit_date"></td>
+                                <td ng-bind="Cleaninfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td>清洗人员</td>
-                                <td ng-bind="Cleaninfo.operator"></td><!--清洗机台编号-->
+                                <td ng-bind="Cleaninfo.nickname"></td><!--清洗机台编号-->
                                 <td>助焊剂</td>
                                 <td>助焊剂规格</td>
                                 <td></td>
@@ -223,7 +223,7 @@
                                 <td>测试机台号</td>
                                 <td ng-bind="IVinfo.wks_id"></td>
                                 <td>测试时间</td>
-                                <td ng-bind="IVinfo.wks_visit_date"></td>
+                                <td ng-bind="IVinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td>电流</td>
                                 <td ng-bind="IVinfo.isc"></td>
                                 <td>边框</td>
