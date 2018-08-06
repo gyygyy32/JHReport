@@ -13,6 +13,7 @@
             }),
         });
         promise.done(function (r) {
+            $scope.lotidinfo = undefined;
             $scope.lotidinfo = r[0];
             $scope.$apply();
         });
@@ -32,7 +33,7 @@
             },
         });
         promiseweld.done(function (r) {
-            $scope.weldinfo = r;
+            $scope.weldinfo = r[0];
             $scope.$apply();
         });
         promiseweld.fail(function (error) {

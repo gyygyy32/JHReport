@@ -114,7 +114,7 @@ and dp.descriptions='焊接';";
             object res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())
             {
-                res = conn.Query(sql, new { lotid = lotid }).Single();
+                res = conn.Query(sql, new { lotid = lotid });
             }
             return Json(res);//
         }
@@ -204,7 +204,16 @@ and dp.descriptions='焊接';";
         public IHttpActionResult Clean(string lotid)
         {
             IEnumerable<dynamic> res = new ReportService().CleanQueryInfo(lotid);
+            List<dynamic> list = res.ToList<dynamic>();
+            if (list.Count > 0)
+            {
+                list[0].curingtime = Math.Round(Convert.ToDouble(list[0].curingtime) / 60, 2, MidpointRounding.AwayFromZero);
+                if (list[0].curingtime != null) list[0].curingtime = list[0].curingtime + "H";
+                return Json(res);
+            }
+            //Math.Round((list[0].curingtime) / 60, 2,MidpointRounding.AwayFromZero)
             return Json(res);
+            
         }
 
         //层压后检验

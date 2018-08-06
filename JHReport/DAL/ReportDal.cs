@@ -662,7 +662,11 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
         private string CleanSql(string lot)
         {
             string sql = @"select
-twv.wks_visit_date
+datediff(mi,
+(select top 1 a.wks_visit_date from trace_workstation_visit a 
+inner join [mes_main].[dbo].[config_workstation] b on a.wks_id = b.wks_id
+where b.process_code = 'M45' and a.serial_nbr = ab.serial_nbr order by a.wks_visit_date desc),twv.wks_visit_date) curingtime
+,twv.wks_visit_date
 ,twv.wks_id/*机台号*/
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
@@ -676,11 +680,8 @@ trace_workstation_visit twv /*记录机台*/
 ,[mes_main].[dbo].[config_workstation] cw
 ,[mes_main].[dbo].[df_processes] dp
 where twv.serial_nbr=ab.serial_nbr
-
 --and twv.serial_nbr='JYP171202X60000019'
 and twv.serial_nbr=ab.serial_nbr
-
-
 and twv.shift_type =dst.shift_type
 and twv.operator=du.username
 and twv.wks_id=cw.wks_id

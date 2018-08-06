@@ -344,11 +344,17 @@ function mergeCells(data, fieldName, colspan, target) {
 //导出excel
 $('#btnExportExcel').click(function () {
     console.log("clicked");
-
-    if ($('#txtBegintime').val() == '' || $('#txtEndtime').val() == '') {
+    if ($('#rangetime').val() =='') {
         alert('请输入查询参数');
         return;
     }
+
+    var bt = $('#rangetime').val().substr(0, 19);
+    var et = $('#rangetime').val().split(' - ')[1];
+    //if ($('#txtBegintime').val() == '' || $('#txtEndtime').val() == '') {
+    //    alert('请输入查询参数');
+    //    return;
+    //}
     //var promiseweld = $.ajax({
     //    url: '../Report/ExportToExcel',
     //    type: 'post',
@@ -362,7 +368,7 @@ $('#btnExportExcel').click(function () {
     //});
 
     //window.open('../Report/ExportToExcel?bt=2018-10-10');$('#LotID').val()
-    var a = $("<a href='../Report/TestDataDetailExcel/" + ($('#LotID').val() == '' ? 'Null' : $('#LotID').val()) + "/" + ($('#txtWO').val() == '' ? 'Null' : $('#txtWO').val()) + "/" + ($('#txtBegintime').val() == '' ? 'Null' : $('#txtBegintime').val()) + "/" + ($('#txtEndtime').val() == '' ? 'Null' : $('#txtEndtime').val()) + "/" + ( !$('#ddlWorkshop').val() ? 'Null' : $('#ddlWorkshop').val())+ "' target='_blank'></a>").get(0);
+    var a = $("<a href='../Report/TestDataDetailExcel/" + ($('#LotID').val() == '' ? 'Null' : $('#LotID').val()) + "/" + ($('#txtWO').val() == '' ? 'Null' : $('#txtWO').val()) + "/" + (bt == '' ? 'Null' : encodeURI(bt)) + "/" + (et == '' ? 'Null' : encodeURI(et)) + "/" + ( !$('#ddlWorkshop').val() ? 'Null' : $('#ddlWorkshop').val())+ "' target='_blank'></a>").get(0);
     var e = document.createEvent('MouseEvents');
     e.initEvent('click', true, true);
     a.dispatchEvent(e);

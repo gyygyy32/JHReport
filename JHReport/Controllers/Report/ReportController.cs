@@ -81,6 +81,7 @@ namespace JHReport.Controllers
 
         //测试数据明细导出excel
         [Route("TestDataDetailExcel/{lot=}/{wo=}/{bt=}/{et=}/{workshop=}")]
+        
         [HttpGet]
         public FileContentResult TestDataDetailExportExcel(string lot, string wo,string bt,string et,string workshop )
         {
