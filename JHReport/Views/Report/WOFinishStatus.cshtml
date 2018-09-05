@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "TestDataDetail";
+    ViewBag.Title = "工单达成情况";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 <link href="~/3rd/AdminLTE2.4.3/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
@@ -15,35 +15,34 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <i class="fa fa-bar-chart-o"></i>
-                    <h3 class="box-title">质量报表</h3>
+                    <h3 class="box-title">工单达成情况</h3>
                 </div>
-                <div class="box-body">
+                <div class="box-body" id="boxbody">
                     <div class="form-inline">
 
-                        <input id="LotID" class="form-control" type="text" placeholder="批次号" />
+
                         <input id="txtWO" class="form-control" type="text" placeholder="工单" />
+                        <input id="txtSales" class="form-control" type="text" placeholder="订单号" />
+                        <input id="txtCustomer" class="form-control" type="text" placeholder="客户" />
                         @*<div class="input-daterange input-group" id="datepicker">
-                            <input type="text" class=" form-control" name="start" id="txtBegintime" />
-                            <span class="input-group-addon">to</span>
-                            <input type="text" class=" form-control" name="end" id="txtEndtime" />
-                        </div>*@
+            <input type="text" class=" form-control" name="start" id="txtBegintime" />
+            <span class="input-group-addon">to</span>
+            <input type="text" class=" form-control" name="end" id="txtEndtime" />
+        </div>*@
                         <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
+                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top" title="工单日期范围" id="wodaterange">
+                                <i class="fa fa-clock-o" ></i>
                             </div>
                             <input type="text" style="width:300px" class="form-control pull-right" id="rangetime">
                         </div>
-                        <select class="form-control" id="ddlWorkshop">
-                            <option value="1">组件一部</option>
-                        </select>
-                        
+
                         <button class="btn btn-default" id="btnQuery">查询</button>
-                        <button id="btnExportExcel" class="btn btn-default btn-sm export-xlsx-button">&nbsp<span class="button-inner"></span></button>
+                        @*<button id="btnExportExcel" class="btn btn-default btn-sm export-xlsx-button">&nbsp<span class="button-inner"></span></button>*@
                     </div>
 
                 </div>
                 <div class="box-body ">
-                    <table id="tbtestdata"></table>
+                    <table id="tbWOFinishStatus"></table>
 
                 </div>
             </div>
@@ -70,5 +69,6 @@
 @*<script src="~/3rd/xlsx.full.min.js"></script>*@
 <script src="~/3rd/AdminLTE2.4.3/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="~/3rd/moment/moment-with-locales.min.js"></script>
-<script src="~/Scripts/Report/TestDataDetail/TestDataDetail.js?v=21"></script>
+<script src="~/Scripts/Common/common.js"></script>
+<script src="~/Scripts/Report/WOFinishStatus/WOFinishStatus.js?v=3"></script>
 

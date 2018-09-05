@@ -52,7 +52,9 @@
             },
         });
         promiseFrameBox.done(function (r) {
-            $scope.FrameBoxinfo = r[0];
+
+            $scope.FrameBoxinfo = _.find(r, function (num) {return num.part_type == '线盒'; });
+            $scope.bar = _.find(r, function (num) { return num.part_type == '长型材'; });
             $scope.$apply();
         });
         promiseFrameBox.fail(function (error) {
@@ -193,6 +195,25 @@
             alert(error);
         });
 
+        /*功率后EL*/
+        var promiseELAfterIV = $.ajax({
+            url: '../api/RunCard/ELAfterIV',
+            type: 'get',
+            cache: false,
+            async: true,
+            data: {
+                lotid: $("#LotID").val()
+            },
+        });
+        promiseELAfterIV.done(function (r) {
+            $scope.ELAfterIVinfo = r[0];
+            $scope.$apply();
+        });
+        promiseELAfterIV.fail(function (error) {
+            console.log(error)
+            alert(error);
+        });
+
         /*层压前EL */
         var promiseELBeforeLayup= $.ajax({
             url: '../api/RunCard/ELBeforeLayup',
@@ -259,6 +280,17 @@ app.filter('result', function () {
         }
         else if(text>0) {
             return "扣留";
+        }
+    }
+})
+
+app.filter('line', function () {
+    return function (text) {
+        if (text.substring(0,3)=="M01") {
+            return "A"
+        }
+        else if (text.substring(0, 3) == "M02") {
+            return "B"
         }
     }
 })

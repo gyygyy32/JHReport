@@ -92,7 +92,30 @@ namespace JHReport.BLL
         {
             return new ReportDal().QCAfterLayup(lot);
         }
+        //功率后EL
+        public IEnumerable<dynamic> ELAfterIVInfo(string lot)
+        {
+            return new ReportDal().ELAfterIV(lot);
+        }
 
+        #endregion
+
+        #region 工单达成情况
+        public IEnumerable<dynamic> WOFinishStatusInfo(string wo, string sales, string customer, string bt, string et)
+        {
+            return new ReportDal().WOFinishStatus(wo, sales, customer, bt, et);
+        }
+        #endregion
+
+        #region 工单状态
+        public IEnumerable<dynamic> WOStatusInfo(string wo)
+        {
+            return new ReportDal().WOStatus(wo);
+        }
+        public DataTable WOStatusInfoDT(string wo)
+        {
+            return new ReportDal().WOStatusDT(wo);
+        }
         #endregion
     }
 }

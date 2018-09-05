@@ -54,13 +54,42 @@ namespace JHReport.Controllers
         {
             return View();
         }
-        
+        [Route("WOFinishStatus")]
+        public ActionResult WOFinishStatus()
+        {
+            return View();
+        }
+        [Route("WOStatus")]
+        public ActionResult WOStatus()
+        {
+            return View();
+        }
+        [Route("WOStatusExcel/{wo}")]
+        [HttpGet]
+        public FileContentResult WOStatusToExcel(string wo)
+        {
+            DataTable dt = new ReportService().WOStatusInfoDT(wo);
+            string[] AryColnameChinese = { "工单号","订单号","组件条码","投产时间","当前站别","组件等级","实测功率" };
+
+            dt.Columns[0].ColumnName = "组件条码";
+            dt.Columns[1].ColumnName = "工单号";
+            dt.Columns[2].ColumnName = "订单号";
+            dt.Columns[3].ColumnName = "投产时间";
+            dt.Columns[4].ColumnName = "当前站别";
+            dt.Columns[5].ColumnName = "组件等级";
+            dt.Columns[6].ColumnName = "实测功率";
+
+
+
+            return ExportExcel(dt, "WOStatus");
+        }
+
 
 
         //质量报表导出excel
         [Route("QCExcel/{bt}/{et=}/{lot=}/{workshop=}/{status=}")]
         [HttpGet]
-        public FileContentResult QCExportToExcel(string bt,string et,string lot,string workshop,string status)
+        public FileContentResult QCExportToExcel(string bt, string et, string lot, string workshop, string status)
         {
             DataTable dt = new ReportService().QCQueryInfo(bt == "Null" ? "" : bt
                                                                      , et == "Null" ? "" : et
@@ -75,21 +104,21 @@ namespace JHReport.Controllers
         [HttpGet]
         public FileContentResult JKExportExcel(string salesorder, string lot)
         {
-            DataTable dt = new ReportService().JKQueryInfo(salesorder=="Null"?"":salesorder, lot=="Null"?"":lot);
+            DataTable dt = new ReportService().JKQueryInfo(salesorder == "Null" ? "" : salesorder, lot == "Null" ? "" : lot);
             return ExportExcel(dt, "JKReport");
         }
 
         //测试数据明细导出excel
         [Route("TestDataDetailExcel/{lot=}/{wo=}/{bt=}/{et=}/{workshop=}")]
-        
+
         [HttpGet]
-        public FileContentResult TestDataDetailExportExcel(string lot, string wo,string bt,string et,string workshop )
+        public FileContentResult TestDataDetailExportExcel(string lot, string wo, string bt, string et, string workshop)
         {
-            DataTable dt = new ReportService().TestDataDetailQueryInfo(lot=="Null"?"":lot
-                                                                     , wo=="Null"?"":wo
-                                                                     , bt=="Null"?"":bt
-                                                                     , et=="Null"?"":et
-                                                                     , workshop=="Null"?"":workshop);
+            DataTable dt = new ReportService().TestDataDetailQueryInfo(lot == "Null" ? "" : lot
+                                                                     , wo == "Null" ? "" : wo
+                                                                     , bt == "Null" ? "" : bt
+                                                                     , et == "Null" ? "" : et
+                                                                     , workshop == "Null" ? "" : workshop);
             return ExportExcel(dt, "TestDataDetailReport");
         }
 
@@ -109,6 +138,11 @@ namespace JHReport.Controllers
         }
 
 
+        public FileContentResult ExportExcel01(DataTable dt, string filename,string[] colname)
+        {
+            byte[] content = ExcelExportHelper.ExportExcel(dt, "", false, colname);
+            return File(content, ExcelExportHelper.ExcelContentType, filename + DateTime.Now.ToString("yyyyMMdd") + ".xlsx");
+        }
         public FileContentResult ExportExcel(DataTable dt, string filename)
         {
             List<string> listColName = new List<string>();
@@ -121,7 +155,7 @@ namespace JHReport.Controllers
             return File(content, ExcelExportHelper.ExcelContentType, filename + DateTime.Now.ToString("yyyyMMdd") + ".xlsx");
         }
 
-        
+
         /// <summary>  
         /// 转换为一个DataTable  
         /// </summary>  

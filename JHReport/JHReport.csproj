@@ -196,6 +196,8 @@
     <Compile Include="WebApi\Report\QCController.cs" />
     <Compile Include="WebApi\Report\RunCardController.cs" />
     <Compile Include="WebApi\Report\TestDataDetailController.cs" />
+    <Compile Include="WebApi\Report\WOFinsihStatusController.cs" />
+    <Compile Include="WebApi\Report\WOStatusController.cs" />
     <Compile Include="WebApi\Warehouse\StockInController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -7962,13 +7964,21 @@
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="3rd\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Scripts\Common\common.js" />
     <Content Include="Scripts\Report\JK\JK.js" />
     <Content Include="Scripts\Report\PackOutput\PackOutput.js" />
     <Content Include="Scripts\Report\QC\QC.js" />
     <Content Include="Scripts\Report\RunCard\app.js" />
     <Content Include="Scripts\Report\RunCard\controller.js" />
+    <Content Include="Scripts\Report\RunCard\controller3.js" />
+    <Content Include="Scripts\Report\RunCard\exporttest.js" />
+    <Content Include="Scripts\Report\RunCard\gulpfile.js" />
+    <Content Include="Scripts\Report\RunCard\require.js" />
     <Content Include="Scripts\Report\RunCard\RunCard.js" />
     <Content Include="Scripts\Report\TestDataDetail\TestDataDetail.js" />
+    <Content Include="Scripts\Report\WOFinishStatus\WOFinishStatus.js" />
+    <Content Include="Scripts\Report\WOStatus\WOStatus.js" />
+    <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\Warehouse\StockIn\angular-route.min.js" />
     <Content Include="Scripts\Warehouse\StockIn\angular.min.js" />
     <Content Include="Scripts\Warehouse\StockIn\angular1.6.6.min.js" />
@@ -8086,6 +8096,8 @@
     <Content Include="Views\Report\PackOutput.cshtml" />
     <Content Include="Views\Report\JK.cshtml" />
     <Content Include="Views\Report\RunCard01.cshtml" />
+    <Content Include="Views\Report\WOFinishStatus.cshtml" />
+    <Content Include="Views\Report\WOStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="3rd\tableexport20180710\TableExport-3.3.13\TableExport-3.3.13\gitbook\" />

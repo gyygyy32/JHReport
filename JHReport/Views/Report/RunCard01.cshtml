@@ -23,6 +23,22 @@
         border-collapse:initial;
     }*/
     /*设置边框的*/
+
+    .green {
+        background-color: #dff0d8;
+    }
+
+    .blue {
+        background-color: #d9edf7;
+    }
+
+    .yellow {
+        background-color: #fcf8e3;
+    }
+
+    .red {
+        background-color: #f2dede;
+    }
 </style>
 <section class="content-header"></section>
 <section class="content" ng-app="myApp">
@@ -49,14 +65,14 @@
                                 <td colspan="12">生产基本信息</td>
 
                             </tr>
-                            <tr>
+                            <tr class="blue">
 
                                 <td>投产日期</td>
                                 <td ng-bind="lotidinfo.create_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td> 客户</td>
                                 <td ng-bind="lotidinfo.cust_desc"></td>
                                 <td>线别</td>
-                                <td ng-bind="xianbie">A线</td>
+                                <td ng-bind="weldinfo.wks_id|line">A线</td>
                                 <td>订单号</td>
                                 <td ng-bind="lotidinfo.sale_order"></td>
                                 <td>工单号</td>
@@ -70,270 +86,386 @@
                             </tr>
                             <tr>
 
-                                <td>焊接</td>
-                                <td>焊接机台号</td>
-                                <td ng-bind="weldinfo.wks_id"></td>
-                                <td>焊接时间</td>
-                                <td ng-bind="weldinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td>焊接人员</td>
-                                <td ng-bind="weldinfo.operator"></td>
-                                <td rowspan="2">电池片</td>
-                                <td>电池片批号</td>
-                                <td></td>
-                                <td>电池片厂家</td>
-                                <td ng-bind="lotidinfo.cell_supplier_desc"></td>
+                                <td class="green">焊接</td>
+                                <td class="green">焊接机台号</td>
+                                <td class="green" ng-bind="weldinfo.wks_id"></td>
+                                <td class="green">焊接时间</td>
+                                <td class="green" ng-bind="weldinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green">焊接人员</td>
+                                <td class="green" ng-bind="weldinfo.operator"></td>
+                                <td class="yellow" rowspan="2">电池片</td>
+                                <td class="yellow">电池片批号</td>
+                                <td class="yellow" ng-bind="weldinfo.lot_nbr"></td>
+                                <td class="yellow">电池片厂家</td>
+                                <td class="yellow" ng-bind="weldinfo.supplier_code"></td>
                             </tr>
                             <tr style="">
 
-                                <td>互联</td>
-                                <td>互联机台号</td>
-                                <td ng-bind=""></td>
-                                <td>互联时间</td>
-                                <td ng-bind=""></td>
-                                <td>互联人员</td>
-                                <td ng-bind=""></td>
-                                <td>电池片颜色</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="green">互联</td>
+                                <td class="green">互联机台号</td>
+                                <td class="green" ng-bind="LaminationEVAinfo.wks_id"></td>
+                                <td class="green">互联时间</td>
+                                <td class="green" ng-bind="LaminationEVAinfo.wks_visit_date|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green">互联人员</td>
+                                <td class="green" ng-bind="LaminationEVAinfo.operator"></td>
+                                <td class="yellow">电池片颜色</td>
+                                <td class="yellow"></td>
+                                <td class="yellow">单片功率</td>
+                                <td class="yellow" ng-bind="weldinfo.cell_uop"></td>
                             </tr>
                             <tr style="">
 
-                                <td>层压前EL</td>
-                                <td>层压前EL机台号</td>
-                                <td ng-bind="ELBeforeLayup.wks_id"></td>
-                                <td>测试时间</td>
-                                <td ng-bind="ELBeforeLayup.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td>是否返修</td>
-                                <td ng-bind=""></td>
-                                <td>高透EVA</td>
-                                <td>高透EVA批号</td>
-                                <td ng-bind="LaminationHighEVAinfo.lot_nbr"></td>
-                                <td>高透EVA厂家</td>
-                                <td ng-bind="LaminationHighEVAinfo.supplier_code"></td>
+                                <td class="green">层压前EL</td>
+                                <td class="green">层压前EL机台号</td>
+                                <td class="green" ng-bind="ELBeforeLayupinfo.wks_id"></td>
+                                <td class="green">测试时间</td>
+                                <td class="green" ng-bind="ELBeforeLayupinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green">是否返修</td>
+                                <td class="green" ng-bind="ELBeforeLayupinfo.isRepair"></td>
+                                <td class="yellow" rowspan="2">高透EVA</td>
+                                <td class="yellow">高透EVA批号</td>
+                                <td class="yellow" ng-bind="LaminationHighEVAinfo.lot_nbr"></td>
+                                <td class="yellow">高透EVA厂家</td>
+                                <td class="yellow" ng-bind="LaminationHighEVAinfo.supplier_code"></td>
                             </tr>
                             <tr style="">
 
-                                <td>层压</td>
-                                <td>层压机台号</td>
-                                <td ng-bind="weldinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td>层压时间</td>
-                                <td ng-bind="weldinfo.operator"></td>
-                                <td></td>
-                                <td></td>
-                                <td>普通EVA</td>
-                                <td>普通EVA批号</td>
-                                <td ng-bind="LaminationEVAinfo.lot_nbr"></td>
-                                <td>普通EVA厂家</td>
-                                <td ng-bind="LaminationEVAinfo.supplier_code"></td>
+                                <td class="green">层压</td>
+                                <td class="green">层压机台号</td>
+                                <td class="green" ng-bind="weldinfo.wks_id"></td>
+                                <td class="green">层压时间</td>
+                                <td class="green" ng-bind="weldinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="yellow">高透EVA长度</td>
+                                <td class="yellow" ng-bind="LaminationHighEVAinfo.eva_width"></td>
+                                <td class="yellow">高透EVA厚度</td>
+                                <td class="yellow" ng-bind="LaminationHighEVAinfo.eva_thickness"></td>
+                                <!-- <td class="yellow">普通EVA</td>
+                <td class="yellow">普通EVA批号</td>
+                <td class="yellow" ng-bind="LaminationEVAinfo.lot_nbr"></td>
+                <td class="yellow">普通EVA厂家</td>
+                <td class="yellow" ng-bind="LaminationEVAinfo.supplier_code"></td> -->
 
                             </tr>
                             <tr style="">
 
-                                <td rowspan="2">层压后检验</td>
-                                <td>层压后检验机台号</td>
-                                <td ng-bind="QCAfterLayupinfo.wks_id"></td>
-                                <td>检验时间</td>
-                                <td ng-bind="QCAfterLayupinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td>检验人员</td>
-                                <td ng-bind="QCAfterLayupinfo.username"></td>
-                                <td>背板</td>
-                                <td>背板批号</td>
-                                <td ng-bind="LaminationBackinfo.lot_nbr"></td>
-                                <td>背板厂家</td>
-                                <td ng-bind="LaminationBackinfo.supplier_code"></td>
+                                <td class="green" rowspan="2">层压后检验</td>
+                                <td class="green">层压后检验机台号</td>
+                                <td class="green" ng-bind="QCAfterLayupinfo.wks_id"></td>
+                                <td class="green">检验时间</td>
+                                <td class="green" ng-bind="QCAfterLayupinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green">检验人员</td>
+                                <td class="green" ng-bind="QCAfterLayupinfo.username"></td>
+                                <td class="yellow" rowspan="2">普通EVA</td>
+                                <td class="yellow">普通EVA批号</td>
+                                <td class="yellow" ng-bind="LaminationEVAinfo.lot_nbr"></td>
+                                <td class="yellow">普通EVA厂家</td>
+                                <td class="yellow" ng-bind="LaminationEVAinfo.supplier_code"></td>
+                                <!-- <td class="yellow">背板</td>
+                <td class="yellow">背板批号</td>
+                <td class="yellow" ng-bind="LaminationBackinfo.lot_nbr"></td>
+                <td class="yellow">背板厂家</td>
+                <td class="yellow" ng-bind="LaminationBackinfo.supplier_code"></td> -->
                             </tr>
                             <tr>
 
-                                <td>层压后检验结果</td>
-                                <td ng-bind="QCAfterLayupinfo.isHold|result"></td>
-                                <td>不良描述</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>玻璃</td>
-                                <td>玻璃批号</td>
-                                <td ng-bind="LaminationGlassinfo.lot_nbr"></td>
-                                <td>玻璃厂家</td>
-                                <td ng-bind="LaminationGlassinfo.supplier_code"></td>
+                                <td class="green">层压后检验结果</td>
+                                <td class="green" ng-bind="QCAfterLayupinfo.isHold|result"></td>
+                                <td class="green">不良描述</td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="yellow">普通EVA长度</td>
+                                <td class="yellow" ng-bind="LaminationEVAinfo.eva_width"></td>
+                                <td class="yellow">普通EVA厚度</td>
+                                <td class="yellow" ng-bind="LaminationEVAinfo.eva_thickness"></td>
+                                <!--  <td class="yellow">玻璃</td>
+                <td class="yellow">玻璃批号</td>
+                <td class="yellow" ng-bind="LaminationGlassinfo.lot_nbr"></td>
+                <td class="yellow">玻璃厂家</td>
+                <td class="yellow" ng-bind="LaminationGlassinfo.supplier_code"></td> -->
                             </tr>
                             <tr style="">
 
-                                <td>组装</td>
-                                <td>组装机台号</td>
-                                <td ng-bind="FrameBoxinfo.wks_id"></td>
-                                <td>组装时间</td>
-                                <td ng-bind="FrameBoxinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td>组装人员</td>
-                                <td ng-bind="FrameBoxinfo.operator"></td>
-                                <td>双波玻璃</td>
-                                <td>玻璃批号</td>
-                                <td></td>
-                                <td>玻璃厂家</td>
-                                <td></td>
+                                <td class="green">组装</td>
+                                <td class="green">组装机台号</td>
+                                <td class="green" ng-bind="FrameBoxinfo.wks_id"></td>
+                                <td class="green">组装时间</td>
+                                <td class="green" ng-bind="FrameBoxinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green">组装人员</td>
+                                <td class="green" ng-bind="FrameBoxinfo.operator"></td>
+                                <td class="yellow" rowspan="2">背板</td>
+                                <td class="yellow">背板批号</td>
+                                <td class="yellow" ng-bind="LaminationBackinfo.lot_nbr"></td>
+                                <td class="yellow">背板厂家</td>
+                                <td class="yellow" ng-bind="LaminationBackinfo.supplier_code">
+                                    <!-- <td class="yellow">双波玻璃</td>
+                    <td class="yellow">玻璃批号</td>
+                    <td class="yellow"></td>
+                    <td class="yellow">玻璃厂家</td>
+                    <td class="yellow"></td> -->
                             </tr>
                             <tr>
-                                <td>固化时间</td>
-                                <td ng-bind="Cleaninfo.curingtime"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>焊带</td>
-                                <td>焊带规格</td>
-                                <td></td>
-                                <td>焊带厂家</td>
-                                <td></td>
+                                <td class="green">固化时间</td>
+                                <td class="green" ng-bind="Cleaninfo.curingtime"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="yellow">背板长度</td>
+                                <td class="yellow" ng-bind="LaminationBackinfo.bks_width"></td>
+                                <td class="yellow">背板厚度</td>
+                                <td class="yellow" ng-bind="LaminationBackinfo.bks_thickness"></td>
+                                <!-- <td class="yellow">焊带</td>
+                <td class="yellow">焊带规格</td>
+                <td class="yellow"></td>
+                <td class="yellow">焊带厂家</td>
+                <td class="yellow"></td> -->
                             </tr>
                             <tr style="">
 
-                                <td>清洗</td>
-                                <td>清洗机台号</td>
-                                <td ng-bind="Cleaninfo.wks_id"></td>
-                                <td>清洗时间</td>
-                                <td ng-bind="Cleaninfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td>清洗人员</td>
-                                <td ng-bind="Cleaninfo.nickname"></td><!--清洗机台编号-->
-                                <td>助焊剂</td>
-                                <td>助焊剂规格</td>
-                                <td></td>
-                                <td>助焊剂厂家</td>
-                                <td></td>
-                                <!--开发到此处2018-7-31-->
+                                <td class="green">清洗</td>
+                                <td class="green">清洗机台号</td>
+                                <td class="green" ng-bind="Cleaninfo.wks_id"></td>
+                                <td class="green">清洗时间</td>
+                                <td class="green" ng-bind="Cleaninfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green">清洗人员</td>
+                                <td class="green" ng-bind="Cleaninfo.nickname"></td><!--清洗机台编号-->
+                                <td class="yellow" rowspan="3">玻璃</td>
+                                <td class="yellow">玻璃批号</td>
+                                <td class="yellow" ng-bind="LaminationGlassinfo.lot_nbr"></td>
+                                <td class="yellow">玻璃厂家</td>
+                                <td class="yellow" ng-bind="LaminationGlassinfo.supplier_code">
+                                    <!--  <td class="yellow">助焊剂</td>
+                    <td class="yellow">助焊剂规格</td>
+                    <td class="yellow"></td>
+                    <td class="yellow">助焊剂厂家</td>
+                    <td class="yellow"></td> -->
+                                    <!--开发到此处2018-7-31-->
                             </tr>
                             <tr>
 
-                                <td>耐压</td>
-                                <td>耐压数据</td>
-                                <td ng-bind="lotidinfo.ny_result"></td>
-                                <td>耐压时间</td>
-                                <td ng-bind=""></td>
-                                <td>耐压结果</td>
-                                <td ng-bind=""></td>
-                                <td>汇流条</td>
-                                <td>汇流条规格</td>
-                                <td ng-bind=""></td>
-                                <td>汇流条厂家</td>
-                                <td ng-bind=""></td>
+                                <td class="green">耐压</td>
+                                <td class="green">耐压数据</td>
+                                <td class="green" ng-bind="lotidinfo.ny_result"></td>
+                                <td class="green">耐压时间</td>
+                                <td class="green" ng-bind="lotidinfo.nytime"></td>
+                                <td class="green">耐压结果</td>
+                                <td class="green" ng-bind=""></td>
+                                <td class="yellow">玻璃长度</td>
+                                <td class="yellow"ng-bind="LaminationGlassinfo.glass_length_desc"></td>
+                                <td class="yellow">玻璃宽度</td>
+                                <td class="yellow"ng-bind="LaminationGlassinfo.glass_width_desc"></td>
+                                <!-- <td class="yellow">汇流条</td>
+                <td class="yellow">汇流条规格</td>
+                <td class="yellow" ng-bind=""></td>
+                <td class="yellow">汇流条厂家</td>
+                <td class="yellow" ng-bind=""></td> -->
                             </tr>
                             <tr>
 
-                                <td rowspan="2">IV测试</td>
-                                <td>测试机台号</td>
-                                <td ng-bind="IVinfo.wks_id"></td>
-                                <td>测试时间</td>
-                                <td ng-bind="IVinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td>电流</td>
-                                <td ng-bind="IVinfo.isc"></td>
-                                <td>边框</td>
-                                <td>边框规格</td>
-                                <td ng-bind=""></td>
-                                <td>边框厂家</td>
-                                <td ng-bind=""></td>
+                                <td class="green" rowspan="2">IV测试</td>
+                                <td class="green">测试机台号</td>
+                                <td class="green" ng-bind="IVinfo.wks_id"></td>
+                                <td class="green">测试时间</td>
+                                <td class="green" ng-bind="IVinfo.wks_visit_date| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td class="green">电流</td>
+                                <td class="green" ng-bind="IVinfo.ipm"></td>
+                                <td class="yellow">玻璃厚度</td>
+                                <td class="yellow" ng-bind="LaminationGlassinfo.glass_thickness_desc"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <!-- <td class="yellow">边框</td>
+                <td class="yellow">边框规格</td>
+                <td class="yellow" ng-bind="bar.spec"></td>
+                <td class="yellow">边框厂家</td>
+                <td class="yellow" ng-bind="bar.supplier_code"></td> -->
                             </tr>
                             <tr style="">
 
-                                <td>功率</td>
-                                <td ng-bind=""></td>
-                                <td>功率档位</td>
-                                <td ng-bind=""></td>
-                                <td>电流挡位</td>
-                                <td ng-bind=""></td>
-                                <td>反光膜</td>
-
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="green">功率</td>
+                                <td class="green" ng-bind="IVinfo.pmax"></td>
+                                <td class="green">功率档位</td>
+                                <td class="green" ng-bind="lotidinfo.power_grade"></td>
+                                <td class="green">电流挡位</td>
+                                <td class="green" ng-bind="lotidinfo.current_grade"></td>
+                                <td class="yellow" rowspan="3">双波玻璃</td>
+                                <td class="yellow">玻璃批号</td>
+                                <td class="yellow"></td>
+                                <td class="yellow">玻璃厂家</td>
+                                <td class="yellow"></td>
+                                <!-- <td class="yellow">反光膜</td>
+                <td class="yellow"></td>
+                <td class="yellow"></td>
+                <td class="yellow"></td>
+                <td class="yellow"></td> -->
                             </tr>
                             <tr style="">
 
-                                <td>层压后EL</td>
-                                <td>测试机台号</td>
-                                <td ng-bind=""></td>
-                                <td>测试时间</td>
-                                <td ng-bind=""></td>
-
-                                <td>测试结果</td>
-                                <td ng-bind=""></td>
-                                <td>线盒</td>
-                                <td>线盒批号</td>
-                                <td ng-bind="FrameBoxinfo.lot_nbr"></td>
-                                <td>线盒厂家</td>
-                                <td ng-bind="FrameBoxinfo.supplier"></td>
+                                <td class="green">后EL</td>
+                                <td class="green">测试机台号</td>
+                                <td class="green" ng-bind="ELAfterIVinfo.wks_id"></td>
+                                <td class="green">测试时间</td>
+                                <td class="green" ng-bind="ELAfterIVinfo.wks_visit_date"></td>
+                                <td class="green">测试结果</td>
+                                <td class="green" ng-bind="ELAfterIVinfo.el_grade"></td>
+                                <td class="yellow">玻璃长度</td>
+                                <td class="yellow"></td>
+                                <td class="yellow">玻璃宽度</td>
+                                <td class="yellow"></td>
+                                <!--  <td class="yellow">线盒</td>
+                <td class="yellow">线盒批号</td>
+                <td class="yellow" ng-bind="FrameBoxinfo.lot_nbr"></td>
+                <td class="yellow">线盒厂家</td>
+                <td class="yellow" ng-bind="FrameBoxinfo.supplier_code"></td> -->
                             </tr>
                             <tr style="">
 
-                                <td rowspan="2">外观检验</td>
-                                <td>检验机台号</td>
-                                <td ng-bind=""></td>
-                                <td>组件等级</td>
-                                <td ng-bind="lotidinfo.exterior_grade"></td>
-                                <td>组件颜色</td>
-                                <td ng-bind="lotidinfo.mod_color"></td>
-                                <td>灌封胶</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="green" rowspan="2">外观检验</td>
+                                <td class="green">检验机台号</td>
+                                <td class="green" ng-bind=""></td>
+                                <td class="green">组件等级</td>
+                                <td class="green" ng-bind="lotidinfo.exterior_grade"></td>
+                                <td class="green">组件颜色</td>
+                                <td class="green" ng-bind="lotidinfo.mod_color"></td>
+                                <td class="yellow">玻璃厚度</td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <!--  <td class="yellow">灌封胶</td>
+                <td class="yellow"></td>
+                <td class="yellow"></td>
+                <td class="yellow"></td>
+                <td class="yellow"></td> -->
                             </tr>
                             <tr style="">
 
-                                <td>电流挡位</td>
-                                <td ng-bind="lotidinfo.current_grade"></td>
-                                <td>功率挡位</td>
-                                <td ng-bind="lotidinfo.power_grade"></td>
-                                <td></td>
-                                <td></td>
-                                <td>工艺信息</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="green">电流挡位</td>
+                                <td class="green" ng-bind="lotidinfo.current_grade"></td>
+                                <td class="green">功率挡位</td>
+                                <td class="green" ng-bind="lotidinfo.power_grade"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="yellow">焊带</td>
+                                <td class="yellow">焊带规格</td>
+                                <td class="yellow"></td>
+                                <td class="yellow">焊带厂家</td>
+                                <td class="yellow"></td>
+                                <!--  <td >工艺信息</td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td> -->
                             </tr>
 
                             <tr style="">
 
-                                <td rowspan="2">入库信息</td>
-                                <td>入库时间</td>
-                                <td ng-bind=""> </td>
-                                <td>托盘号</td>
-                                <td ng-bind="Packinfo.pallet_nbr"></td>
-                                <td>入库人员</td>
-                                <td ng-bind=""></td>
-
-                                <td>串焊机参数</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-
-                            </tr>
-                            <tr style="">
-
-                                <td>库位</td>
-                                <td ng-bind=""></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>层压机参数</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="green" rowspan="2">入库信息</td>
+                                <td class="green">入库时间</td>
+                                <td class="green" ng-bind=""> </td>
+                                <td class="green">托盘号</td>
+                                <td class="green" ng-bind="Packinfo.pallet_nbr"></td>
+                                <td class="green">入库人员</td>
+                                <td class="green" ng-bind=""></td>
+                                <td class="yellow">助焊剂</td>
+                                <td class="yellow">助焊剂规格</td>
+                                <td class="yellow"></td>
+                                <td class="yellow">助焊剂厂家</td>
+                                <td class="yellow"></td>
+                                <!--  <td class="red">串焊机参数</td>
+                <td class="red"></td>
+                <td class="red"></td>
+                <td class="red"></td>
+                <td class="red"></td> -->
 
                             </tr>
                             <tr style="">
-                                <td>出货信息</td>
-                                <td>出货柜号</td>
-                                <td ng-bind=""></td>
-                                <td>出货日期</td>
-                                <td ng-bind=""></td>
-                                <td></td>
-                                <td></td>
-                                <td colspan="5"></td>
 
+                                <td class="green">库位</td>
+                                <td class="green" ng-bind=""></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="yellow">汇流条</td>
+                                <td class="yellow">汇流条规格</td>
+                                <td class="yellow" ng-bind=""></td>
+                                <td class="yellow">汇流条厂家</td>
+                                <td class="yellow" ng-bind=""></td>
+                                <!-- <td class="red">层压机参数</td>
+                <td class="red"></td>
+                <td class="red"></td>
+                <td class="red"></td>
+                <td class="red"></td> -->
+
+                            </tr>
+                            <tr style="">
+                                <td class="green">出货信息</td>
+                                <td class="green">出货柜号</td>
+                                <td class="green" ng-bind=""></td>
+                                <td class="green">出货日期</td>
+                                <td class="green" ng-bind=""></td>
+                                <td class="green"></td>
+                                <td class="green"></td>
+                                <td class="yellow">边框</td>
+                                <td class="yellow">边框规格</td>
+                                <td class="yellow" ng-bind="bar.spec"></td>
+                                <td class="yellow">边框厂家</td>
+                                <td class="yellow" ng-bind="bar.supplier_code"></td>
+                                <!-- <td class="red" colspan="5"></td> -->
+
+                            </tr>
+                            <tr>
+                                <td colspan="7">工艺信息</td>
+                                <td class="yellow">反光膜</td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                            </tr>
+                            <tr>
+                                <td class="red">串焊机参数</td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="yellow">线盒</td>
+                                <td class="yellow">线盒批号</td>
+                                <td class="yellow" ng-bind="FrameBoxinfo.lot_nbr"></td>
+                                <td class="yellow">线盒厂家</td>
+                                <td class="yellow" ng-bind="FrameBoxinfo.supplier_code"></td>
+                            </tr>
+                            <tr>
+                                <td class="red">层压机参数</td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="yellow">灌封胶</td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                            </tr>
+                            <tr>
+                                <td class="red">标板校准参数</td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="red"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
+                                <td class="yellow"></td>
                             </tr>
 
                         </tbody>
@@ -344,15 +476,15 @@
         </div>
     </div>
 </section>
-
-
+<script src="~/Scripts/underscore-min.js"></script>
+<script src="~/Scripts/Report/RunCard/exporttest.js"></script>
 <script src="~/3rd/tableexport20180710/xlsx.core.js"></script>
 <script src="~/3rd/tableexport20180710/FileSaver.js"></script>
 <script src="~/3rd/tableexport20180710/dist/js/tableexport.js?v=2"></script>
 <script src="~/3rd/Angularjs/angular.min.js?v=1"></script>
 @*<script src="~/3rd/Angularjs/angular-route.min.js"></script>*@
 <script src="~/Scripts/Report/RunCard/app.js"></script>
-<script src="~/Scripts/Report/RunCard/controller.js?v=10"></script>
+<script src="~/Scripts/Report/RunCard/controller.js?v=17"></script>
 <script>
     $('#btnExportExcel').click(function () {
         var ExportButtons = document.getElementById('tbRuncard');
@@ -372,6 +504,6 @@
         instance.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension);
         //});
     })
-
+    //require('/Script/Report/RunCard/exporttest.js');
 
 </script>

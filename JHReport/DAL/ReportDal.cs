@@ -320,6 +320,7 @@ where ppk.[pack_date]>='" + bt + "' and ppk.[pack_date]<='" + et + "' ";
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
 ,dst.descriptions shift_type/*班次*/
+,(select top 1 frame_spec_desc from [mes_main].[dbo].[config_mat_frame] where part_nbr = tcl.part_nbr ) spec
  from trace_componnet_lot tcl/*记录材料*/
 ,trace_workstation_visit twv /*记录机台*/
 ,assembly_status ab
@@ -340,7 +341,7 @@ and twv.shift_type =dst.shift_type
 and twv.operator=du.username
 and twv.wks_id=cw.wks_id
 and cw.process_code=dp.process_code 
-and tcl.serial_nbr='" + lot + "'" + " and dp.descriptions='装框' and dpt.[descriptions]='线盒'";
+and tcl.serial_nbr='" + lot + "'" + " and dp.descriptions='装框' "; //and dpt.[descriptions]='线盒'
             return sql;
 
         }
@@ -369,6 +370,8 @@ and tcl.serial_nbr='" + lot + "'" + " and dp.descriptions='装框' and dpt.[desc
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
 ,dst.descriptions shift_type/*班次*/
+,a.eva_width
+,a.eva_thickness
  from trace_componnet_lot tcl/*记录材料*/
 ,trace_workstation_visit twv /*记录机台*/
 ,assembly_status ab
@@ -379,6 +382,7 @@ and tcl.serial_nbr='" + lot + "'" + " and dp.descriptions='装框' and dpt.[desc
 ,[mes_auth].[dbo].[df_user] du
 ,[mes_main].[dbo].[config_workstation] cw
 ,[mes_main].[dbo].[df_processes] dp
+,[mes_main].[dbo].[config_mat_eva] a
 where twv.serial_nbr=tcl.serial_nbr
 and tcl.wks_id=twv.wks_id
 --and twv.serial_nbr='JYP171202X60000019'
@@ -390,7 +394,8 @@ and twv.shift_type =dst.shift_type
 and twv.operator=du.username
 and twv.wks_id=cw.wks_id
 and cw.process_code=dp.process_code 
-and tcl.serial_nbr='"+lot+"' and dp.descriptions = '叠层' and dpt.[descriptions]='EVA'";
+and tcl.part_nbr = a.part_nbr
+and tcl.serial_nbr='" + lot+"' and dp.descriptions = '叠层' and dpt.[descriptions]='EVA'";
             return sql;
         }
         public IEnumerable<dynamic> LaminationEVAQueryInfo(string lot)
@@ -418,6 +423,8 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions = '叠层' and dpt.[description
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
 ,dst.descriptions shift_type/*班次*/
+,a.eva_width
+,a.eva_thickness
  from trace_componnet_lot tcl/*记录材料*/
 ,trace_workstation_visit twv /*记录机台*/
 ,assembly_status ab
@@ -428,6 +435,7 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions = '叠层' and dpt.[description
 ,[mes_auth].[dbo].[df_user] du
 ,[mes_main].[dbo].[config_workstation] cw
 ,[mes_main].[dbo].[df_processes] dp
+,[mes_main].[dbo].[config_mat_eva] a
 where twv.serial_nbr=tcl.serial_nbr
 and tcl.wks_id=twv.wks_id
 --and twv.serial_nbr='JYP171202X60000019'
@@ -438,8 +446,9 @@ and tcl.supplier_code=ms.supplier_code
 and twv.shift_type =dst.shift_type
 and twv.operator=du.username
 and twv.wks_id=cw.wks_id
-and cw.process_code=dp.process_code 
-and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]='高透EVA'";
+and cw.process_code=dp.process_code
+and tcl.part_nbr = a.part_nbr
+and tcl.serial_nbr='" + lot+"' and dp.descriptions='叠层' and dpt.[descriptions]='高透EVA'";
             return sql;
         }
         public IEnumerable<dynamic> LaminationHighEVAQueryInfo(string lot)
@@ -467,6 +476,9 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
 ,dst.descriptions shift_type/*班次*/
+,a.glass_width_desc
+,a.glass_thickness_desc
+,a.glass_length_desc
  from trace_componnet_lot tcl/*记录材料*/
 ,trace_workstation_visit twv /*记录机台*/
 ,assembly_status ab
@@ -477,6 +489,7 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
 ,[mes_auth].[dbo].[df_user] du
 ,[mes_main].[dbo].[config_workstation] cw
 ,[mes_main].[dbo].[df_processes] dp
+,[mes_main].[dbo].[config_mat_glass] a
 where twv.serial_nbr=tcl.serial_nbr
 and tcl.wks_id=twv.wks_id
 --and twv.serial_nbr='JYP171202X60000019'
@@ -488,7 +501,8 @@ and twv.shift_type =dst.shift_type
 and twv.operator=du.username
 and twv.wks_id=cw.wks_id
 and cw.process_code=dp.process_code 
-and tcl.serial_nbr='${serial_nbr}' and dp.descriptions='叠层' and dpt.[descriptions]='玻璃'";
+and a.part_nbr = tcl.part_nbr
+and tcl.serial_nbr='" + lot+"' and dp.descriptions='叠层' and dpt.[descriptions]='玻璃'";
             return sql;
         }
         public IEnumerable<dynamic> LaminationGlassQueryInfo(string lot)
@@ -515,6 +529,8 @@ and tcl.serial_nbr='${serial_nbr}' and dp.descriptions='叠层' and dpt.[descrip
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
 ,dst.descriptions shift_type/*班次*/
+,a.bks_width
+,a.bks_thickness
  from trace_componnet_lot tcl/*记录材料*/
 ,trace_workstation_visit twv /*记录机台*/
 ,assembly_status ab
@@ -525,6 +541,7 @@ and tcl.serial_nbr='${serial_nbr}' and dp.descriptions='叠层' and dpt.[descrip
 ,[mes_auth].[dbo].[df_user] du
 ,[mes_main].[dbo].[config_workstation] cw
 ,[mes_main].[dbo].[df_processes] dp
+,[mes_main].[dbo].[config_mat_bks] a
 where twv.serial_nbr=tcl.serial_nbr
 and tcl.wks_id=twv.wks_id
 --and twv.serial_nbr='JYP171202X60000019'
@@ -536,7 +553,8 @@ and twv.shift_type =dst.shift_type
 and twv.operator=du.username
 and twv.wks_id=cw.wks_id
 and cw.process_code=dp.process_code 
-and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]='背板'";
+and tcl.part_nbr = a.part_nbr
+and tcl.serial_nbr='" + lot+"' and dp.descriptions='叠层' and dpt.[descriptions]='背板'";
             return sql;
         }
         public IEnumerable<dynamic> LaminationBackQueryInfo(string lot)
@@ -640,7 +658,10 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
       ,[el_grade]
       ,[process_code]
       ,[el_path]
-      ,( select count(*) from mes_main.dbo.qc_visit as a where a.visit_type='M' and wks_id = 'QC' and serial_nbr  =el.serial_nbr ) as isRepair
+      ,case ( select count(*) from mes_main.dbo.qc_visit as a where a.visit_type='M' and wks_id = 'QC' and serial_nbr  =el.serial_nbr ) 
+	   when 0 then 'N'
+	   else 'Y' end
+	   isRepair
   FROM [mes_level2_iface].[dbo].[el] el
   where el.[process_code]='QEL'
   and el.serial_nbr='" + lot+"'";
@@ -657,7 +678,32 @@ and tcl.serial_nbr='"+lot+"' and dp.descriptions='叠层' and dpt.[descriptions]
             return res;
         }
 
-        
+        //功率后EL
+        private string ELAfterIVSql(string lot)
+        {
+            string sql = @"SELECT [serial_nbr]
+      ,[wks_id]
+      ,[wks_visit_date]
+      ,[el_grade]
+      ,[process_code]
+      ,[el_path]
+  FROM [mes_level2_iface].[dbo].[el] el
+  where el.[process_code]='HEL'
+  and el.serial_nbr='" + lot + "'";
+            return sql;
+        }
+
+        public IEnumerable<dynamic> ELAfterIV(string lot)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(ELAfterIVSql(lot));
+            }
+            return res;
+        }
+
+
         //清洗
         private string CleanSql(string lot)
         {
@@ -720,6 +766,105 @@ and ab.serial_nbr='" + lot + "' and dp.descriptions='清洗' order by twv.wks_vi
 
         #endregion
 
+        #region 工单达成情况
+
+        private string WOFinishStatusSql(string wo, string sales, string customer, string bt, string et)
+        {
+            string sql = @"exec mes_main.dbo.prWOFinishStatus ";
+            sql += string.IsNullOrEmpty(wo) ? " @wo=N''" : " @wo =N'" + wo + "'";
+            sql += string.IsNullOrEmpty(sales) ? " ,@sales=N''" : " ,@sales=N'" + sales + "'";
+            sql += string.IsNullOrEmpty(customer) ? " ,@customer=N''" : " ,@customer=N'" + customer + "'";
+            if (!string.IsNullOrEmpty(bt) && !string.IsNullOrEmpty(et))
+            {
+                sql += " ,@bt=N'" + bt + "',@et=N'" + et + "'";
+            }
+            else
+            {
+                sql += " ,@bt=N'',@et=N''";
+            }
+            return sql;
+        }
+
+        private string WOFinishStatusSql1(string wo,string sales,string customer,string bt,string et)
+        {
+            string sql = @"select a.create_date
+,( select top 1 create_date from mes_main.dbo.assembly_status where workorder = a.workorder order by create_date ) firstlottime
+,a.customer
+,a.sale_order
+,a.workorder
+,( select top 1 serial_nbr from mes_main.dbo.assembly_status where workorder = a.workorder order by create_date ) firstlot
+,a.product_code
+,a.plan_qty
+,(select count( a1.serial_nbr) from mes_main.dbo.[trace_workstation_visit]  a1 
+inner join mes_main.dbo.config_workstation b on a1.wks_id = b.wks_id  
+inner join mes_main.dbo.assembly_status c on a1.serial_nbr = c.serial_nbr
+where b.process_code = 'M15' and c.workorder = a.workorder) laminationqty
+,a.cell_supplier_desc
+,(select top 1 c.cell_uop from mes_main.dbo.trace_componnet_lot a2 
+inner join mes_main.dbo.config_workstation b on a2.wks_id = b.wks_id 
+inner join [mes_main].[dbo].[config_mat_cell] c on a2.part_nbr = c.part_nbr
+inner join mes_main.dbo.assembly_status d on d.serial_nbr = a2.serial_nbr
+where b.process_code = 'M10' and d.workorder = a.workorder ) cellgrade
+,(select isnull(max( case report_grade when 'A' then ''+ CAST( gradeqty as nvarchar) end),'A:0')  
+	   +'|'+isnull(max(case report_grade when 'B' then ''+ CAST( gradeqty as nvarchar) end) ,'B:0')
+	   +'|'+isnull(max(case report_grade when 'C' then '' + CAST( gradeqty as nvarchar) end) ,'C:0')	       
+from	   	
+(
+select a1.report_grade, count( a1.report_grade) gradeqty from mes_main.dbo.config_report_grade a1
+inner join mes_main.dbo.assembly_status b on a1.exterior_grade = b.final_grade where b.serial_status = 'G' and b.workorder = a.workorder and a1.customer = a.customer
+group by a1.report_grade
+) t) gradeqty
+,(select count(serial_nbr) from mes_main.dbo.assembly_status where serial_status ='S' and workorder = a.workorder) scrapqty 
+,(select cast(max(a3.pmax)as nvarchar)+'|'+cast(min(a3.pmax)as nvarchar)+'|'+ cast( avg(a3.pmax) as nvarchar) from mes_level2_iface.dbo.iv a3 inner join mes_main.dbo.assembly_status b on a3.serial_nbr = b.serial_nbr
+  where b.workorder = a.workorder) testpower
+from mes_main.dbo.wo_mfg a where 1=1 ";
+            sql += string.IsNullOrEmpty(wo) ? "" : " and a.workorder = '"+wo+"'";
+            sql += string.IsNullOrEmpty(sales) ? "" : " and a.sale_order = '" + sales + "'";
+            sql += string.IsNullOrEmpty(customer)?"": " and a.customer = '"+customer+"'";
+            if (!string.IsNullOrEmpty(bt) && !string.IsNullOrEmpty(et))
+            {
+                sql += " and a.create_date between '"+bt+"' and '"+et+"' ";
+            }
+            return sql;
+        }
+
+        public IEnumerable<dynamic> WOFinishStatus(string wo, string sales, string customer, string bt, string et)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(WOFinishStatusSql(wo,sales,customer,bt,et));
+            }
+            return res;
+        }
+        #endregion
+
+        #region 工单状态
+        private string WOStatusSql(string wo)
+        {
+            string sql = @"select distinct a.serial_nbr,a.workorder,b.sale_order,convert(varchar(100), c.wks_visit_date,120) wks_visit_date
+,e.descriptions process_code,a.final_grade,d.pmax from mes_main.dbo.assembly_status a 
+inner join mes_main.dbo.wo_mfg b on a.workorder = b.workorder
+inner join mes_main.dbo.trace_workstation_visit c on a.serial_nbr = c.serial_nbr and c.wks_id like '%HJJ%'
+left join [mes_level2_iface].[dbo].[iv] d on a.serial_nbr = d.serial_nbr
+left join [mes_main].[dbo].[df_processes] e on a.process_code = e.process_code
+where a.workorder = '" + wo+"'";
+            return sql;
+        }
+        public DataTable WOStatusDT(string wo)
+        {
+            return dbhelp.ExecuteDataTable(WOStatusSql(wo), null);
+        }
+        public IEnumerable<dynamic> WOStatus(string wo)
+        {
+            IEnumerable<dynamic> res = null;
+            using (var conn = Dpperhelper.OpenSqlConnection())
+            {
+                res = conn.Query(WOStatusSql(wo));
+            }
+            return res;
+        }
+        #endregion
 
 
     }

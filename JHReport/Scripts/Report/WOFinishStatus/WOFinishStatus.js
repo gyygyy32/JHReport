@@ -7,29 +7,28 @@ $().ready(function () {
     //使用datarangepickrer控件 modify by xue lei on 2018-8-2
     //$('#txtEndtime').val(moment().format("YYYY-MM-DD"));
     //$('#txtBegintime').val(moment().subtract(1, 'days').format("YYYY-MM-DD"));
-    $('#ddlWorkshop').val('');
-    $('#ddlWorkshop').select2({
-        placeholder: "车间",
-        allowClear: true
-    });
+    //$('#ddlWorkshop').val('');
+    //$('#ddlWorkshop').select2({
+    //    placeholder: "车间",
+    //    allowClear: true
+    //});
     Daterangeini();
     //QueryddlStatus();
     //1.初始化Table
-    var oTable = new TableInit();
-    oTable.Init();
+    $('#wodaterange').tooltip();
 
 })
 
 /*显示daterangepicker*/
 function Daterangeini() {
-    $('#rangetime').val(moment().subtract('hours', 24).format('YYYY-MM-DD') + ' 08:00:00' + ' - ' + moment().format('YYYY-MM-DD') + ' 08:00:00');
-    
+    //$('#rangetime').val(moment().subtract('hours', 24).format('YYYY-MM-DD') + ' 08:00:00' + ' - ' + moment().format('YYYY-MM-DD') + ' 08:00:00');
 
-    $('#rangetime').daterangepicker(  
+
+    $('#rangetime').daterangepicker(
         {
             //autoUpdateInput: false,
             timePicker: true,
-            timePicker24Hour:true,
+            timePicker24Hour: true,
             'locale': {
                 "format": 'YYYY-MM-DD hh:mm:ss',
                 "separator": " - ",
@@ -45,47 +44,67 @@ function Daterangeini() {
                 //"cancelLabel": '清除'
             }
         });
-    //$('#rangetime').val('');
+    $('#rangetime').val('');
     $('#rangetime').on('cancel.daterangepicker', function (ev, picker) {
         $(this).val('');
     });
 }
 
-function QueryddlStatus() { 
-    var promiseweld = $.ajax({
-        url: '../api/QC/QueryStatus',
-        type: 'post',
-        cache: true,
-        async: true,
-    });
-    promiseweld.done(function (r) {
-        $.each(r, function (index, value) {
-            $("#ddlStatus").append("<option value='" + value.visit_type + "'>" + value.visit_type_desc + "</option>");
-        })
-        $('#ddlStatus').val('');
-        $('#ddlStatus').select2({
-            placeholder: "状态",
-            allowClear: true
-        });
-    });
-    promiseweld.fail(function (error) {
-        console.log(error)
-        alert(error);
-    });
-}
+//function QueryddlStatus() {
+//    var promiseweld = $.ajax({
+//        url: '../api/QC/QueryStatus',
+//        type: 'post',
+//        cache: true,
+//        async: true,
+//    });
+//    promiseweld.done(function (r) {
+//        $.each(r, function (index, value) {
+//            $("#ddlStatus").append("<option value='" + value.visit_type + "'>" + value.visit_type_desc + "</option>");
+//        })
+//        $('#ddlStatus').val('');
+//        $('#ddlStatus').select2({
+//            placeholder: "状态",
+//            allowClear: true
+//        });
+//    });
+//    promiseweld.fail(function (error) {
+//        console.log(error)
+//        alert(error);
+//    });
+//}
 
 
 $('#btnQuery').click(function () {
+    //检查查询参数
+    if ($('#rangetime').val() == ''
+        && $('#txtWO').val() == ''
+        && $('#txtSales').val() == ''
+        && $('#txtCustomer').val() == ''
+    ) {
+        //alert('请输入查询参数');
+        alertinfo($('#boxbody'), '请输入查询参数');
+        return;
+    }
 
-    $("#tbtestdata").bootstrapTable('refresh');
+    //时间范围卡关 不能超过一周
+    var bt = moment($('#rangetime').val().substr(0, 19));
+    var et = moment($('#rangetime').val().split(' - ')[1]);
+    if (et.diff(bt, 'days') > 7) {
+        alertinfo($('#boxbody'), '时间范围不能超过7天');
+        return;
+    }
 
+
+    //$("#tbtestdata").bootstrapTable('refresh');
+    var oTable = new TableInit();
+    oTable.Init();
 })
 var TableInit = function () {
     var oTableInit = new Object();
     //初始化Table
     oTableInit.Init = function () {
-        $('#tbtestdata').bootstrapTable({
-            url: '../api/TestDataDetail/QueryData',         //请求后台的URL（*）
+        $('#tbWOFinishStatus').bootstrapTable('destroy').bootstrapTable({
+            url: '../api/WOFinishStatus/QueryInfo',         //请求后台的URL（*）
             method: 'post',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
@@ -121,175 +140,145 @@ var TableInit = function () {
             //    mergeCells(data, "schedule_nbr", 1, $('#tbqc'));
 
             //},
-            columns: [{
-                checkbox: true
+            columns: [[{
+                checkbox: true,
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             }, {
-                field: 'wks_visit_date',
-                title: '测试时间'
+                field: 'create_date',
+                title: '工单日期',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             }, {
-                field: 'serial_nbr',
-                title: '组件序列号'
-            },  {
-                field: 'wks_id',
-                title: '机台号'
+                field: 'firstlottime',
+                title: '生码日期',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
+            }, {
+                field: 'customer',
+                title: '客户',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'sale_order',
+                title: '订单号',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'workorder',
-                title: '工单号'
+                title: '工单号',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             },
             {
-                field: 'cell_uop',
-                title: '电池片功率'
+                field: 'firstlot',
+                title: '生产批次',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             },
             {
-                field: 'cell_eff',
-                title: '电池片效率'
+                field: 'product_code',
+                title: '组件功率',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             }, {
-                field: 'pmax',
-                title: 'pmax'
+                field: 'plan_qty',
+                title: '工单数量',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             },
             {
-                field: "voc",
-                title: "voc"
+                field: "laminationqty",
+                title: "叠层数量",
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             },
             {
-                field: "isc",
-                title: "isc"
+                field: "cell_supplier_desc",
+                title: "电池片厂家",
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             },
             {
-                field: "ff",
-                title: "ff"
+                field: "cellgrade",
+                title: "电池片挡位",
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle'
             },
             {
-                field: "vpm",
-                title: "vpm"
+                title: "组件等级分布",
+                colspan: 4,
+                align: 'center',
+                valign: 'middle'
+
             }
                 ,
             {
-                field: "ipm",
-                title: "ipm"
-            },
-            {
-                field: "rs",
-                title: "rs"
-            },
-            {
-                field: "rsh",
-                title: "rsh"
-            },
-            {
-                field: "eff",
-                title: "eff"
-            },
-            {
-                field: "env_temp",
-                title: "env_temp"
-            },
-            {
-                field: "surf_temp",
-                title: "surf_temp"
-            },
-            {
-                field: "temp",
-                title: "temp"
-            },
-            {
-                field: "ivfile_path",
-                title: "ivfile_path"
-            },
-            {
-                field: "product_code",
-                title: "组件类型"
-            },
-            {
-                field: "cell_part_nbr",
-                title: "电池料号"
-            },
-            {
-                field: "cell_lot_nbr",
-                title: "电池批号"
-            },
-            {
-                field: "cell_supplier_code",
-                title: "电池供应商"
-            },
-            {
-                field: "glass_part_nbr",
-                title: "玻璃料号"
-            },
-            {
-                field: "glass_supplier_code",
-                title: "玻璃供应商"
-            },
-            {
-                field: "eva_part_nbr",
-                title: "EVA料号"
-            },
-            {
-                field: "eva_supplier_code",
-                title: "EVA供应商"
-            },
-            {
-                field: "eva_lot_nbr",
-                title: "EVA批号"
-            },
-            {
-                field: "bks_part_nbr",
-                title: "背板料号"
-            },
-            {
-                field: "bks_supplier_code",
-                title: "背板供应商"
-            },
-            {
-                field: "bks_lot_nbr",
-                title: "背板批号"
-            },
-            {
-                field: "frame_part_nbr",
-                title: "型材料号"
-            },
-            {
-                field: "frame_supplier_code",
-                title: "型材供应商"
-            },
-            {
-                field: "frame_lot_nbr",
-                title: "型材批号"
-            },
-            {
-                field: "jbox_part_nbr",
-                title: "接线盒料号"
-            },
-            {
-                field: "jbox_supplier_code",
-                title: "接线盒供应商"
-            },
-            {
-                field: "jbox_lot_nbr",
-                title: "接线盒批号"
-            },
-            {
-                field: "huiliu_part_nbr",
-                title: "汇流条料号"
-            },
-            {
-                field: "huiliu_supplier_code",
-                title: "汇流条供应商"
-            },
-            {
-                field: "huiliu_lot_nbr",
-                title: "汇流条批号"
-            },
-            {
-                field: "hulian_part_nbr",
-                title: "汇联条批号"
-            },
-            {
-                field: "hulian_supplier_code",
-                title: "汇联条供应商"
+                title: "测试功率",
+                colspan: 3,
+                align: 'center',
+                valign: 'middle'
+
             }
-            ]
+            ],
+            [
+                {
+                    field: "A",
+                    title: "A",
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    field: "B",
+                    title: "B",
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    field: "C",
+                    title: "C",
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    field: "scrapqty",
+                    title: "报废",
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    field: "max",
+                    title: "最大值",
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    field: "min",
+                    title: "最小值",
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    field: "avg",
+                    title: "平均值",
+                    align: 'center',
+                    valign: 'middle'
+                }
+            ]]
         });
     };
 
@@ -300,11 +289,11 @@ var TableInit = function () {
             offset: params.offset,  //页码
             //departmentname: $("#txt_search_departmentname").val(),
             //statu: $("#txt_search_statu").val()
-            begintime: $('#rangetime').val().substr(0, 19),//$('#txtBegintime').val(),
-            endtime: $('#rangetime').val().split(' - ')[1],
-            workshop: $('#ddlWorkshop').val(),
-            workorder: $('#txtWO').val(),
-            serialno: $('#LotID').val(),
+            bt: $('#rangetime').val().substr(0, 19),//$('#txtBegintime').val(),
+            et: $('#rangetime').val().split(' - ')[1],
+            customer: $('#txtCustomer').val(),
+            wo: $('#txtWO').val(),
+            sales: $('#txtSales').val(),
         };
         return temp;
     };
@@ -351,7 +340,7 @@ function mergeCells(data, fieldName, colspan, target) {
 //导出excel
 $('#btnExportExcel').click(function () {
     console.log("clicked");
-    if ($('#rangetime').val() =='') {
+    if ($('#rangetime').val() == '') {
         alert('请输入查询参数');
         return;
     }
@@ -375,7 +364,7 @@ $('#btnExportExcel').click(function () {
     //});
 
     //window.open('../Report/ExportToExcel?bt=2018-10-10');$('#LotID').val()
-    var a = $("<a href='../Report/TestDataDetailExcel/" + ($('#LotID').val() == '' ? 'Null' : $('#LotID').val()) + "/" + ($('#txtWO').val() == '' ? 'Null' : $('#txtWO').val()) + "/" + (bt == '' ? 'Null' : encodeURI(bt)) + "/" + (et == '' ? 'Null' : encodeURI(et)) + "/" + ( !$('#ddlWorkshop').val() ? 'Null' : $('#ddlWorkshop').val())+ "' target='_blank'></a>").get(0);
+    var a = $("<a href='../Report/WOFinishStatusExcel/" + ($('#LotID').val() == '' ? 'Null' : $('#LotID').val()) + "/" + ($('#txtWO').val() == '' ? 'Null' : $('#txtWO').val()) + "/" + (bt == '' ? 'Null' : encodeURI(bt)) + "/" + (et == '' ? 'Null' : encodeURI(et)) + "/" + (!$('#ddlWorkshop').val() ? 'Null' : $('#ddlWorkshop').val()) + "' target='_blank'></a>").get(0);
     var e = document.createEvent('MouseEvents');
     e.initEvent('click', true, true);
     a.dispatchEvent(e);

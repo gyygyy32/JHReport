@@ -31,6 +31,7 @@ namespace JHReport.WebApi.Report
       ,proce.descriptions as process_name/*站点名称*/
       ,ast.[create_date]/*投产日期--add by xue lei on 2018-7-31*/
       ,ast.[ny_result]/*耐压数据--add by xue lei on 2018-7-31*/ 
+      , ( select top 1 create_time   FROM [mes_level2_iface].[dbo].[YD9860_Data] where barcode = ast.serial_nbr order by create_time desc) nytime
       ,ast.power_grade /*功率挡位--add by xue lei on 2018-7-31*/
       ,ast.current_grade /*电流挡位--add by xue lei on 2018-7-31*/
         ,ast.exterior_grade /*组件等级--add by xue lei on 2018-7-31*/
@@ -88,6 +89,7 @@ ast.serial_nbr=@lotid;";
 ,cw.process_code /*站点编号*/
 ,dp.descriptions/*站点名称*/
 ,dst.descriptions shift_type/*班次*/
+,a.cell_uop /*单片功率*/
  from trace_componnet_lot tcl/*记录材料*/
 ,trace_workstation_visit twv /*记录机台*/
 ,assembly_status ab
@@ -98,6 +100,7 @@ ast.serial_nbr=@lotid;";
 ,[mes_auth].[dbo].[df_user] du
 ,[mes_main].[dbo].[config_workstation] cw
 ,[mes_main].[dbo].[df_processes] dp
+,mes_main.dbo.config_mat_cell a
 where twv.serial_nbr=tcl.serial_nbr
 and tcl.wks_id=twv.wks_id
 --and twv.serial_nbr='JYP171202X60000019'
@@ -110,7 +113,8 @@ and twv.operator=du.username
 and twv.wks_id=cw.wks_id
 and cw.process_code=dp.process_code 
 and tcl.serial_nbr=@lotid
-and dp.descriptions='焊接';";
+and dp.descriptions='焊接'
+and tcl.part_nbr = a.part_nbr ;";
             object res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())
             {
@@ -197,7 +201,14 @@ and dp.descriptions='焊接';";
             IEnumerable<dynamic> res = new ReportService().ELBeforeLayupQueryInfo(lotid);
             return Json(res);
         }
-
+        //功率后EL
+        [Route("ELAfterIV")]
+        [HttpGet]
+        public IHttpActionResult ELAfterIV(string lotid)
+        {
+            IEnumerable<dynamic> res = new ReportService().ELAfterIVInfo(lotid);
+            return Json(res);
+        }
         //清洗
         [Route("Clean")]
         [HttpGet]
@@ -205,10 +216,12 @@ and dp.descriptions='焊接';";
         {
             IEnumerable<dynamic> res = new ReportService().CleanQueryInfo(lotid);
             List<dynamic> list = res.ToList<dynamic>();
+           
             if (list.Count > 0)
             {
                 list[0].curingtime = Math.Round(Convert.ToDouble(list[0].curingtime) / 60, 2, MidpointRounding.AwayFromZero);
                 if (list[0].curingtime != null) list[0].curingtime = list[0].curingtime + "H";
+                list[0].testitem = "dsdsa";
                 return Json(res);
             }
             //Math.Round((list[0].curingtime) / 60, 2,MidpointRounding.AwayFromZero)
@@ -224,6 +237,8 @@ and dp.descriptions='焊接';";
             IEnumerable<dynamic> res = new ReportService().QCAfterLayupInfo(lotid);
             return Json(res);
         }
+
+        
 
     }
 }
