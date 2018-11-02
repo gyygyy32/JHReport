@@ -108,13 +108,13 @@ namespace JHReport.BLL
         #endregion
 
         #region 工单状态
-        public IEnumerable<dynamic> WOStatusInfo(string wo)
+        public IEnumerable<dynamic> WOStatusInfo(string wo,string sales)
         {
-            return new ReportDal().WOStatus(wo);
+            return new ReportDal().WOStatus(wo,sales);
         }
-        public DataTable WOStatusInfoDT(string wo)
+        public DataTable WOStatusInfoDT(string wo,string sales)
         {
-            return new ReportDal().WOStatusDT(wo);
+            return new ReportDal().WOStatusDT(wo,sales);
         }
         #endregion
     }

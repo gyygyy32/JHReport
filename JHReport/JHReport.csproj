@@ -6567,6 +6567,7 @@
     <Content Include="3rd\AdminLTE2.4.3\dist\js\demo.js" />
     <Content Include="3rd\AdminLTE2.4.3\dist\js\pages\dashboard.js" />
     <Content Include="3rd\AdminLTE2.4.3\dist\js\pages\dashboard2.js" />
+    <Content Include="3rd\AdminLTE2.4.3\dist\js\savesidebarstatus.js" />
     <Content Include="3rd\AdminLTE2.4.3\image\avatar04.png" />
     <Content Include="3rd\AdminLTE2.4.3\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="3rd\AdminLTE2.4.3\plugins\bootstrap-slider\slider.css" />

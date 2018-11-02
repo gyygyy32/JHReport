@@ -98,12 +98,12 @@ WHERE 1=1 ";
         private string TestDataDetailSql(string lot, string wo, string bt, string et, string workshop)
         {
             string sql = @"select 
-       convert(varchar(100), iv.[wks_visit_date],120) as wks_visit_date /*测试时间*/
-      ,iv.[serial_nbr] /*组件序列号*/
-      ,iv.[wks_id]/*机台号*/
-      ,ab.[workorder] as workorder/*工单号*/
-      ,cmc.cell_uop/*电池片功率*/
-      ,cmc.cell_eff/*电池片效率*/
+      iv.[wks_visit_date] as 测试时间/*测试时间*/ 
+      ,iv.[serial_nbr] as 组件序列号/*组件序列号*/  
+      ,iv.[wks_id] as 机台号/*机台号*/ 
+      ,ab.[workorder] as 工单号/*工单号*/  
+      ,cmc.cell_uop as 电池片功率/*电池片功率*/
+      ,cmc.cell_eff as 电池片效率/*电池片效率*/
       ,iv.[pmax]
       ,iv.[voc]
       ,iv.[isc]
@@ -117,45 +117,39 @@ WHERE 1=1 ";
       ,iv.[surf_temp]
       ,iv.[temp]
       ,iv.[ivfile_path] 
-      ,ab.[product_code]/*组件类型*/
-      ,ab.[cell_part_nbr]/*电池料号*/
-      ,ab.[cell_lot_nbr]/*电池批号*/
-      ,ab.[cell_supplier_code]/*电池供应商*/
-      ,ab.[glass_part_nbr]/*玻璃料号*/
-      ,ab.[glass_supplier_code]/*玻璃供应商*/
-      ,ab.[glass_lot_nbr]/*电池批号*/
-      ,ab.[eva_part_nbr]/*EVA料号*/
-      ,ab.[eva_supplier_code]/*EVA供应商*/
-      ,ab.[eva_lot_nbr]/*EVA批号*/
-      ,ab.[bks_part_nbr]/*背板料号*/
-      ,ab.[bks_supplier_code]/*背板供应商*/
-      ,ab.[bks_lot_nbr]/*背板批号*/
-      ,ab.[frame_part_nbr]/*型材料号*/
-      ,ab.[frame_supplier_code]/*型材供应商*/
-      ,ab.[frame_lot_nbr]/*型材批号*/
-      ,ab.[jbox_part_nbr]/*接线盒料号*/
-      ,ab.[jbox_supplier_code]/*接线盒供应商*/
-      ,ab.[jbox_lot_nbr]/*接线盒批号*/
-      ,ab.[huiliu_part_nbr]
-      ,ab.[huiliu_supplier_code]
-      ,ab.[huiliu_lot_nbr]
-      ,ab.[hulian_part_nbr]
-      ,ab.[hulian_supplier_code]
-      ,ab.[hulian_lot_nbr]
-      ,el.el_grade
-      from mes_level2_iface.dbo.iv iv  /*测试数据*/
-,[mes_main].[dbo].[assembly_basis] ab
-,[mes_main].[dbo].[config_mat_cell]cmc
---,[mes_main].[dbo].[config_mat_eva] cme
-,[mes_level2_iface].[dbo].[el] el
-,wo_mfg wm
-where iv.[serial_nbr]=ab.serial_nbr
-and ab.cell_part_nbr=cmc.[part_nbr]
---and ab.eva_part_nbr=cme.part_nbr
-and iv.[serial_nbr]=el.[serial_nbr]
-and ab.workorder=wm.workorder and iv.wks_visit_date>='" + bt + "' and  iv.wks_visit_date<='" + et+"'";
+      ,ab.[product_code] as 组件类型/*组件类型*/
+      ,ab.[cell_part_nbr] as 电池料号/*电池料号*/
+      ,ab.[cell_lot_nbr]as 电池批号/*电池批号*/
+      ,ab.[cell_supplier_code] as 电池供应商/*电池供应商*/
+      ,ab.[glass_part_nbr] as 玻璃料号/*玻璃料号*/
+      ,ab.[glass_supplier_code] as 玻璃供应商/*玻璃供应商*/
+      ,ab.[glass_lot_nbr] as 玻璃批号/*电池批号*/
+      ,ab.[eva_part_nbr] as EVA料号/*EVA料号*/
+      ,ab.[eva_supplier_code] as EVA供应商/*EVA供应商*/
+      ,ab.[eva_lot_nbr] as EVA批号/*EVA批号*/
+      ,ab.[bks_part_nbr] as 背板料号/*背板料号*/
+      ,ab.[bks_supplier_code] as 背板供应商/*背板供应商*/
+      ,ab.[bks_lot_nbr] as 背板批号/*背板批号*/
+      ,ab.[frame_part_nbr] as 型材料号/*型材料号*/
+      ,ab.[frame_supplier_code] as 型材供应商/*型材供应商*/
+      ,ab.[frame_lot_nbr] as 型材批号/*型材批号*/
+      ,ab.[jbox_part_nbr] as 接线盒料号/*接线盒料号*/
+      ,ab.[jbox_supplier_code] as 接线盒供应商/*接线盒供应商*/
+      ,ab.[jbox_lot_nbr] as 接线盒批号/*接线盒批号*/
+      ,ab.[huiliu_part_nbr] as 汇流条料号
+      ,ab.[huiliu_supplier_code] as 汇流条供应商
+      ,ab.[huiliu_lot_nbr] as 汇流条批号
+
+      ,sm.el_grade as EL等级
+
+	  from mes_level2_iface.dbo.iv iv 
+	  inner join  [mes_main].[dbo].[assembly_status] sm on iv.serial_nbr = sm.serial_nbr
+	  inner join wo_mfg wm on sm.workorder = wm.workorder
+	  left join [mes_main].[dbo].[assembly_basis] ab on ab.serial_nbr=sm.serial_nbr
+	  left join [mes_main].[dbo].[config_mat_cell]cmc on ab.cell_part_nbr=cmc.[part_nbr]
+	  where iv.wks_visit_date>='" + bt+"' and  iv.wks_visit_date<='"+et+"' ";
             sql += String.IsNullOrEmpty(workshop.ToString()) ? "" : " and wm.area_code LIKE '" + Convert.ToString(workshop) + "%'";
-            sql += String.IsNullOrEmpty(wo.ToString()) ? "" : " AND ab.workorder = '" + Convert.ToString(wo) + "'";
+            sql += String.IsNullOrEmpty(wo.ToString()) ? "" : " AND wm.workorder = '" + Convert.ToString(wo) + "'";
             sql += String.IsNullOrEmpty(lot.ToString()) ? "" : " AND iv.serial_nbr = '" + Convert.ToString(lot) + "'";
             return sql;
         }
@@ -840,27 +834,31 @@ from mes_main.dbo.wo_mfg a where 1=1 ";
         #endregion
 
         #region 工单状态
-        private string WOStatusSql(string wo)
+        //增加订单号查询条件 显示内容增加el等级 modify by xue lei on 2018-10-11
+        private string WOStatusSql(string wo,string sales)
         {
             string sql = @"select distinct a.serial_nbr,a.workorder,b.sale_order,convert(varchar(100), c.wks_visit_date,120) wks_visit_date
-,e.descriptions process_code,a.final_grade,d.pmax from mes_main.dbo.assembly_status a 
+,e.descriptions process_code,a.el_grade,a.final_grade,d.pmax from mes_main.dbo.assembly_status a 
 inner join mes_main.dbo.wo_mfg b on a.workorder = b.workorder
 inner join mes_main.dbo.trace_workstation_visit c on a.serial_nbr = c.serial_nbr and c.wks_id like '%HJJ%'
 left join [mes_level2_iface].[dbo].[iv] d on a.serial_nbr = d.serial_nbr
-left join [mes_main].[dbo].[df_processes] e on a.process_code = e.process_code
-where a.workorder = '" + wo+"'";
+left join [mes_main].[dbo].[df_processes] e on a.process_code = e.process_code where 1=1";
+            sql += string.IsNullOrEmpty(wo) ? "" : " and a.workorder ='"+wo+"'";
+            sql += string.IsNullOrEmpty(sales) ? "" : " and b.sale_order = '"+sales+"'";
+//where a.workorder = '" + wo+"'";
+            
             return sql;
         }
-        public DataTable WOStatusDT(string wo)
+        public DataTable WOStatusDT(string wo,string sales)
         {
-            return dbhelp.ExecuteDataTable(WOStatusSql(wo), null);
+            return dbhelp.ExecuteDataTable(WOStatusSql(wo,sales), null);
         }
-        public IEnumerable<dynamic> WOStatus(string wo)
+        public IEnumerable<dynamic> WOStatus(string wo,string sales)
         {
             IEnumerable<dynamic> res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())
             {
-                res = conn.Query(WOStatusSql(wo));
+                res = conn.Query(WOStatusSql(wo,sales));
             }
             return res;
         }

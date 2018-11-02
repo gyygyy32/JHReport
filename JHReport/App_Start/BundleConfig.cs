@@ -37,6 +37,7 @@ namespace JHReport
             bundles.Add(new ScriptBundle("~/3rd/js").Include(
                 "~/3rd/bootstrap-3.3.7-dist/js/bootstrap.min.js",
                 "~/3rd/AdminLTE2.4.3/dist/js/adminlte.min.js",
+                "~/3rd/AdminLTE2.4.3/dist/js/savesidebarstatus.js",
                 "~/3rd/AdminLTE2.4.3/bower_components/jquery-slimscroll/jquery.slimscroll.min.js",
                 "~/3rd/moment/moment-with-locales.min.js"
                 ));

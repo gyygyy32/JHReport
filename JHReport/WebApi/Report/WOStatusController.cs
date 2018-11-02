@@ -19,7 +19,7 @@ namespace JHReport.WebApi.Report
             IEnumerable<dynamic> res = null;
             using (var conn = Dpperhelper.OpenSqlConnection())
             {
-                res = new ReportService().WOStatusInfo(Convert.ToString(para.wo));
+                res = new ReportService().WOStatusInfo(Convert.ToString(para.wo),Convert.ToString(para.sales));
             }
             return Json<dynamic>(res);
 

@@ -97,17 +97,21 @@ var TableInit = function () {
                 title: '工单号'
             }, {
                 field: 'sale_order',
-                    title: '订单号'
+                title: '订单号'
             }, {
                 field: 'serial_nbr',
-                    title: '组件条码'
+                title: '组件条码'
             }, {
-                    field: 'wks_visit_date',
+                field: 'wks_visit_date',
                 title: '投产时间'
             },
             {
                 field: 'process_code',
                 title: '当前站别'
+            },
+            {
+                field: 'el_grade',
+                title: 'EL等级'
             },
             {
                 field: 'final_grade',
@@ -126,7 +130,8 @@ var TableInit = function () {
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
             wo: $('#txtWO').val(),
-            
+            sales: $('#txtSales').val()
+
         };
         return temp;
     };
@@ -195,7 +200,7 @@ $('#btnExportExcel').click(function () {
     //});
 
     //window.open('../Report/ExportToExcel?bt=2018-10-10');
-    var astr = "<a href='../Report/WOStatusExcel/" + (!$('#txtWO').val() ? "Null" : $('#txtWO').val()) + "' target='_blank'></a>";
+    var astr = "<a href='../Report/WOStatusExcel/" + (!$('#txtWO').val() ? "Null" : $('#txtWO').val()) + "/" + (!$('#txtSales').val() ? "Null" : $('#txtSales').val()) + "' target='_blank'></a>";
     var a = $(astr).get(0)
     var e = document.createEvent('MouseEvents');
     e.initEvent('click', true, true);

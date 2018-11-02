@@ -64,20 +64,21 @@ namespace JHReport.Controllers
         {
             return View();
         }
-        [Route("WOStatusExcel/{wo}")]
+        [Route("WOStatusExcel/{wo=}/{sales=}")]
         [HttpGet]
-        public FileContentResult WOStatusToExcel(string wo)
+        public FileContentResult WOStatusToExcel(string wo,string sales)
         {
-            DataTable dt = new ReportService().WOStatusInfoDT(wo);
-            string[] AryColnameChinese = { "工单号","订单号","组件条码","投产时间","当前站别","组件等级","实测功率" };
+            DataTable dt = new ReportService().WOStatusInfoDT(wo=="Null"?"":wo,sales=="Null"?"":sales);
+            //string[] AryColnameChinese = { "工单号","订单号","组件条码","投产时间","当前站别","组件等级","实测功率" };
 
             dt.Columns[0].ColumnName = "组件条码";
             dt.Columns[1].ColumnName = "工单号";
             dt.Columns[2].ColumnName = "订单号";
             dt.Columns[3].ColumnName = "投产时间";
             dt.Columns[4].ColumnName = "当前站别";
-            dt.Columns[5].ColumnName = "组件等级";
-            dt.Columns[6].ColumnName = "实测功率";
+            dt.Columns[5].ColumnName = "EL等级";
+            dt.Columns[6].ColumnName = "组件等级";
+            dt.Columns[7].ColumnName = "实测功率";
 
 
 
